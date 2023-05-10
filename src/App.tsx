@@ -1,5 +1,6 @@
 import React from 'react';
-import { HashRouter , Routes, Route } from "react-router-dom";
+// I changed Hashrouter for BrowserRouter just because testing in the address bar.
+import { BrowserRouter  , Routes, Route } from "react-router-dom";
 import Home from './Components/Pages/Home';
 import Profile from './Components/Pages/Profile';
 import Settings from './Components/Pages/Settings';
@@ -8,15 +9,15 @@ import Settings from './Components/Pages/Settings';
 
 function App() {
   return (
-    <HashRouter>
+    <BrowserRouter >
       <div className="App">
         <Routes>
-          <Route path="/home" element={<Home />} />
+          <Route path="/" element={<Home />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/settings" element={<Settings />} />
         </Routes >
       </div>
-    </HashRouter>
+    </BrowserRouter>
   );
 }
 

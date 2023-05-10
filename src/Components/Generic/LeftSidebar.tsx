@@ -1,7 +1,12 @@
 import React from 'react'
+import MainMenu from './MainMenu'
 
 export default function LeftSidebar() {
   return (
-    <div>LeftSidebar</div>
+    <div>
+      <div>logo</div>
+      <MainMenu/>
+      <div>footer</div>
+    </div>
   )
 }

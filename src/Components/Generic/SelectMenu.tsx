@@ -2,6 +2,11 @@ import React from 'react'
 
 export default function SelectMenu() {
   return (
-    <div>SelectMenu</div>
+    <div>
+        <ul>
+            <li>For you</li>
+            <li>Following</li>
+        </ul>
+    </div>
   )
 }
