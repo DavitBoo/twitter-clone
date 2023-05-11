@@ -7,6 +7,11 @@ export default function ContentMain() {
     <div>
         <InputArea/>
         <ContentForUser/>
+        <ContentForUser/>
+        <ContentForUser/>
+        <ContentForUser/>
+        <ContentForUser/>
+
     </div>
   )
 }

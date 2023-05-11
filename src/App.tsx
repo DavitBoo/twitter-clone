@@ -12,6 +12,8 @@ const StyledDiv = styled.div `
   justify-content: center;
   gap: 5rem;
   
+
+
   > div:nth-child(2){
     /* flex: 1 1 50%; */
     width: min(65ch, 100%);
