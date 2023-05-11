@@ -8,7 +8,7 @@ import { mdiDotsHorizontal, mdiMessageReplyOutline, mdiRepeatVariant, mdiCardsHe
 const StyledDiv = styled.div  `
   display: flex;
   padding: 1rem;
-  outline: 1px solid #e8e9ed;
+  outline: 1px solid var(--color-border);
 
   &:hover{
     background-color:#f9f9fc;
@@ -32,6 +32,16 @@ const StyledDiv = styled.div  `
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    svg{
+      border-radius: 100%;
+      padding: 4px;
+    }
+
+    svg:hover{
+      color: #35abff;
+      background-color: #e1f3ff;
+    }
   }
 
   .message-info{

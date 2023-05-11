@@ -11,13 +11,19 @@ const StyledDiv = styled.div `
   display: flex;
   justify-content: center;
   gap: 5rem;
-  
 
+  > div:first-child{
+    width: 0px;
+  }
 
   > div:nth-child(2){
     /* flex: 1 1 50%; */
     width: min(65ch, 100%);
-    border: 1px solid #e8e9ed;
+    border: 1px solid var(--color-border);
+
+    h1{
+      padding-left: 16px;
+    }
   }
   
 `;

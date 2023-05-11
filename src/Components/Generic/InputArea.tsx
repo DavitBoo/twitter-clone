@@ -15,8 +15,8 @@ flex-direction: column;
     /* padding: 1rem; */
   }
   .input-container{
-    border-top: 1px solid #e8e9ed;
-    border-bottom: 1px solid #e8e9ed;
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
     background-color: #f9f9fc;
     justify-content: space-around;
     padding: .5rem 0;

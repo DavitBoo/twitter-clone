@@ -8,14 +8,29 @@ const StyledDiv = styled.div `
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
+
+  .fixed-container{
+    height: 100vh;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-right: 10rem;
+  }
+
+  ul{
+    padding: 0;
+  }
 
   img {
-    max-width: 40px;
+    width: 40px;
+    height: 40px;
     padding: 5px;
     
   }
 
-  > a{
+  .logo{
     border-radius: 100% ;
     transition: all .2s;
 
@@ -24,14 +39,23 @@ const StyledDiv = styled.div `
     }
   }
 
+  .footer{
+    max-width: 100%;
+    color: var(--color-text-secodary)
+  }
+
 `;
 
 export default function LeftSidebar() {
   return (
-    <StyledDiv>
-      <a href=""><img src={logo} alt="" /></a>
-      <MainMenu/>
-      <div>footer</div>
+    <StyledDiv className='left-sidebar'>
+      <div className="fixed-container">
+        <div>
+          <a href="/#" className='logo'><img src={logo} alt="" /></a>
+          <MainMenu/>
+        </div>
+        <div className='footer'><a href="/#">About this project</a></div>
+      </div>
     </StyledDiv>
   )
 }

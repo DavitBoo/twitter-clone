@@ -58,7 +58,7 @@ export default function MainMenu() {
               </NavLink>
             </li>
             <li>
-                <a href="">
+                <a href="/#">
                   <Icon path={mdiDotsHorizontalCircleOutline} size={1} />
                   <p>More</p>
                 </a>
