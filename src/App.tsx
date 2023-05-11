@@ -9,10 +9,13 @@ import { styled } from 'styled-components';
 
 const StyledDiv = styled.div `
   display: flex;
-  gap: .7rem;
+  justify-content: center;
+  gap: 5rem;
   
   > div:nth-child(2){
-    flex: 1 1 50%;
+    /* flex: 1 1 50%; */
+    width: min(65ch, 100%);
+    border: 1px solid #e8e9ed;
   }
   
 `;

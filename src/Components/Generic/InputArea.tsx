@@ -7,18 +7,31 @@ import testImage from '../../assets/test.jpg'
 const StyledDiv = styled.div `
 display: flex;
 flex-direction: column;
+
   img{
     width: 75px;
     height: 75px;
     border-radius: 100%;
+    /* padding: 1rem; */
   }
+  .input-container{
+    border-top: 1px solid #e8e9ed;
+    border-bottom: 1px solid #e8e9ed;
+    background-color: #f9f9fc;
+    justify-content: space-around;
+    padding: .5rem 0;
+  }
+
   canvas{
-    border: 1px solid #e8e9ed;
+    margin: 10px 0;
+    border-radius: 5px;
+    background-color: #fff;
   }
 
   button{
     padding: .6rem 1.2rem;
     font-weight: 700;
+    align-self: flex-end;
 
     &:hover{
       background-color: var(--color-primary-darker);
@@ -29,6 +42,19 @@ flex-direction: column;
   .buttons{
     display: flex;
     justify-content: space-between;
+    cursor: pointer;
+
+  }
+
+  .flex{
+    display: flex;
+  }
+
+  .flex-col-dir{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
   }
 `;
 
@@ -83,18 +109,23 @@ export default function InputArea() {
 
   return (
     <StyledDiv>
-      <img src={testImage} alt="" />
-      <canvas ref={canvasRef} width={400} height={200} />
-      
-      <div className="buttons">
-        <div>
-          <Icon path={mdiDraw} size={1} />
-          <Icon path={mdiFormatText} size={1} />
+      <div className="input-container flex">
+        <div className="flex-col-dir">
+          <img src={testImage} alt="" />
+          <div className="buttons">
+            <div>
+              <Icon path={mdiDraw} size={1} />
+              <Icon path={mdiFormatText} size={1} />
+            </div>
+          </div>
         </div>
+        <canvas ref={canvasRef} width={400} height={200} />
         <button onClick={() => console.log(savedDataRef.current)}>
           Draw!
         </button>
       </div>
+      
+      
     </StyledDiv>
   );
 }
