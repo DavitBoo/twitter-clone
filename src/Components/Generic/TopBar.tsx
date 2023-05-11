@@ -11,7 +11,7 @@ export default function TopBar() {
   return (
     <div>
         <SelectMenu/>
-        <SearchMenu/>
+        {/* <SearchMenu/> */}
     </div>
   )
 }

@@ -12,8 +12,9 @@ const GlobalStyles = createGlobalStyle`
   :root {
     --color-text: rgb(15, 20, 25);
     --color-text-secondary: #536471;
-    --color-background: white;
+    --color-text-contrast: white;
     --color-primary: #0099D1;
+    --color-primary-darker: #0076a1;
   }
 
   body{
@@ -32,6 +33,14 @@ const GlobalStyles = createGlobalStyle`
   a{
     text-decoration: none;
     color: var(--color-text)
+  }
+
+  button{
+    background-color: var(--color-primary);
+    color: var(--color-text-contrast);
+    border: none;
+    border-radius: 100rem;
+    cursor: pointer;
   }
 `;
 
