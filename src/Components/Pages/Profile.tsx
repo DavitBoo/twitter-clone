@@ -1,7 +1,7 @@
 import React from 'react'
 import ContentForUser from '../Generic/ContentForUser'
 import CoverImage from '../Generic/Subcomponents/CoverImage'
-import SelectMenu from '../Generic/SelectMenu'
+import SelectTimelines from '../Generic/SelectTimelines'
 import UserName from '../Generic/Subcomponents/UserName'
 
 import { styled } from 'styled-components'
@@ -87,7 +87,7 @@ export default function Profile() {
           </div>
         </div>
 
-        <SelectMenu/>
+        <SelectTimelines/>
         <ContentForUser/>
         <ContentForUser/>
         <ContentForUser/>

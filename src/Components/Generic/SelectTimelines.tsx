@@ -41,19 +41,31 @@ const StyledDiv = styled.div`
 
 `;
 
-export default function SelectMenu() {
+export default function SelectTimelines() {
   return (
     <StyledDiv>
         <ul>
             <li>
               <div className='active'>
-                <p>For you</p>
+                <p>News</p>
                 <div></div>
               </div>
             </li>
             <li>
               <div>
-                <p>Following</p>
+                <p>Replies</p>
+                <div></div>
+              </div>
+            </li>
+            <li>
+              <div>
+                <p>Media</p>
+                <div></div>
+              </div>
+            </li>
+            <li>
+              <div>
+                <p>Likes</p>
                 <div></div>
               </div>
             </li>
