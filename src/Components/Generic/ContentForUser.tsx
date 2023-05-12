@@ -73,11 +73,9 @@ const StyledDiv = styled.div  `
     justify-content: space-between;
     
 
-    div{
-      
+    div{      
       display: flex;
       align-items: center;
-      
     }
 
     div >*{
@@ -94,14 +92,26 @@ const StyledDiv = styled.div  `
     .reply:hover, .views:hover, .share:hover{
       color: #35abff;
       background-color: #e1f3ff;
+
+      + p{
+        color: #35abff;
+      }
     }
     .repost:hover{
       color: #0fb14b;
       background-color: #baffd4;
+
+      + p{
+        color: #0fb14b;
+      }
     }
     .like:hover{
       color: #ff3c87;
       background-color: #ffcade;
+
+      + p{
+        color: #ff3c87;
+      }
     }
   
   }

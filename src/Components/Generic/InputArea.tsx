@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from "react";
 import { styled } from "styled-components";
 import Icon from '@mdi/react';
-import { mdiDraw, mdiFormatText } from '@mdi/js';
+import { mdiDraw, mdiFormatText  } from '@mdi/js';
 import testImage from '../../assets/test.jpg'
 
 const StyledDiv = styled.div `
@@ -23,10 +23,11 @@ flex-direction: column;
   }
 
   canvas{
-    margin: 10px 0;
-    border-radius: 5px;
-    background-color: #fff;
-  }
+      margin: 10px 0;
+      border-radius: 5px;
+      background-color: #fff;
+    }
+  
 
   button{
     padding: .6rem 1.2rem;

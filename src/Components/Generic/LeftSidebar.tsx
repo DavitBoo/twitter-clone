@@ -16,7 +16,7 @@ const StyledDiv = styled.div `
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding-right: 10rem;
+    margin-right: 10rem;
   }
 
   ul{
@@ -33,6 +33,7 @@ const StyledDiv = styled.div `
   .logo{
     border-radius: 100% ;
     transition: all .2s;
+    display: inline-block;
 
     &:hover {
       background-color: rgba(15, 20, 25, 0.1);
@@ -41,7 +42,16 @@ const StyledDiv = styled.div `
 
   .footer{
     max-width: 100%;
-    color: var(--color-text-secodary)
+    color: var(--color-text-secodary);
+    margin-bottom: 2rem;
+
+    a:hover{
+      color: var(--color-primary);
+    }
+  }
+
+  .active{
+    font-weight: 900;
   }
 
 `;
@@ -54,7 +64,7 @@ export default function LeftSidebar() {
           <a href="/#" className='logo'><img src={logo} alt="" /></a>
           <MainMenu/>
         </div>
-        <div className='footer'><a href="/#">About this project</a></div>
+        <div className='footer'><a href="https://github.com/DavitBoo/twitter-clone">About this project</a></div>
       </div>
     </StyledDiv>
   )
