@@ -4,6 +4,7 @@ import CoverImage from '../Generic/Subcomponents/CoverImage'
 import SelectTimelines from '../Generic/SelectTimelines'
 import UserName from '../Generic/Subcomponents/UserName'
 
+import { NavLink } from 'react-router-dom'
 import { styled } from 'styled-components'
 
 import Icon from '@mdi/react';
@@ -13,13 +14,16 @@ import { mdiCalendarMonthOutline } from '@mdi/js';
 
 const StyledDiv = styled.div`
 
-  button{
+  .edit-profile-btn{
     background-color: #fff;
     color: #000;
     border: 1px solid var(--color-border);
     padding: .75rem .5rem;
     font-weight: 700;
     margin: 1rem;
+
+    border-radius: 100rem;
+    cursor: pointer;
     
 
     &:hover{
@@ -61,6 +65,7 @@ const StyledDiv = styled.div`
 
     .follow-info{
       display: flex;
+      gap: 1rem;
     }
 
   }
@@ -73,7 +78,7 @@ export default function Profile() {
         <h1>Profile</h1>
         <div className="cover">
           <CoverImage/>
-          <button>Edit Profile</button>
+          <NavLink className="edit-profile-btn" to="/settings">Edit Profile</NavLink>
         </div>
         <div className='user-info'>
           <UserName/>
@@ -82,8 +87,8 @@ export default function Profile() {
             <p>Joined May 2023</p>
           </div>
           <div className='follow-info'>
-            <p><strong>1</strong> Following</p>
-            <p><strong>1</strong> Followers</p>
+            <NavLink to="/profile/following"><p><strong>1</strong> Following</p></NavLink>
+            <NavLink to="/profile/followers"><p><strong>1</strong> Followers</p></NavLink>
           </div>
         </div>
 

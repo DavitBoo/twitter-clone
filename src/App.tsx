@@ -1,11 +1,14 @@
-import React, { useState, createContext } from 'react';
+import React, { useState } from 'react';
 // I changed HashRouter for BrowserRouter just because testing in the address bar.
-import { BrowserRouter  , Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from './Components/Pages/Home';
 import Profile from './Components/Pages/Profile';
 import Settings from './Components/Pages/Settings';
 import LeftSidebar from './Components/Generic/LeftSidebar';
 import { styled } from 'styled-components';
+import Followed from './Components/Pages/Follows/Followed';
+import Following from './Components/Pages/Follows/Following';
+
 
 const StyledDiv = styled.div `
   position: relative;
@@ -60,6 +63,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/profile/following" element={<Followed />} />
+          <Route path="/profile/followers" element={<Following />} />
           <Route path="/settings" element={<Settings />} />
         </Routes >
         { overlayDisplay && <div onClick={overlayClickHandler} className="full-overlay"></div> }
