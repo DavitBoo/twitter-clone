@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { styled } from "styled-components";
 import Icon from '@mdi/react';
 import { mdiDraw, mdiFormatText  } from '@mdi/js';
@@ -57,12 +57,28 @@ flex-direction: column;
     justify-content: space-between;
     align-items: center;
   }
+
+  textArea{
+    width: 400px;
+    height: 100px;
+    border-radius: 5px;
+    border: none;
+    margin: 10px 0;
+    padding: 8px 1ch;
+    font-size: 20px;
+    color : var(--color-text-secondary);
+
+  }
 `;
 
 
 export default function InputArea() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const savedDataRef = useRef<string | null>(null);
+
+  const [canvasOrText, setCanvasOrText] = useState(true)
+  const [canvasState, setCanvasState] = useState()
+  const [valueTextArea, setValueTextArea] = useState()
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -106,7 +122,16 @@ export default function InputArea() {
       canvas.removeEventListener("mouseup", stopDrawing);
       canvas.removeEventListener("mouseout", stopDrawing);
     };
-  }, []);
+  }, [canvasOrText]);
+
+
+  const displayCanvas = () => {
+    setCanvasOrText(true)
+  }
+
+  const displayTextArea = () => {
+    setCanvasOrText(false)
+  }
 
   return (
     <StyledDiv>
@@ -114,16 +139,25 @@ export default function InputArea() {
         <div className="flex-col-dir">
           <img src={testImage} alt="" />
           <div className="buttons">
-            <div>
-              <Icon path={mdiDraw} size={1} />
-              <Icon path={mdiFormatText} size={1} />
-            </div>
+              <div onClick={displayCanvas}>
+                <Icon path={mdiDraw} size={1}  />
+              </div>
+              <div onClick={displayTextArea}>
+                <Icon path={mdiFormatText} size={1} />
+              </div>
           </div>
         </div>
-        <canvas ref={canvasRef} width={400} height={200} />
-        <button onClick={() => console.log(savedDataRef.current)}>
+        {canvasOrText && <canvas ref={canvasRef} width={400} height={200} />}
+        {!canvasOrText && <textarea maxLength={250} name="" id="" placeholder="What is happening?"></textarea>}
+        {canvasOrText && <button onClick={() => console.log(savedDataRef.current)}>
           Draw!
-        </button>
+        </button>}
+        {! canvasOrText && <button onClick={() => console.log(savedDataRef.current)}>
+          Write!
+        </button>}
+
+        
+
       </div>
       
       
