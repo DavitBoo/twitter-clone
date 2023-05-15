@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, createContext } from 'react';
 // I changed HashRouter for BrowserRouter just because testing in the address bar.
 import { BrowserRouter  , Routes, Route } from "react-router-dom";
 import Home from './Components/Pages/Home';
@@ -29,11 +29,12 @@ const StyledDiv = styled.div `
   
 
   .full-overlay{
-    position: absolute;
+    position: fixed;
     width: 100%;
     height: 100%;
     top: 0;
     left: 0;
+    z-index: 10;
   }
 
 `;
@@ -41,18 +42,27 @@ const StyledDiv = styled.div `
 function App() {
 
   const [overlayDisplay, setOverlayDisplay] = useState(false)
+  const [displaySubMenu, setDisplaySubMenu] = useState(false)
 
+  const overlayClickHandler = () => {
+    setOverlayDisplay(false)
+    setDisplaySubMenu(false)
+  }
 
   return (
     <BrowserRouter >
       <StyledDiv className="App">
-        { overlayDisplay && <div className="full-overlay"></div> }
-        <LeftSidebar/>
+        <LeftSidebar 
+          setOverlayDisplay={setOverlayDisplay} 
+          displaySubMenu={displaySubMenu}
+          setDisplaySubMenu={setDisplaySubMenu}
+        />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/settings" element={<Settings />} />
         </Routes >
+        { overlayDisplay && <div onClick={overlayClickHandler} className="full-overlay"></div> }
       </StyledDiv>
     </BrowserRouter>
   );

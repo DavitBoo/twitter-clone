@@ -7,7 +7,7 @@ import MoreMenu from './MoreMenu';
 
 const StyledDiv = styled.div `
   font-size: 1.2rem;
-
+  
   ul{
     display: flex;
     flex-direction: column;
@@ -37,18 +37,29 @@ const StyledDiv = styled.div `
     }
   }
 `
-export default function MainMenu() {
 
-  const [displaySubMenu, setDisplaySubMenu] = useState(false)
+
+interface LeftSidebarProps {
+  setOverlayDisplay: React.Dispatch<React.SetStateAction<boolean>>;
+  setDisplaySubMenu: React.Dispatch<React.SetStateAction<boolean>>;
+  displaySubMenu: boolean;
+
+}
+
+export default function MainMenu({ setOverlayDisplay, setDisplaySubMenu, displaySubMenu }: LeftSidebarProps ) {
+
+  
+  
 
   const handleClick = (e: any) => {
     e.preventDefault();
     setDisplaySubMenu(true)
+    setOverlayDisplay(true)
   }
 
   return (
     <StyledDiv>
-        <ul>
+        <ul onClick={displaySubMenu ? () => setDisplaySubMenu(false) : undefined} >
             <li>
               <NavLink to="/">
                   <Icon path={mdiHomeOutline} size={1} /> <p>Home</p>

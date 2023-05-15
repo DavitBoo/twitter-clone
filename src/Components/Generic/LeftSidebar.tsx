@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import MainMenu from './MainMenu'
 import logo from '../../assets/logo.png'
 import { styled } from 'styled-components'
@@ -17,6 +17,7 @@ const StyledDiv = styled.div `
     flex-direction: column;
     justify-content: space-between;
     margin-right: 10rem;
+    z-index: 20;
   }
 
   ul{
@@ -56,16 +57,28 @@ const StyledDiv = styled.div `
 
 `;
 
-export default function LeftSidebar() {
+interface LeftSidebarProps {
+  setOverlayDisplay: React.Dispatch<React.SetStateAction<boolean>>;
+  setDisplaySubMenu: React.Dispatch<React.SetStateAction<boolean>>;
+  displaySubMenu: boolean;
+}
+
+const LeftSidebar: React.FC<LeftSidebarProps> = ({ setOverlayDisplay, setDisplaySubMenu, displaySubMenu }) => {
   return (
     <StyledDiv className='left-sidebar'>
       <div className="fixed-container">
         <div>
           <a href="/#" className='logo'><img src={logo} alt="" /></a>
-          <MainMenu/>
+          <MainMenu  
+              setOverlayDisplay={setOverlayDisplay}
+              displaySubMenu={displaySubMenu}
+              setDisplaySubMenu={setDisplaySubMenu}
+            />
         </div>
-        <div className='footer'><a href="https://github.com/DavitBoo/twitter-clone">About this project</a></div>
+        <div className='footer'><a target="_blank" href="https://github.com/DavitBoo/twitter-clone">About this project</a></div>
       </div>
     </StyledDiv>
   )
 }
+
+export default LeftSidebar

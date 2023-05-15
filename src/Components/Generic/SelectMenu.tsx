@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { styled } from 'styled-components'
 
 const StyledDiv = styled.div`
@@ -43,17 +43,30 @@ const StyledDiv = styled.div`
 `;
 
 export default function SelectMenu() {
+  
+  const [activeMenu, setActiveMenu] = useState(true)
+  
+  const activeLeftByClick = () => {
+    setActiveMenu(true)
+  }
+
+  const activeRightByClick = () => {
+    setActiveMenu(false)
+  }
+  
   return (
+
+ 
     <StyledDiv>
         <ul>
-            <li>
-              <div className='active'>
+            <li onClick={activeLeftByClick}>
+              <div className={activeMenu?'active':'' } >
                 <p>For you</p>
                 <div></div>
               </div>
             </li>
-            <li>
-              <div>
+            <li onClick={activeRightByClick}>
+              <div className={activeMenu?'':'active'} >
                 <p>Following</p>
                 <div></div>
               </div>
