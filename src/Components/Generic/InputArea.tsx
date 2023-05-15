@@ -60,7 +60,7 @@ flex-direction: column;
 
   textArea{
     width: 400px;
-    height: 100px;
+    height: 200px;
     border-radius: 5px;
     border: none;
     margin: 10px 0;
@@ -68,6 +68,14 @@ flex-direction: column;
     font-size: 20px;
     color : var(--color-text-secondary);
   }
+
+  .textArea-control{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between
+  }
+
 `;
 
 
@@ -77,7 +85,8 @@ export default function InputArea() {
 
   const [canvasOrText, setCanvasOrText] = useState(true)
   const [canvasState, setCanvasState] = useState<string | null>(null);
-  const [valueTextArea, setValueTextArea] = useState()
+  const [valueTextArea, setValueTextArea] = useState("")
+ 
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -158,13 +167,26 @@ export default function InputArea() {
           </div>
         </div>
         {canvasOrText && <canvas ref={canvasRef} width={400} height={200} />}
-        {!canvasOrText && <textarea maxLength={250} name="" id="" placeholder="What is happening?"></textarea>}
+        {!canvasOrText && 
+          <textarea 
+            maxLength={280} 
+            name="" 
+            id="" 
+            placeholder="What is happening?"
+            value={valueTextArea}
+            onChange={(e) => setValueTextArea(e.target.value)}
+          ></textarea>
+        }
         {canvasOrText && <button onClick={() => console.log(savedDataRef.current)}>
           Draw!
         </button>}
-        {! canvasOrText && <button onClick={() => console.log(savedDataRef.current)}>
-          Write!
-        </button>}
+        {!canvasOrText && 
+         <>
+            <div className="textArea-control">
+              <p>{280-valueTextArea.length}</p>
+              <button onClick={() => console.log(valueTextArea)}>Write!</button>
+            </div>
+        </>}
 
         
 
