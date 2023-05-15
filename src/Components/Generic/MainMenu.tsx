@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Icon from '@mdi/react';
 import { mdiHomeOutline, mdiAccountOutline, mdiCogOutline, mdiDotsHorizontalCircleOutline } from '@mdi/js';
 import { styled } from 'styled-components';
 import { NavLink } from 'react-router-dom'
+import MoreMenu from './MoreMenu';
 
 const StyledDiv = styled.div `
   font-size: 1.2rem;
@@ -38,7 +39,13 @@ const StyledDiv = styled.div `
 `
 export default function MainMenu() {
 
-  
+  const [displaySubMenu, setDisplaySubMenu] = useState(false)
+
+  const handleClick = (e: any) => {
+    e.preventDefault();
+    setDisplaySubMenu(true)
+  }
+
   return (
     <StyledDiv>
         <ul>
@@ -58,15 +65,13 @@ export default function MainMenu() {
               </NavLink>
             </li>
             <li>
-                <a href="/#">
+                <a href="/#" onClick={handleClick}>
                   <Icon path={mdiDotsHorizontalCircleOutline} size={1} />
-                  <p>More</p>
-                </a>
-                <ul>
-                    <li>Logout</li>
-                </ul>
+                  More
+                </a>          
             </li>
         </ul>
+        {displaySubMenu&&<MoreMenu/>}
     </StyledDiv>
   )
 }

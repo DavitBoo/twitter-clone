@@ -11,7 +11,7 @@ const StyledDiv = styled.div  `
   outline: 1px solid var(--color-border);
 
   &:hover{
-    background-color:#f9f9fc;
+    background-color: var(--color-hover);
     cursor: pointer;
   }
 

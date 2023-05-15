@@ -8,6 +8,7 @@ const StyledDiv = styled.div`
   ul{
     display: flex;
     justify-content: space-around;
+    padding: 0;
 
     
   }

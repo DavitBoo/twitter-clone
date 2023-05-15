@@ -16,6 +16,7 @@ const GlobalStyles = createGlobalStyle`
     --color-primary: #0099D1;
     --color-primary-darker: #0076a1;
     --color-border: #e8e9ed;
+    --color-hover: #f9f9fc;
   }
 
   body{

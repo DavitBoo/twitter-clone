@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 // I changed HashRouter for BrowserRouter just because testing in the address bar.
 import { BrowserRouter  , Routes, Route } from "react-router-dom";
 import Home from './Components/Pages/Home';
@@ -8,6 +8,7 @@ import LeftSidebar from './Components/Generic/LeftSidebar';
 import { styled } from 'styled-components';
 
 const StyledDiv = styled.div `
+  position: relative;
   display: flex;
   justify-content: center;
   gap: 5rem;
@@ -26,12 +27,26 @@ const StyledDiv = styled.div `
     }
   }
   
+
+  .full-overlay{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+  }
+
 `;
 
 function App() {
+
+  const [overlayDisplay, setOverlayDisplay] = useState(false)
+
+
   return (
     <BrowserRouter >
       <StyledDiv className="App">
+        { overlayDisplay && <div className="full-overlay"></div> }
         <LeftSidebar/>
         <Routes>
           <Route path="/" element={<Home />} />

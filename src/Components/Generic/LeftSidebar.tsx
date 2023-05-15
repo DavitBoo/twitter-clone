@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import MainMenu from './MainMenu'
 import logo from '../../assets/logo.png'
 import { styled } from 'styled-components'
