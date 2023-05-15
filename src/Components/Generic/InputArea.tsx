@@ -67,7 +67,6 @@ flex-direction: column;
     padding: 8px 1ch;
     font-size: 20px;
     color : var(--color-text-secondary);
-
   }
 `;
 
@@ -77,7 +76,7 @@ export default function InputArea() {
   const savedDataRef = useRef<string | null>(null);
 
   const [canvasOrText, setCanvasOrText] = useState(true)
-  const [canvasState, setCanvasState] = useState()
+  const [canvasState, setCanvasState] = useState<string | null>(null);
   const [valueTextArea, setValueTextArea] = useState()
 
   useEffect(() => {
@@ -107,14 +106,25 @@ export default function InputArea() {
 
     function stopDrawing() {
       isDrawing = false;
-      if(canvas)
-      savedDataRef.current = canvas.toDataURL(); // Guardar los datos dibujados del canvas en la variable
+      if (canvas) {
+        savedDataRef.current = canvas.toDataURL(); // Guardar los datos dibujados del canvas en la variable
+        setCanvasState(canvas.toDataURL()); // Actualizar el estado del canvas
+      }
     }
 
     canvas.addEventListener("mousedown", startDrawing);
     canvas.addEventListener("mousemove", draw);
     canvas.addEventListener("mouseup", stopDrawing);
     canvas.addEventListener("mouseout", stopDrawing);
+
+    if (canvasState) {
+      const image = new Image();
+      image.onload = () => {
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        context.drawImage(image, 0, 0);
+      };
+      image.src = canvasState;
+    }
 
     return () => {
       canvas.removeEventListener("mousedown", startDrawing);

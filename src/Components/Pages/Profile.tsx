@@ -17,7 +17,7 @@ const StyledDiv = styled.div`
     background-color: #fff;
     color: #000;
     border: 1px solid var(--color-border);
-    padding: .5rem;
+    padding: .75rem .5rem;
     font-weight: 700;
     margin: 1rem;
     
