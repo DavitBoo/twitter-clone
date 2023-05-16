@@ -14,6 +14,10 @@ const StyledDiv = styled.div`
       padding-bottom: 2rem;
       border: 1px solid var(--color-border);
       border-radius: 5px;
+
+      &:focus-within{
+          border: 2px solid var(--color-primary);
+        }
     
       label{
         font-size: .7rem;
@@ -27,6 +31,7 @@ const StyledDiv = styled.div`
         outline: none;
         border: none;
         width: calc(100% - 2ch);
+
       }
     }
   }
