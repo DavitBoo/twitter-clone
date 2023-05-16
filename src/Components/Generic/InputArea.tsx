@@ -47,9 +47,6 @@ flex-direction: column;
 
   }
 
-  .flex{
-    display: flex;
-  }
 
   .flex-col-dir{
     display: flex;
@@ -141,7 +138,7 @@ export default function InputArea() {
       canvas.removeEventListener("mouseup", stopDrawing);
       canvas.removeEventListener("mouseout", stopDrawing);
     };
-  }, [canvasOrText]);
+  }, [canvasOrText, canvasState]);
 
 
   const displayCanvas = () => {

@@ -44,6 +44,11 @@ const GlobalStyles = createGlobalStyle`
     border-radius: 100rem;
     cursor: pointer;
   }
+
+  .flex{
+    display: flex;
+  }
+
 `;
 
 

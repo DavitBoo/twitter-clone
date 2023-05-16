@@ -22,14 +22,11 @@ const StyledDiv = styled.div `
 `
 
 
-export default function Following() {
+export default function Followed() {
   return (
     <StyledDiv>
         <UserName/>
-        <SelectFollowTab activeTab={true}/>
-        <AccountInfo/>
-        <AccountInfo/>
-        <AccountInfo/>
+        <SelectFollowTab activeTab={false}/>
         <AccountInfo/>
     </StyledDiv>
   )

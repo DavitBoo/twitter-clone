@@ -6,7 +6,7 @@ import Profile from './Components/Pages/Profile';
 import Settings from './Components/Pages/Settings';
 import LeftSidebar from './Components/Generic/LeftSidebar';
 import { styled } from 'styled-components';
-import Followed from './Components/Pages/Follows/Followed';
+import Followers from './Components/Pages/Follows/Followers';
 import Following from './Components/Pages/Follows/Following';
 
 
@@ -63,7 +63,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/profile/following" element={<Followed />} />
+          <Route path="/profile/following" element={<Followers />} />
           <Route path="/profile/followers" element={<Following />} />
           <Route path="/settings" element={<Settings />} />
         </Routes >
