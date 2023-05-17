@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 // I changed HashRouter for BrowserRouter just because testing in the address bar.
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from './Components/Pages/Home';
@@ -8,6 +8,8 @@ import LeftSidebar from './Components/Generic/LeftSidebar';
 import { styled } from 'styled-components';
 import Followers from './Components/Pages/Follows/Followers';
 import Following from './Components/Pages/Follows/Following';
+import Login from './Components/Pages/Login';
+import { auth } from './firebase/config';
 
 
 const StyledDiv = styled.div `
@@ -30,7 +32,6 @@ const StyledDiv = styled.div `
     }
   }
   
-
   .full-overlay{
     position: fixed;
     width: 100%;
@@ -42,10 +43,29 @@ const StyledDiv = styled.div `
 
 `;
 
+
+
 function App() {
 
   const [overlayDisplay, setOverlayDisplay] = useState(false)
   const [displaySubMenu, setDisplaySubMenu] = useState(false)
+  const [logged, setLogged] = useState(false)
+
+
+  useEffect(() => {
+    const checkLoggedInStatus = () => {
+      auth.onAuthStateChanged((user) => {
+        if (user) {
+          setLogged(true);
+        } else {
+          setLogged(false);
+        }
+      });
+    };
+
+    checkLoggedInStatus();
+  }, []);
+
 
   const overlayClickHandler = () => {
     setOverlayDisplay(false)
@@ -54,7 +74,8 @@ function App() {
 
   return (
     <BrowserRouter >
-      <StyledDiv className="App">
+      { logged ?
+        <StyledDiv className="App">
         <LeftSidebar 
           setOverlayDisplay={setOverlayDisplay} 
           displaySubMenu={displaySubMenu}
@@ -68,7 +89,9 @@ function App() {
           <Route path="/settings" element={<Settings />} />
         </Routes >
         { overlayDisplay && <div onClick={overlayClickHandler} className="full-overlay"></div> }
-      </StyledDiv>
+      </StyledDiv> 
+      // if user is not logged, login screen will be displayed
+      : <Login setLogged={setLogged}/>}
     </BrowserRouter>
   );
 }

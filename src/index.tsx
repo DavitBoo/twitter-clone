@@ -15,6 +15,7 @@ const GlobalStyles = createGlobalStyle`
     --color-text-contrast: white;
     --color-primary: #0099D1;
     --color-primary-darker: #0076a1;
+    --color-primary-70: #0099d1ad;
     --color-border: #e8e9ed;
     --color-hover: #f9f9fc;
   }

@@ -1,6 +1,8 @@
 import React from 'react'
 import { styled } from 'styled-components'
 
+import { auth } from "../../firebase/config";
+
 const StyledDiv = styled.div`
 
     ul{
@@ -25,12 +27,29 @@ const StyledDiv = styled.div`
 
 `
 
+interface MoreMenuProps {
+    setOverlayDisplay: React.Dispatch<React.SetStateAction<boolean>>;
+    setDisplaySubMenu: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
-export default function MoreMenu() {
+export default function MoreMenu({setOverlayDisplay, setDisplaySubMenu}: MoreMenuProps) {
+
+const handleLogout = async () => {
+    setOverlayDisplay(false)
+    setDisplaySubMenu(false)
+    try {
+        await auth.signOut();
+        // Realiza cualquier otra acción necesaria después del cierre de sesión exitoso
+    } catch (error) {
+        // Maneja los errores de cierre de sesión
+        console.log(error);
+    }
+    };
+
   return (
     <StyledDiv>
         <ul>
-            <li>Logout</li>
+            <li onClick={handleLogout}>Logout</li>
         </ul>
     </StyledDiv>
   )

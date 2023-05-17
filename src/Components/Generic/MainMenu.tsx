@@ -82,7 +82,12 @@ export default function MainMenu({ setOverlayDisplay, setDisplaySubMenu, display
                 </a>          
             </li>
         </ul>
-        {displaySubMenu&&<MoreMenu/>}
+        { displaySubMenu && 
+          <MoreMenu 
+            setOverlayDisplay={setOverlayDisplay}
+            setDisplaySubMenu={setDisplaySubMenu}
+          /> 
+        }
     </StyledDiv>
   )
 }
