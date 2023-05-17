@@ -35,17 +35,11 @@ const StyleDiv = styled.div`
     
   }
 
-  .camera-i svg{
+  svg{
         filter: invert(1);
         border-radius: 100%;
         background-color: #ffffff2c;
         padding: 1rem;
-        position: absolute;
-
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
 
         transition: all .2s;
         cursor: pointer;
@@ -53,6 +47,13 @@ const StyleDiv = styled.div`
         &:hover{
           background-color: #ffffff9d;
         }
+  }
+
+  .camera-i svg{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);        
     }
 
 `

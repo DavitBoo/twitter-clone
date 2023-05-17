@@ -2,6 +2,9 @@ import React from 'react'
 import MainMenu from './MainMenu'
 import logo from '../../assets/logo.png'
 import { styled } from 'styled-components'
+import { NavLink } from 'react-router-dom'
+
+
 
 const StyledDiv = styled.div `
 
@@ -68,7 +71,7 @@ const LeftSidebar: React.FC<LeftSidebarProps> = ({ setOverlayDisplay, setDisplay
     <StyledDiv className='left-sidebar'>
       <div className="fixed-container">
         <div>
-          <a href="/#" className='logo'><img src={logo} alt="" /></a>
+          <NavLink to="/" className='logo'><img src={logo} alt="" /></NavLink>
           <MainMenu  
               setOverlayDisplay={setOverlayDisplay}
               displaySubMenu={displaySubMenu}

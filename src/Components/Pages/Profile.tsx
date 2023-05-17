@@ -8,11 +8,30 @@ import { NavLink } from 'react-router-dom'
 import { styled } from 'styled-components'
 
 import Icon from '@mdi/react';
-import { mdiCalendarMonthOutline } from '@mdi/js';
-
-
+import { mdiCalendarMonthOutline, mdiArrowLeft } from '@mdi/js';
 
 const StyledDiv = styled.div`
+
+  .header{
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    gap: 2rem;
+
+    a{
+      cursor: pointer;
+      padding: .5rem;
+      border-radius: 100%;
+
+      &:hover{
+        background-color: var(--color-hover);
+      }
+    }
+
+    > div > *{
+      margin: 5px;
+    }
+  }
 
   .edit-profile-btn{
     background-color: #fff;
@@ -72,10 +91,20 @@ const StyledDiv = styled.div`
 
 `
 
+
+
 export default function Profile() {
   return (
     <StyledDiv>
-        <h1>Profile</h1>
+        <div className='header'>
+          <NavLink to="/">
+            <Icon path={mdiArrowLeft} size={1} />
+          </NavLink>
+          <div className='flex-col'>
+            <h1>Profile</h1>
+            <p>28 tweets</p>
+          </div>  
+        </div>
         <div className="cover">
           <CoverImage/>
           <NavLink className="edit-profile-btn" to="/settings">Edit Profile</NavLink>

@@ -49,6 +49,11 @@ const GlobalStyles = createGlobalStyle`
     display: flex;
   }
 
+  .flex-col{
+    display: flex;
+    flex-direction: column;
+  }
+
 `;
 
 

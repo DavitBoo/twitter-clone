@@ -25,7 +25,7 @@ const StyledDiv = styled.div `
     width: min(65ch, 100%);
     border: 1px solid var(--color-border);
 
-    h1{
+    > h1{
       padding-left: 16px;
     }
   }
