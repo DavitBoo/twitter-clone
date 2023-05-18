@@ -80,30 +80,14 @@ interface LoginProps{
   setLogged: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const handleSignInWithGoogle = async () => {
-  try {
-    const user = await signInWithGoogle();
-    console.log(user)
-    await createUserInFirestore(user);
-    return user.uid
-    
-
-    // Aquí puedes realizar cualquier acción adicional con los datos del usuario
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-
 
 export default function Login({setLogged}: LoginProps)   {
   const handleLogin = async () => {
     try {
-      const provider = new GoogleAuthProvider();
-      await signInWithPopup(auth, provider);
-      setLogged(true)
-      // I am passing handleSignInWithGoogle to loadUserData, because it contains de uid value and I do not want to call it twice
-      loadUserData(await handleSignInWithGoogle());
+      const user = await signInWithGoogle();
+      await createUserInFirestore(user);
+      setLogged(true);
+      loadUserData(user.uid);
       // El usuario ha iniciado sesión correctamente
     } catch (error) {
       // Ocurrió un error al iniciar sesión
