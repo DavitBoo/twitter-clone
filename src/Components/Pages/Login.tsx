@@ -3,9 +3,9 @@ import logo from '../../assets/logo.png'
 import googleLogo from '../../assets/google-logo.svg'
 import { styled } from 'styled-components'
 
-import { GoogleAuthProvider, auth, createUserInFirestore, signInWithGoogle } from '../../firebase/config'
+import { GoogleAuthProvider, auth, createUserInFirestore, loadUserData, signInWithGoogle } from '../../firebase/config'
 import { signInWithPopup } from 'firebase/auth'
-import { getFirestore, doc, setDoc, getDoc } from "firebase/firestore";
+
 
 const StyledDiv = styled.div `
   position: relative;
@@ -83,7 +83,10 @@ interface LoginProps{
 const handleSignInWithGoogle = async () => {
   try {
     const user = await signInWithGoogle();
+    console.log(user)
     await createUserInFirestore(user);
+    return user.uid
+    
 
     // Aquí puedes realizar cualquier acción adicional con los datos del usuario
   } catch (error) {
@@ -91,13 +94,16 @@ const handleSignInWithGoogle = async () => {
   }
 };
 
+
+
 export default function Login({setLogged}: LoginProps)   {
   const handleLogin = async () => {
     try {
       const provider = new GoogleAuthProvider();
       await signInWithPopup(auth, provider);
       setLogged(true)
-      handleSignInWithGoogle();
+      // I am passing handleSignInWithGoogle to loadUserData, because it contains de uid value and I do not want to call it twice
+      loadUserData(await handleSignInWithGoogle());
       // El usuario ha iniciado sesión correctamente
     } catch (error) {
       // Ocurrió un error al iniciar sesión

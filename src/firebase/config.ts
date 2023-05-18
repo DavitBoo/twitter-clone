@@ -61,4 +61,31 @@ export const createUserInFirestore = async (user: any) => {
   }
 };
 
+
+export const loadUserData = async (uid: any) => {
+  const db = getFirestore();
+  const userRef = doc(db, "users", uid);
+
+  const userSnapshot = await getDoc(userRef);
+  if (userSnapshot.exists()) {
+    const userData = userSnapshot.data();
+
+    const {
+      name,
+      profilImg,
+      coverImg,
+      inputs,
+      username,
+      bio,
+      following,
+      followers,
+      email,
+    } = userData;
+
+    console.log(userData)
+    // Realiza acciones adicionales con los datos del usuario cargados desde la base de datos
+  }
+};
+
+
 export { auth, GoogleAuthProvider };
