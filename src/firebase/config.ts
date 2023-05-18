@@ -1,6 +1,8 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { getFirestore, doc, setDoc, getDoc } from "firebase/firestore";
+
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -18,5 +20,45 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+
+const provider = new GoogleAuthProvider();
+export const signInWithGoogle = async () => {
+  try {
+    const result = await signInWithPopup(auth, provider);
+    const { user } = result;
+
+    const { displayName, photoURL, email, uid } = user;
+    // displayName contiene el nombre del usuario
+    // photoURL contiene la URL de la foto de perfil
+    // email contiene el correo electrónico del usuario (si está disponible)
+
+    return { displayName, photoURL, email, uid }; // Devolver los datos del usuario
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+
+export const createUserInFirestore = async (user: any) => {
+  const db = getFirestore();
+  const userRef = doc(db, "users", user.uid);
+  console.log(userRef)
+  const userSnapshot = await getDoc(userRef);
+
+  if (!userSnapshot.exists()) {
+    await setDoc(userRef, {
+      name: user.displayName,
+      profilImg: user.photoURL,
+      coverImg: "",
+      inputs: [],
+      username: "",
+      bio: "",
+      following: [],
+      followers: [],
+      email: user.email || "",
+    });
+  }
+};
 
 export { auth, GoogleAuthProvider };

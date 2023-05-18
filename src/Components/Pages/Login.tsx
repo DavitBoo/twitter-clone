@@ -2,8 +2,10 @@ import React from 'react'
 import logo from '../../assets/logo.png'
 import googleLogo from '../../assets/google-logo.svg'
 import { styled } from 'styled-components'
-import { GoogleAuthProvider, auth } from '../../firebase/config'
+
+import { GoogleAuthProvider, auth, createUserInFirestore, signInWithGoogle } from '../../firebase/config'
 import { signInWithPopup } from 'firebase/auth'
+import { getFirestore, doc, setDoc, getDoc } from "firebase/firestore";
 
 const StyledDiv = styled.div `
   position: relative;
@@ -78,12 +80,24 @@ interface LoginProps{
   setLogged: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
+const handleSignInWithGoogle = async () => {
+  try {
+    const user = await signInWithGoogle();
+    await createUserInFirestore(user);
+
+    // Aquí puedes realizar cualquier acción adicional con los datos del usuario
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export default function Login({setLogged}: LoginProps)   {
   const handleLogin = async () => {
     try {
       const provider = new GoogleAuthProvider();
       await signInWithPopup(auth, provider);
       setLogged(true)
+      handleSignInWithGoogle();
       // El usuario ha iniciado sesión correctamente
     } catch (error) {
       // Ocurrió un error al iniciar sesión

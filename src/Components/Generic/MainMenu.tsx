@@ -51,7 +51,7 @@ export default function MainMenu({ setOverlayDisplay, setDisplaySubMenu, display
   
   
 
-  const handleClick = (e: any) => {
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     e.preventDefault();
     setDisplaySubMenu(true)
     setOverlayDisplay(true)
