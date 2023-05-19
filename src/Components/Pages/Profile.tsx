@@ -1,4 +1,5 @@
-import React from 'react'
+import React, {useContext} from 'react'
+import { UserContext } from '../../Context/UserContext'
 import ContentForUser from '../Generic/ContentForUser'
 import CoverImage from '../Generic/Subcomponents/CoverImage'
 import SelectTimelines from '../Generic/SelectTimelines'
@@ -9,6 +10,7 @@ import { styled } from 'styled-components'
 
 import Icon from '@mdi/react';
 import { mdiCalendarMonthOutline, mdiArrowLeft } from '@mdi/js';
+
 
 const StyledDiv = styled.div`
 
@@ -94,6 +96,9 @@ const StyledDiv = styled.div`
 
 
 export default function Profile() {
+
+  const { userDataState } = useContext(UserContext);
+
   return (
     <StyledDiv>
         <div className='header'>
@@ -102,7 +107,7 @@ export default function Profile() {
           </NavLink>
           <div className='flex-col'>
             <h1>Profile</h1>
-            <p>28 tweets</p>
+            <p>{userDataState?.inputs.length} tweets</p>
           </div>  
         </div>
         <div className="cover">
@@ -116,8 +121,8 @@ export default function Profile() {
             <p>Joined May 2023</p>
           </div>
           <div className='follow-info'>
-            <NavLink to="/profile/following"><p><strong>1</strong> Following</p></NavLink>
-            <NavLink to="/profile/followers"><p><strong>1</strong> Followers</p></NavLink>
+            <NavLink to="/profile/following"><p><strong>{userDataState?.following.length}</strong> Following</p></NavLink>
+            <NavLink to="/profile/followers"><p><strong>{userDataState?.followers.length}</strong> Followers</p></NavLink>
           </div>
         </div>
 

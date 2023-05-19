@@ -2,7 +2,6 @@ import React, { useRef, useEffect, useState, useContext } from "react";
 import { styled } from "styled-components";
 import Icon from '@mdi/react';
 import { mdiDraw, mdiFormatText  } from '@mdi/js';
-import testImage from '../../assets/test.jpg'
 import { UserContext } from "../../Context/UserContext";
 
 const StyledDiv = styled.div `
