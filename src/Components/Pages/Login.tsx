@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import logo from '../../assets/logo.png'
 import googleLogo from '../../assets/google-logo.svg'
 import { styled } from 'styled-components'
 
-import { GoogleAuthProvider, auth, createUserInFirestore, loadUserData, signInWithGoogle } from '../../firebase/config'
-import { signInWithPopup } from 'firebase/auth'
+import { createUserInFirestore, loadUserData, signInWithGoogle } from '../../firebase/config'
+
 
 
 const StyledDiv = styled.div `
@@ -78,10 +78,16 @@ const StyledDiv = styled.div `
 
 interface LoginProps{
   setLogged: React.Dispatch<React.SetStateAction<boolean>>;
+
+  //el tipo sería  React.Dispatch<React.SetStateAction<UserData>> pero tengo que ver como importo el interface
+  setuserDataState: React.Dispatch<React.SetStateAction<any>>;
 }
 
 
-export default function Login({setLogged}: LoginProps)   {
+
+export default function Login({setLogged, setuserDataState}: LoginProps)   {
+  
+
   const handleLogin = async () => {
     try {
       const user = await signInWithGoogle();
@@ -90,8 +96,6 @@ export default function Login({setLogged}: LoginProps)   {
       // setup login state to true
       setLogged(true);
 
-      // Le pasamos el uid directamente
-      loadUserData(user.uid);
       // El usuario ha iniciado sesión correctamente
       
     } catch (error) {

@@ -9,8 +9,9 @@ import { styled } from 'styled-components';
 import Followers from './Components/Pages/Follows/Followers';
 import Following from './Components/Pages/Follows/Following';
 import Login from './Components/Pages/Login';
-import { auth } from './firebase/config';
-
+import { auth, loadUserData } from './firebase/config';
+import { UserProvider } from './Context/UserContext';
+ 
 
 const StyledDiv = styled.div `
   position: relative;
@@ -44,19 +45,37 @@ const StyledDiv = styled.div `
 `;
 
 
+interface UserData {
+  name: string;
+  profilImg: string;
+  coverImg: string;
+  inputs: any[];
+  username: string;
+  bio: string;
+  following: any[];
+  followers: any[];
+  email: string;
+}
 
 function App() {
 
   const [overlayDisplay, setOverlayDisplay] = useState(false)
   const [displaySubMenu, setDisplaySubMenu] = useState(false)
   const [logged, setLogged] = useState(false)
-
+  const [userDataState, setUserDataState] = useState<UserData | null>(null);
 
   useEffect(() => {
     const checkLoggedInStatus = () => {
       auth.onAuthStateChanged((user) => {
         if (user) {
           setLogged(true);
+
+           // Le pasamos el uid directamente
+          loadUserData(user.uid).then((userData: any) => {
+            setUserDataState(userData);
+            console.log(userData)
+          });
+
         } else {
           setLogged(false);
         }
@@ -66,6 +85,8 @@ function App() {
     checkLoggedInStatus();
   }, []);
 
+  
+
 
   const overlayClickHandler = () => {
     setOverlayDisplay(false)
@@ -74,24 +95,26 @@ function App() {
 
   return (
     <BrowserRouter >
-      { logged ?
-        <StyledDiv className="App">
-        <LeftSidebar 
-          setOverlayDisplay={setOverlayDisplay} 
-          displaySubMenu={displaySubMenu}
-          setDisplaySubMenu={setDisplaySubMenu}
-        />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/profile/following" element={<Followers />} />
-          <Route path="/profile/followers" element={<Following />} />
-          <Route path="/settings" element={<Settings />} />
-        </Routes >
-        { overlayDisplay && <div onClick={overlayClickHandler} className="full-overlay"></div> }
+        { logged ?
+          <StyledDiv className="App">
+            <UserProvider userDataState={userDataState} setUserDataState={setUserDataState}>
+                  <LeftSidebar
+                    setOverlayDisplay={setOverlayDisplay}
+                    displaySubMenu={displaySubMenu}
+                    setDisplaySubMenu={setDisplaySubMenu}
+                  />
+                  <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/profile" element={<Profile />} />
+                    <Route path="/profile/following" element={<Followers />} />
+                    <Route path="/profile/followers" element={<Following />} />
+                    <Route path="/settings" element={<Settings />} />
+                  </Routes >
+          { overlayDisplay && <div onClick={overlayClickHandler} className="full-overlay"></div> }
+        </UserProvider>
       </StyledDiv> 
       // if user is not logged, login screen will be displayed
-      : <Login setLogged={setLogged}/>}
+      : <Login setLogged={setLogged} setuserDataState={setUserDataState}/>}
     </BrowserRouter>
   );
 }

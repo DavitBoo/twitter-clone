@@ -1,8 +1,9 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState, useContext } from "react";
 import { styled } from "styled-components";
 import Icon from '@mdi/react';
 import { mdiDraw, mdiFormatText  } from '@mdi/js';
 import testImage from '../../assets/test.jpg'
+import { UserContext } from "../../Context/UserContext";
 
 const StyledDiv = styled.div `
 display: flex;
@@ -83,8 +84,10 @@ export default function InputArea() {
   const [canvasOrText, setCanvasOrText] = useState(true)
   const [canvasState, setCanvasState] = useState<string | null>(null);
   const [valueTextArea, setValueTextArea] = useState("")
- 
 
+  const { userDataState } = useContext(UserContext);
+
+  
   useEffect(() => {
     const canvas = canvasRef.current;
 
@@ -149,11 +152,13 @@ export default function InputArea() {
     setCanvasOrText(false)
   }
 
+
+  
   return (
     <StyledDiv>
       <div className="input-container flex">
         <div className="flex-col-dir">
-          <img src={testImage} alt="" />
+          {userDataState === null ? '...' : <img src={userDataState?.profilImg} alt="" />}
           <div className="buttons">
               <div onClick={displayCanvas}>
                 <Icon path={mdiDraw} size={1}  />
