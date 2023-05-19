@@ -118,7 +118,7 @@ export default function Profile() {
           <UserName/>
           <div className='join-date'>
             <Icon path={mdiCalendarMonthOutline} size={1} />
-            <p>Joined May 2023</p>
+            <p>Joined {userDataState?.creationData}</p>
           </div>
           <div className='follow-info'>
             <NavLink to="/profile/following"><p><strong>{userDataState?.following.length}</strong> Following</p></NavLink>

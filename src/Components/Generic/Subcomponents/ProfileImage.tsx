@@ -1,9 +1,11 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import testImage from '../../../assets/test.jpg'
 
 import Icon from '@mdi/react';
 import { mdiCameraOutline } from '@mdi/js';
+
 import { styled } from 'styled-components';
+import { UserContext } from '../../../Context/UserContext';
 
 const StyledDiv = styled.div`
   .camera-i-profile{
@@ -15,9 +17,11 @@ const StyledDiv = styled.div`
 `
 
 export default function ProfileImage() {
+  const { userDataState } = useContext(UserContext);
+
   return (
     <StyledDiv className='profile-img-container'>
-        <img className="profile-img" src={testImage} alt="" />
+        <img className="profile-img" src={userDataState?.profilImg} alt="" />
         <div className='camera-i-profile'>
           <Icon path={mdiCameraOutline} size={1} />
         </div>

@@ -29,15 +29,21 @@ export const signInWithGoogle = async () => {
     const result = await signInWithPopup(auth, provider);
 
     const { user } = result;
+    console.log(user)
     // we could destructrue some other data like login token, telephone, account's joining data.. but we do not need it right now 
-    const { displayName, photoURL, email, uid } = user;
+    const { displayName, photoURL, email, uid, metadata } = user;
+
+    const {creationTime} = metadata;
+    const creationDataSplit: any = creationTime?.split(' ')
+    const creationData: string = creationDataSplit[2] + ' ' + creationDataSplit[3];
+
     // displayName contiene el nombre del usuario
     // photoURL contiene la URL de la foto de perfil
     // email contiene el correo electrónico del usuario (si está disponible)
     // uid es el id asignado por firebase al usuario a google loggeado
 
 
-    return { displayName, photoURL, email, uid }; // Devolver los datos del usuario
+    return { displayName, photoURL, email, uid, creationData }; // Devolver los datos del usuario
   } catch (error) {
     console.log(error);
     throw error;
@@ -62,6 +68,8 @@ export const createUserInFirestore = async (user: any) => {
       following: [],
       followers: [],
       email: user.email || "",
+      creationData: user.creationData
+
     });
   }
 };

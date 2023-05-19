@@ -1,11 +1,14 @@
-import React from 'react'
+import React, {useContext} from 'react'
+import { UserContext } from '../../../Context/UserContext'
 
 export default function UserName() {
+  const { userDataState } = useContext(UserContext);
+
   return (
     <div>
         <div className="user-name">
-            <h2>Davit Am Kalten Born</h2>
-            <p>@davitBoo</p>
+            <h2>{userDataState?.name}</h2>
+            <p>@{userDataState?.username}</p>
           </div>
     </div>
   )

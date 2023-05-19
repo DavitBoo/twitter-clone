@@ -3,7 +3,7 @@ import logo from '../../assets/logo.png'
 import googleLogo from '../../assets/google-logo.svg'
 import { styled } from 'styled-components'
 
-import { createUserInFirestore, loadUserData, signInWithGoogle } from '../../firebase/config'
+import { createUserInFirestore, signInWithGoogle } from '../../firebase/config'
 
 
 

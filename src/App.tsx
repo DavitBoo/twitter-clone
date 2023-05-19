@@ -55,6 +55,7 @@ interface UserData {
   following: any[];
   followers: any[];
   email: string;
+  creationData: string;
 }
 
 function App() {
