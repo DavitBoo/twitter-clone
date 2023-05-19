@@ -86,15 +86,19 @@ export default function Login({setLogged}: LoginProps)   {
     try {
       const user = await signInWithGoogle();
       await createUserInFirestore(user);
+
+      // setup login state to true
       setLogged(true);
+
+      // Le pasamos el uid directamente
       loadUserData(user.uid);
       // El usuario ha iniciado sesión correctamente
+      
     } catch (error) {
       // Ocurrió un error al iniciar sesión
       console.log(error);
     }
-  };
-
+  }
 
   return (
     <StyledDiv>

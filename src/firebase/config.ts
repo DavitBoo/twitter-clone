@@ -22,15 +22,20 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
 const provider = new GoogleAuthProvider();
+
 export const signInWithGoogle = async () => {
   try {
+    // it returns the data related to the sign in session, user data included
     const result = await signInWithPopup(auth, provider);
-    const { user } = result;
 
+    const { user } = result;
+    // we could destructrue some other data like login token, telephone, account's joining data.. but we do not need it right now 
     const { displayName, photoURL, email, uid } = user;
     // displayName contiene el nombre del usuario
     // photoURL contiene la URL de la foto de perfil
     // email contiene el correo electrónico del usuario (si está disponible)
+    // uid es el id asignado por firebase al usuario a google loggeado
+
 
     return { displayName, photoURL, email, uid }; // Devolver los datos del usuario
   } catch (error) {
