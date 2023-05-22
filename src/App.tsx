@@ -56,6 +56,7 @@ interface UserData {
   followers: any[];
   email: string;
   creationData: string;
+  uid: string
 }
 
 function App() {
@@ -73,8 +74,11 @@ function App() {
 
            // Le pasamos el uid directamente
           loadUserData(user.uid).then((userData: any) => {
-            setUserDataState(userData);
-            console.log(userData)
+            const updatedUserData = {
+              ...userData,
+              uid: user.uid
+            };
+            setUserDataState(updatedUserData);
           });
 
         } else {

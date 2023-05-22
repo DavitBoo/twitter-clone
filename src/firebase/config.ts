@@ -68,8 +68,7 @@ export const createUserInFirestore = async (user: any) => {
       following: [],
       followers: [],
       email: user.email || "",
-      creationData: user.creationData
-
+      creationData: user.creationData,
     });
   }
 };

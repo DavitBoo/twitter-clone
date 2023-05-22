@@ -12,6 +12,7 @@ interface UserData {
   followers: any[];
   email: string;
   creationData: string;
+  uid: string
 }
 
 interface UserContextProps {

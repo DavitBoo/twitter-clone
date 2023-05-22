@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState, useContext } from "react";
 import { styled } from "styled-components";
 import Icon from '@mdi/react';
 import { mdiDraw, mdiFormatText  } from '@mdi/js';
+
 import { UserContext } from "../../Context/UserContext";
 
 const StyledDiv = styled.div `
@@ -57,36 +58,55 @@ flex-direction: column;
 
   textArea{
     width: 400px;
-    height: 200px;
+    height: 150px;
     border-radius: 5px;
     border: none;
     margin: 10px 0;
     padding: 8px 1ch;
     font-size: 20px;
     color : var(--color-text-secondary);
+    resize: none;
+    overflow-y: auto;
+
+    &:focus-visible{
+        outline: none;
+      }
   }
 
   .textArea-control{
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between
+    justify-content: space-between;
+        
   }
 
 `;
 
+interface InputData {
+  id: string
+  fecha: string
+  content: string
+  likes: number
+}
 
 export default function InputArea() {
+
+  // useRef
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const savedDataRef = useRef<string | null>(null);
 
+  // useState
   const [canvasOrText, setCanvasOrText] = useState(true)
   const [canvasState, setCanvasState] = useState<string | null>(null);
   const [valueTextArea, setValueTextArea] = useState("")
 
+  const [inputData, setInputData] = useState<InputData | null>(null)
+
+  // useContext
   const { userDataState } = useContext(UserContext);
 
-  
+  // useEffect
   useEffect(() => {
     const canvas = canvasRef.current;
 
@@ -143,6 +163,7 @@ export default function InputArea() {
   }, [canvasOrText, canvasState]);
 
 
+
   const displayCanvas = () => {
     setCanvasOrText(true)
   }
@@ -151,7 +172,14 @@ export default function InputArea() {
     setCanvasOrText(false)
   }
 
-
+  const handleSubmitInput = () => {
+    setInputData({
+      id: userDataState?.uid || "",
+      fecha: new Date().toISOString(),
+      content: (canvasOrText ? savedDataRef.current : valueTextArea) || '',
+      likes: 46,
+    })
+  }
   
   return (
     <StyledDiv>
@@ -178,21 +206,20 @@ export default function InputArea() {
             onChange={(e) => setValueTextArea(e.target.value)}
           ></textarea>
         }
-        {canvasOrText && <button onClick={() => console.log(savedDataRef.current)}>
+        {canvasOrText && <button onClick={handleSubmitInput}>
           Draw!
         </button>}
         {!canvasOrText && 
          <>
             <div className="textArea-control">
               <p>{280-valueTextArea.length}</p>
-              <button onClick={() => console.log(valueTextArea)}>Write!</button>
+              <button onClick={handleSubmitInput}>
+                Write!
+              </button>
             </div>
         </>}
-
-        
-
-      </div>
-      
+       
+      </div>   
       
     </StyledDiv>
   );

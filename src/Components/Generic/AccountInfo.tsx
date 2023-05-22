@@ -64,19 +64,19 @@ const StyledDiv = styled.div `
 export default function AccountInfo() {
   return (
     <StyledDiv className='flex'>
-        <div><img src={testImg} alt="" /></div>
+        <img src={testImg} alt='' />
         <div className='flex-col container'>
-            <div className="flex follow-user">
-                <div className="flex-col user-info">
-                    <p className="userName">davitAmKaltenBorn</p>
-                    <p className="userAccount">@davitAmkKaltenBorn</p>
+            <div className='flex follow-user'>
+                <div className='flex-col user-info'>
+                    <p className='userName'>davitAmKaltenBorn</p>
+                    <p className='userAccount'>@davitAmkKaltenBorn</p>
                 </div>
                 <div>
                     <button>Follow</button>
                 </div>
             </div>
             <div>
-                <p className="description">Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>
+                <p className='description'>Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>
             </div>
         </div>
     </StyledDiv>
