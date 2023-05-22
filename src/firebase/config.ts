@@ -1,8 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { getFirestore, doc, setDoc, getDoc } from "firebase/firestore";
-
+import { getFirestore, doc, setDoc, getDoc, collection, getDocs } from "firebase/firestore";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -20,6 +19,8 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+
+const db = getFirestore(app);
 
 const provider = new GoogleAuthProvider();
 
@@ -52,7 +53,6 @@ export const signInWithGoogle = async () => {
 
 
 export const createUserInFirestore = async (user: any) => {
-  const db = getFirestore();
   const userRef = doc(db, "users", user.uid);
   console.log(userRef)
   const userSnapshot = await getDoc(userRef);
@@ -75,7 +75,6 @@ export const createUserInFirestore = async (user: any) => {
 
 
 export const loadUserData = async (uid: any) => {
-  const db = getFirestore();
   const userRef = doc(db, "users", uid);
 
   const userSnapshot = await getDoc(userRef);
@@ -88,4 +87,20 @@ export const loadUserData = async (uid: any) => {
 };
 
 
-export { auth, GoogleAuthProvider };
+export const loadInputs = async () => {
+  const inputsRef = collection(db, "inputs");
+
+  const inputSnapshot = await getDocs(inputsRef);
+  const inputsArray: Array<any> = [];
+
+  inputSnapshot.forEach((doc) => {
+    if (doc.exists()) {
+      const inputData = doc.data();
+      inputsArray.push(inputData);
+    }
+  });
+
+  return inputsArray;
+};
+
+export { auth, db, GoogleAuthProvider };

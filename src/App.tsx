@@ -1,17 +1,23 @@
 import React, { useEffect, useState } from 'react';
 // I changed HashRouter for BrowserRouter just because testing in the address bar.
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { styled } from 'styled-components';
+
+// components
 import Home from './Components/Pages/Home';
 import Profile from './Components/Pages/Profile';
 import Settings from './Components/Pages/Settings';
 import LeftSidebar from './Components/Generic/LeftSidebar';
-import { styled } from 'styled-components';
 import Followers from './Components/Pages/Follows/Followers';
 import Following from './Components/Pages/Follows/Following';
 import Login from './Components/Pages/Login';
-import { auth, loadUserData } from './firebase/config';
+
+// firebase
+import { auth, loadInputs, loadUserData } from './firebase/config';
+
+// context providers
 import { UserProvider } from './Context/UserContext';
- 
+import { InputsProvider } from './Context/InputsContext';
 
 const StyledDiv = styled.div `
   position: relative;
@@ -59,12 +65,22 @@ interface UserData {
   uid: string
 }
 
+// interface InputsData{
+//   content: string,
+//   fecha: string,
+//   likes: number
+//   id: string,
+// }
+
 function App() {
 
   const [overlayDisplay, setOverlayDisplay] = useState(false)
   const [displaySubMenu, setDisplaySubMenu] = useState(false)
   const [logged, setLogged] = useState(false)
+
+  // for context
   const [userDataState, setUserDataState] = useState<UserData | null>(null);
+  const [inputsState, setInputsState] = useState<Array<any> | null>(null);
 
   useEffect(() => {
     const checkLoggedInStatus = () => {
@@ -80,6 +96,9 @@ function App() {
             };
             setUserDataState(updatedUserData);
           });
+
+          loadInputs().then(inputs => setInputsState(inputs))
+          
 
         } else {
           setLogged(false);
@@ -108,13 +127,15 @@ function App() {
                     displaySubMenu={displaySubMenu}
                     setDisplaySubMenu={setDisplaySubMenu}
                   />
-                  <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/profile" element={<Profile />} />
-                    <Route path="/profile/following" element={<Followers />} />
-                    <Route path="/profile/followers" element={<Following />} />
-                    <Route path="/settings" element={<Settings />} />
-                  </Routes >
+                  <InputsProvider inputsState={inputsState} setInputsState={setInputsState}>
+                    <Routes>
+                        <Route path="/" element={<Home />} />
+                        <Route path="/profile" element={<Profile />} />
+                        <Route path="/profile/following" element={<Followers />} />
+                        <Route path="/profile/followers" element={<Following />} />
+                        <Route path="/settings" element={<Settings />} />
+                    </Routes >
+                  </InputsProvider>
           { overlayDisplay && <div onClick={overlayClickHandler} className="full-overlay"></div> }
         </UserProvider>
       </StyledDiv> 

@@ -1,9 +1,17 @@
+// react relate imports
 import React, { useRef, useEffect, useState, useContext } from "react";
+import { UserContext } from "../../Context/UserContext";
 import { styled } from "styled-components";
+
+// icon library
 import Icon from '@mdi/react';
 import { mdiDraw, mdiFormatText  } from '@mdi/js';
 
-import { UserContext } from "../../Context/UserContext";
+
+// firebase imports
+import { db } from "../../firebase/config";
+import { addDoc, collection } from "firebase/firestore";
+
 
 const StyledDiv = styled.div `
 display: flex;
@@ -77,18 +85,10 @@ flex-direction: column;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-        
+    justify-content: space-between;       
   }
 
 `;
-
-interface InputData {
-  id: string
-  fecha: string
-  content: string
-  likes: number
-}
 
 export default function InputArea() {
 
@@ -100,8 +100,6 @@ export default function InputArea() {
   const [canvasOrText, setCanvasOrText] = useState(true)
   const [canvasState, setCanvasState] = useState<string | null>(null);
   const [valueTextArea, setValueTextArea] = useState("")
-
-  const [inputData, setInputData] = useState<InputData | null>(null)
 
   // useContext
   const { userDataState } = useContext(UserContext);
@@ -173,12 +171,23 @@ export default function InputArea() {
   }
 
   const handleSubmitInput = () => {
-    setInputData({
+    const inputData = {
       id: userDataState?.uid || "",
       fecha: new Date().toISOString(),
-      content: (canvasOrText ? savedDataRef.current : valueTextArea) || '',
+      content: (canvasOrText ? 'img;' + savedDataRef.current : 'text;' + valueTextArea) || "",
       likes: 46,
-    })
+    };
+
+      addDoc(collection(db, "inputs"), inputData)
+      .then((docRef) => {
+        console.log("Documento guardado con ID: ", docRef.id);
+        setValueTextArea('');
+
+      })
+      .catch((error) => {
+        console.error("Error al guardar el documento: ", error);
+      });
+    
   }
   
   return (
