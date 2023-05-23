@@ -1,8 +1,20 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+
+// images
 import testImage from '../../assets/test.jpg'
+
+// libraries
 import { styled } from 'styled-components'
+
+// icons
 import Icon from '@mdi/react';
 import { mdiDotsHorizontal, mdiMessageReplyOutline, mdiRepeatVariant, mdiCardsHeartOutline, mdiPoll, mdiShare } from '@mdi/js';
+
+//firebase - functions
+import { loadUserData } from '../../firebase/config';
+
+// --- firebase
+import { DocumentData } from 'firebase/firestore'; // tipo de datos de la base de datos
 
 
 const StyledDiv = styled.div  `
@@ -118,29 +130,59 @@ const StyledDiv = styled.div  `
 
 `
 
-export default function ContentForUser() {
+interface ContentForUserProps{
+  likes: number
+  content: string
+  uid: string
+  fecha: string
+}
+
+export default function ContentForUser({likes, content, uid, fecha}: ContentForUserProps) {
+  
+  const [userData, setUserData] = useState<DocumentData | undefined>(undefined);
+  useEffect(() => {
+    async function fetchUserData() {
+      try {
+        const user = await loadUserData(uid);
+        setUserData(user);
+      } catch (error) {
+        // Manejar el error aquí
+      }
+    }
+
+    fetchUserData();
+  }, [uid]);
+
+  if (!userData) {
+    // Renderizar un estado de carga o un componente de carga mientras se obtienen los datos
+    return <div>Cargando...</div>;
+  }
+
+  const { name, profilImg, username } = userData;
+
   return (
     <StyledDiv>
-        <img src={testImage} alt="" />
+        <img src={profilImg} alt="" />
         <div className='message-contet'>
           <div className="message-head">
             <div className="message-info">
-              <p className="nick-name">Davit Boo</p>
-              <p className='user-name'>@davitBoo</p>
-              <p className='publish-date'>May 11</p>
+              <p className="nick-name">{name}</p>
+              <p className='user-name'>@{username}</p>
+              <p className='publish-date'>{fecha.split('T')[0]}</p>
             </div>
             <Icon path={mdiDotsHorizontal} size={1} />
           </div>
           <p className="message">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium at culpa nemo explicabo libero vitae voluptas et perferendis, cumque qui quasi earum! Consectetur consequatur corporis officia blanditiis facilis.</p>
+          <img src={content} alt="" />
           <div className="interactions">
             <div>
               <Icon className='reply' path={mdiMessageReplyOutline} size={1} /> <p>23</p>
             </div>
             <div>
-              <Icon className='repost' path={mdiRepeatVariant} size={1} /> <p>23</p>
+              <Icon className='repost' path={mdiRepeatVariant} size={1} /> <p>45</p>
             </div>
             <div>
-              <Icon className='like' path={mdiCardsHeartOutline} size={1} /> <p>237</p>
+              <Icon className='like' path={mdiCardsHeartOutline} size={1} /> <p>{likes}</p>
             </div>
             <div>
               <Icon className='views' path={mdiPoll} size={1} /> <p>29.7k</p>

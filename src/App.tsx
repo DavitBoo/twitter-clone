@@ -65,12 +65,6 @@ interface UserData {
   uid: string
 }
 
-// interface InputsData{
-//   content: string,
-//   fecha: string,
-//   likes: number
-//   id: string,
-// }
 
 function App() {
 
@@ -108,8 +102,6 @@ function App() {
 
     checkLoggedInStatus();
   }, []);
-
-  
 
 
   const overlayClickHandler = () => {

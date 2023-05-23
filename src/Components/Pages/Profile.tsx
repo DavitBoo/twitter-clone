@@ -1,13 +1,20 @@
 import React, {useContext} from 'react'
-import { UserContext } from '../../Context/UserContext'
+
+// components
 import ContentForUser from '../Generic/ContentForUser'
 import CoverImage from '../Generic/Subcomponents/CoverImage'
 import SelectTimelines from '../Generic/SelectTimelines'
 import UserName from '../Generic/Subcomponents/UserName'
 
+// context
+import { UserContext } from '../../Context/UserContext'
+import { InputsContext } from '../../Context/InputsContext'
+
+// react libreries
 import { NavLink } from 'react-router-dom'
 import { styled } from 'styled-components'
 
+// icon library
 import Icon from '@mdi/react';
 import { mdiCalendarMonthOutline, mdiArrowLeft } from '@mdi/js';
 
@@ -94,10 +101,11 @@ const StyledDiv = styled.div`
 `
 
 
-
 export default function Profile() {
 
+  // useContext
   const { userDataState } = useContext(UserContext);
+  const { inputsState } = useContext(InputsContext);
 
   return (
     <StyledDiv>
@@ -127,10 +135,9 @@ export default function Profile() {
         </div>
 
         <SelectTimelines/>
-        <ContentForUser/>
-        <ContentForUser/>
-        <ContentForUser/>
-
+        {inputsState && inputsState.map((input, index) => (
+          <ContentForUser key={index} likes={input.likes} content={input.content} uid={input.uid} fecha={input.fecha}/>
+        ))}
     </StyledDiv>
   )
 }

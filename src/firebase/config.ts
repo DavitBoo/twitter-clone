@@ -76,6 +76,7 @@ export const createUserInFirestore = async (user: any) => {
 
 export const loadUserData = async (uid: any) => {
   const userRef = doc(db, "users", uid);
+  console.log(userRef)
 
   const userSnapshot = await getDoc(userRef);
   if (userSnapshot.exists()) {
