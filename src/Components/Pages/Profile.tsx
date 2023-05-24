@@ -152,10 +152,21 @@ export default function Profile() {
         </div>
 
         <SelectTimelines/>
-        {inputsState && inputsState.map((input, index) => (
-          // I use username as uid
-          <ContentForUser key={index} likes={input.likes} content={input.content} uid={input.uid} fecha={input.fecha}/>
-        ))}
+        {inputsState &&
+        inputsState.map((input, index) => {
+          if (userDataState?.following.includes(input.uid)) {
+            return (
+              <ContentForUser
+                key={index}
+                likes={input.likes}
+                content={input.content}
+                uid={input.uid}
+                fecha={input.fecha}
+              />
+            );
+          }
+          return null;
+        })}
     </StyledDiv>
   )
 }
