@@ -116,12 +116,12 @@ export default function InputArea() {
     let lastX = 0;
     let lastY = 0;
 
-    function startDrawing(e: MouseEvent) {
+    function startDrawing(e: MouseEvent): void {
       isDrawing = true;
       [lastX, lastY] = [e.offsetX, e.offsetY];
     }
 
-    function draw(e: MouseEvent) {
+    function draw(e: MouseEvent): void {
       if (!isDrawing) return;
       context.beginPath();
       context.moveTo(lastX, lastY);
@@ -130,7 +130,7 @@ export default function InputArea() {
       [lastX, lastY] = [e.offsetX, e.offsetY];
     }
 
-    function stopDrawing() {
+    function stopDrawing(): void{
       isDrawing = false;
       if (canvas) {
         savedDataRef.current = canvas.toDataURL(); // Guardar los datos dibujados del canvas en la variable

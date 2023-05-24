@@ -1,9 +1,17 @@
 import React, { useState } from 'react'
+
+// components
+import MoreMenu from './MoreMenu';
+
+// icon library
 import Icon from '@mdi/react';
 import { mdiHomeOutline, mdiAccountOutline, mdiCogOutline, mdiDotsHorizontalCircleOutline } from '@mdi/js';
+
+// react libraries
 import { styled } from 'styled-components';
 import { NavLink } from 'react-router-dom'
-import MoreMenu from './MoreMenu';
+
+
 
 const StyledDiv = styled.div `
   font-size: 1.2rem;

@@ -1,6 +1,10 @@
 import React from 'react'
+
+// components
 import MainMenu from './MainMenu'
 import logo from '../../assets/logo.png'
+
+// libraries
 import { styled } from 'styled-components'
 import { NavLink } from 'react-router-dom'
 
