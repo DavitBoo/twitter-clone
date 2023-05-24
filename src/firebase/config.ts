@@ -53,7 +53,7 @@ export const signInWithGoogle = async () => {
 
 
 export const createUserInFirestore = async (user: any) => {
-  const userRef = doc(db, "users", user.uid);
+  const userRef = doc(db, "users", user.email.split('@')[0]);
   console.log(userRef)
   const userSnapshot = await getDoc(userRef);
 
@@ -63,7 +63,7 @@ export const createUserInFirestore = async (user: any) => {
       profilImg: user.photoURL,
       coverImg: "",
       inputs: [],
-      username: "",
+      username: user.email.split('@')[0],
       bio: "",
       following: [],
       followers: [],
@@ -76,7 +76,6 @@ export const createUserInFirestore = async (user: any) => {
 
 export const loadUserData = async (uid: any) => {
   const userRef = doc(db, "users", uid);
-  console.log(userRef)
 
   const userSnapshot = await getDoc(userRef);
   if (userSnapshot.exists()) {

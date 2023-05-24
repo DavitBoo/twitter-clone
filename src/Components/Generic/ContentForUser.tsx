@@ -34,7 +34,7 @@ const StyledDiv = styled.div  `
     border-radius: 100%;
   }
 
-  .message-contet{
+  .message-content{
     display: flex;
     flex-direction: column;
     flex: 1 1 100%;
@@ -174,7 +174,7 @@ export default function ContentForUser({likes, content, uid, fecha}: ContentForU
     return ''
   }
 
-  
+
   const dateFormat = (fechaHora: string): string => {
     const now = moment();
     const date = moment(fechaHora); 
@@ -198,7 +198,7 @@ export default function ContentForUser({likes, content, uid, fecha}: ContentForU
   return (
     <StyledDiv>
         <img className="message-profile-pic" src={profilImg} alt="" />
-        <div className='message-contet'>
+        <div className='message-content'>
           <div className="message-head">
             <div className="message-info">
               <p className="nick-name">{name}</p>

@@ -366,7 +366,7 @@ export default function InputArea() {
         {!canvasOrText && 
          <>
             <div className="textArea-control">
-              <p>{280-valueTextArea.length}</p>
+              <p>{280-valueTextArea.length}/280</p>
               <button onClick={handleSubmitInput}>
                 Write!
               </button>

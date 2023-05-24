@@ -82,8 +82,9 @@ function App() {
         if (user) {
           setLogged(true);
 
-           // Le pasamos el uid directamente
-          loadUserData(user.uid).then((userData: any) => {
+           // Le pasabmos el uid directamente
+           // pero como ahora el identificador es el email se ha cambiado eso
+          loadUserData(user.email?.split('@')[0]).then((userData: any) => {
             const updatedUserData = {
               ...userData,
               uid: user.uid
