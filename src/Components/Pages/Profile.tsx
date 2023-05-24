@@ -1,4 +1,4 @@
-import React, {useContext} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 
 // components
 import ContentForUser from '../Generic/ContentForUser'
@@ -11,12 +11,13 @@ import { UserContext } from '../../Context/UserContext'
 import { InputsContext } from '../../Context/InputsContext'
 
 // react libreries
-import { NavLink } from 'react-router-dom'
+import { NavLink, useParams } from 'react-router-dom'
 import { styled } from 'styled-components'
 
 // icon library
 import Icon from '@mdi/react';
 import { mdiCalendarMonthOutline, mdiArrowLeft } from '@mdi/js';
+import { loadUserData } from '../../firebase/config'
 
 
 const StyledDiv = styled.div`
@@ -102,10 +103,26 @@ const StyledDiv = styled.div`
 
 
 export default function Profile() {
+  
+  // useState
+  const [userData, setUserData] = useState<any>(null);
 
   // useContext
   const { userDataState } = useContext(UserContext);
   const { inputsState } = useContext(InputsContext);
+
+  // userParams --- react-router
+  const { username } = useParams<{ username: string }>();
+  
+  useEffect(() => {
+    if(username){
+      loadUserData(username).then((userData: any) => {
+        console.log(userData)
+        setUserData(userData)
+      });
+    }
+  }, [username])
+  
 
   return (
     <StyledDiv>
@@ -114,13 +131,13 @@ export default function Profile() {
             <Icon path={mdiArrowLeft} size={1} />
           </NavLink>
           <div className='flex-col'>
-            <h1>Profile</h1>
-            <p>{userDataState?.inputs.length} tweets</p>
+            <h1>{userData && (userData==='profile' ? 'profile' : userData.name)}</h1>
+            <p>{userData?.inputs.length} tweets</p>
           </div>  
         </div>
         <div className="cover">
-          <CoverImage/>
-          <NavLink className="edit-profile-btn" to="/settings">Edit Profile</NavLink>
+          <CoverImage profilImg={userData?.profilImg}/>
+          {!userData ? <NavLink className="edit-profile-btn" to="/settings">Edit Profile</NavLink> : <div className="edit-profile-btn"></div>}
         </div>
         <div className='user-info'>
           <UserName/>
@@ -129,13 +146,14 @@ export default function Profile() {
             <p>Joined {userDataState?.creationData}</p>
           </div>
           <div className='follow-info'>
-            <NavLink to="/profile/following"><p><strong>{userDataState?.following.length}</strong> Following</p></NavLink>
-            <NavLink to="/profile/followers"><p><strong>{userDataState?.followers.length}</strong> Followers</p></NavLink>
+            <NavLink to="/profile/following"><p><strong>{userData ? userData.following.length : userDataState?.following.length}</strong> Following</p></NavLink>
+            <NavLink to="/profile/followers"><p><strong>{userData ? userData.followers.length : userDataState?.followers.length}</strong> Followers</p></NavLink>
           </div>
         </div>
 
         <SelectTimelines/>
         {inputsState && inputsState.map((input, index) => (
+          // I use username as uid
           <ContentForUser key={index} likes={input.likes} content={input.content} uid={input.uid} fecha={input.fecha}/>
         ))}
     </StyledDiv>

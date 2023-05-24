@@ -58,10 +58,10 @@ const StyleDiv = styled.div`
 
 `
 
-export default function CoverImage() {
+export default function CoverImage({profilImg}: any) {
   return (
     <StyleDiv className='cover-img'>
-        <ProfileImage/>
+        <ProfileImage profilImg={profilImg}/>
         <div className='camera-i'>
           <Icon path={mdiCameraOutline} size={1} />
         </div>

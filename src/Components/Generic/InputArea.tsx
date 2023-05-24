@@ -214,7 +214,7 @@ export default function InputArea() {
 
   const handleSubmitInput = () => {
     const inputData = {
-      uid: userDataState?.uid || "",
+      uid: userDataState?.username || "",
       fecha: new Date().toISOString(),
       content: (canvasOrText ? 'img;' + savedDataRef.current : 'text;' + valueTextArea) || "",
       likes: 46,

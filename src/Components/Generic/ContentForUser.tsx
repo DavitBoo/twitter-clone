@@ -5,6 +5,7 @@ import testImage from '../../assets/test.jpg'
 
 // libraries
 import { styled } from 'styled-components'
+import { NavLink } from 'react-router-dom';
 import moment from 'moment';
 
 // icons
@@ -62,7 +63,11 @@ const StyledDiv = styled.div  `
     gap: 1ch;
 
     .nick-name{
-      font-weight: 900;
+      font-weight: 700;
+
+      &:hover{
+        text-decoration: underline;
+      }
     }
 
     .user-name{
@@ -134,7 +139,7 @@ const StyledDiv = styled.div  `
 interface ContentForUserProps{
   likes: number
   content: string
-  uid: string
+  uid: string  // this should be useraccount or username
   fecha: string
 }
 
@@ -201,7 +206,7 @@ export default function ContentForUser({likes, content, uid, fecha}: ContentForU
         <div className='message-content'>
           <div className="message-head">
             <div className="message-info">
-              <p className="nick-name">{name}</p>
+              <p className="nick-name"><NavLink to={`/${uid}`}>{name}</NavLink></p>
               <p className='user-name'>@{username}</p>
               <p className='publish-date'>{dateFormat(fecha)}</p>
             </div>

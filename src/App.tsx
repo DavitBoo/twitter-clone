@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 // I changed HashRouter for BrowserRouter just because testing in the address bar.
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useParams } from "react-router-dom";
 import { styled } from 'styled-components';
 
 // components
@@ -104,7 +104,7 @@ function App() {
     checkLoggedInStatus();
   }, []);
 
-
+  
   const overlayClickHandler = () => {
     setOverlayDisplay(false)
     setDisplaySubMenu(false)
@@ -124,6 +124,7 @@ function App() {
                     <Routes>
                         <Route path="/" element={<Home />} />
                         <Route path="/profile" element={<Profile />} />
+                        <Route path="/:username" element={<Profile />} />
                         <Route path="/profile/following" element={<Followers />} />
                         <Route path="/profile/followers" element={<Following />} />
                         <Route path="/settings" element={<Settings />} />
