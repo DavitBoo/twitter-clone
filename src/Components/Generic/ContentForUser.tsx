@@ -5,6 +5,7 @@ import testImage from '../../assets/test.jpg'
 
 // libraries
 import { styled } from 'styled-components'
+import moment from 'moment';
 
 // icons
 import Icon from '@mdi/react';
@@ -27,7 +28,7 @@ const StyledDiv = styled.div  `
     cursor: pointer;
   }
 
-  img{
+  img.message-profile-pic{
     width: 50px;
     height: 50px;
     border-radius: 100%;
@@ -139,7 +140,10 @@ interface ContentForUserProps{
 
 export default function ContentForUser({likes, content, uid, fecha}: ContentForUserProps) {
   
+  // useState
   const [userData, setUserData] = useState<DocumentData | undefined>(undefined);
+
+  // useEffect
   useEffect(() => {
     async function fetchUserData() {
       try {
@@ -158,22 +162,52 @@ export default function ContentForUser({likes, content, uid, fecha}: ContentForU
     return <div>Cargando...</div>;
   }
 
+  const isContent = (content: string) => {
+    if (content.startsWith("img;")){
+      const newContent = content.replace("img;", "");
+      return  <img src={newContent} alt="" />
+    } else if (content.startsWith("text;")){
+        const newContent = content.replace("text;", "");
+        return (<p className="message">{newContent}</p>)
+    } 
+
+    return ''
+  }
+
+  
+  const dateFormat = (fechaHora: string): string => {
+    const now = moment();
+    const date = moment(fechaHora); 
+    const difference = now.diff(fecha, 'hours');  // método diff() de moment.js 
+
+      if (difference < 1) {
+        return 'Now';
+      } else if (difference < 24) {
+        return `${difference}h ago`;
+      } else if (difference < 48) {
+        return 'Yesterday';
+      } else if (now.year() === date.year()) {
+        return date.format('MMM D'); // Mes y día (ejemplo: "May 23")
+      } else {
+        return date.format('YYYY MMM'); // Año y mes (ejemplo: "2022 May")
+      }
+  }
+
   const { name, profilImg, username } = userData;
 
   return (
     <StyledDiv>
-        <img src={profilImg} alt="" />
+        <img className="message-profile-pic" src={profilImg} alt="" />
         <div className='message-contet'>
           <div className="message-head">
             <div className="message-info">
               <p className="nick-name">{name}</p>
               <p className='user-name'>@{username}</p>
-              <p className='publish-date'>{fecha.split('T')[0]}</p>
+              <p className='publish-date'>{dateFormat(fecha)}</p>
             </div>
             <Icon path={mdiDotsHorizontal} size={1} />
           </div>
-          <p className="message">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium at culpa nemo explicabo libero vitae voluptas et perferendis, cumque qui quasi earum! Consectetur consequatur corporis officia blanditiis facilis.</p>
-          <img src={content} alt="" />
+          {isContent(content)}
           <div className="interactions">
             <div>
               <Icon className='reply' path={mdiMessageReplyOutline} size={1} /> <p>23</p>
