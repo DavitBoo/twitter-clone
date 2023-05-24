@@ -88,7 +88,47 @@ flex-direction: column;
     justify-content: space-between;       
   }
 
-`;
+
+  .color-picker {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 10px;
+  }
+
+  .color-option {
+    width: 17px;
+    height: 17px;
+    border-radius: 50%;
+    margin-right: 5px;
+    cursor: pointer;
+    border: 2px solid #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+  
+      &:hover {
+        transform: scale(2);
+      }
+    
+      &:focus {
+        outline: none;
+        transform: scale(2);
+      }
+    
+      &.active {
+        border-width: 4px;
+
+        &:hover {
+          transform: scale(2);
+        }
+        
+        &:focus {
+          outline: none;
+          transform: scale(2);
+        }
+      }
+  }
+
+  `;
 
 export default function InputArea() {
 
@@ -100,6 +140,7 @@ export default function InputArea() {
   const [canvasOrText, setCanvasOrText] = useState(true)
   const [canvasState, setCanvasState] = useState<string | null>(null);
   const [valueTextArea, setValueTextArea] = useState("")
+  const [color, setColor] = useState("black");
 
   // useContext
   const { userDataState } = useContext(UserContext);
@@ -126,6 +167,7 @@ export default function InputArea() {
       context.beginPath();
       context.moveTo(lastX, lastY);
       context.lineTo(e.offsetX, e.offsetY);
+      context.strokeStyle = color; // Establecer el color actual
       context.stroke();
       [lastX, lastY] = [e.offsetX, e.offsetY];
     }
@@ -158,7 +200,7 @@ export default function InputArea() {
       canvas.removeEventListener("mouseup", stopDrawing);
       canvas.removeEventListener("mouseout", stopDrawing);
     };
-  }, [canvasOrText, canvasState]);
+  }, [canvasOrText, canvasState, color]);
 
 
 
@@ -195,6 +237,109 @@ export default function InputArea() {
       <div className="input-container flex">
         <div className="flex-col-dir">
           {userDataState === null ? '...' : <img src={userDataState?.profilImg} alt="" />}
+          {canvasOrText && <div className="color-picker">
+            <div
+              className="color-option"
+              style={{ backgroundColor: "black" }}
+              onClick={() => setColor("black")}
+            ></div>
+            <div
+              className="color-option"
+              style={{ backgroundColor: "red" }}
+              onClick={() => setColor("red")}
+            ></div>
+            <div
+              className="color-option"
+              style={{ backgroundColor: "blue" }}
+              onClick={() => setColor("blue")}
+            ></div>
+            <div
+              className="color-option"
+              style={{ backgroundColor: "green" }}
+              onClick={() => setColor("green")}
+            ></div>
+            <div
+              className="color-option"
+              style={{ backgroundColor: "yellow" }}
+              onClick={() => setColor("yellow")}
+            ></div>
+            <div
+              className="color-option"
+              style={{ backgroundColor: "orange" }}
+              onClick={() => setColor("orange")}
+            ></div>
+            <div
+              className="color-option"
+              style={{ backgroundColor: "purple" }}
+              onClick={() => setColor("purple")}
+            ></div>
+            <div
+              className="color-option"
+              style={{ backgroundColor: "white" }}
+              onClick={() => setColor("white")}
+            ></div>
+            <div
+              className="color-option"
+              style={{ backgroundColor: "brown" }}
+              onClick={() => setColor("brown")}
+            ></div>
+            <div
+              className="color-option"
+              style={{ backgroundColor: "gray" }}
+              onClick={() => setColor("gray")}
+            ></div>
+            <div
+              className="color-option"
+              style={{ backgroundColor: "teal" }}
+              onClick={() => setColor("teal")}
+            ></div>
+            <div
+              className="color-option"
+              style={{ backgroundColor: "cyan" }}
+              onClick={() => setColor("cyan")}
+            ></div>
+            <div
+              className="color-option"
+              style={{ backgroundColor: "magenta" }}
+              onClick={() => setColor("magenta")}
+            ></div>
+            <div
+              className="color-option"
+              style={{ backgroundColor: "navy" }}
+              onClick={() => setColor("navy")}
+            ></div>
+            <div
+              className="color-option"
+              style={{ backgroundColor: "indigo" }}
+              onClick={() => setColor("indigo")}
+            ></div>
+            <div
+              className="color-option"
+              style={{ backgroundColor: "maroon" }}
+              onClick={() => setColor("maroon")}
+            ></div>
+            <div
+              className="color-option"
+              style={{ backgroundColor: "olive" }}
+              onClick={() => setColor("olive")}
+            ></div>
+            <div
+              className="color-option"
+              style={{ backgroundColor: "lime" }}
+              onClick={() => setColor("lime")}
+            ></div>
+            <div
+              className="color-option"
+              style={{ backgroundColor: "silver" }}
+              onClick={() => setColor("silver")}
+            ></div>
+            <div
+              className="color-option"
+              style={{ backgroundColor: "gold" }}
+              onClick={() => setColor("gold")}
+            ></div>
+    
+          </div>}
           <div className="buttons">
               <div onClick={displayCanvas}>
                 <Icon path={mdiDraw} size={1}  />
