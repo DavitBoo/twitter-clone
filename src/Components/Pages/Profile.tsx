@@ -143,7 +143,7 @@ export default function Profile() {
           <UserName/>
           <div className='join-date'>
             <Icon path={mdiCalendarMonthOutline} size={1} />
-            <p>Joined {userDataState?.creationData}</p>
+            <p>Joined {userData ? userData.creationData : userDataState?.creationData}</p>
           </div>
           <div className='follow-info'>
             <NavLink to="/profile/following"><p><strong>{userData ? userData.following.length : userDataState?.following.length}</strong> Following</p></NavLink>
@@ -154,7 +154,7 @@ export default function Profile() {
         <SelectTimelines/>
         {inputsState &&
         inputsState.map((input, index) => {
-          if (userDataState?.following.includes(input.uid)) {
+          if ((username ? username : userDataState?.username) === input.uid) {
             return (
               <ContentForUser
                 key={index}
