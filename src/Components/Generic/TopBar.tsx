@@ -7,10 +7,10 @@ import SelectMenu from './SelectMenu'
 //   width: 100%;
 // `
 
-export default function TopBar() {
+export default function TopBar({activeMenu, setActiveMenu}: any) {
   return (
     <div>
-        <SelectMenu/>
+        <SelectMenu activeMenu={activeMenu} setActiveMenu={setActiveMenu}/>
         {/* <SearchMenu/> */}
     </div>
   )

@@ -42,10 +42,8 @@ const StyledDiv = styled.div`
 
 `;
 
-export default function SelectMenu() {
-  
-  const [activeMenu, setActiveMenu] = useState(true)
-  
+export default function SelectMenu({activeMenu, setActiveMenu}: any) {
+    
   const activeLeftByClick = () => {
     setActiveMenu(true)
   }

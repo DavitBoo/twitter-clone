@@ -96,6 +96,8 @@ export const loadInputs = async () => {
   inputSnapshot.forEach((doc) => {
     if (doc.exists()) {
       const inputData = doc.data();
+      const inputId = doc.id;
+      inputData.inputId = inputId; // Añadir inputId al objeto inputData
       inputsArray.push(inputData);
     }
   });

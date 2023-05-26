@@ -10,13 +10,13 @@ import moment from 'moment';
 
 // icons
 import Icon from '@mdi/react';
-import { mdiDotsHorizontal, mdiMessageReplyOutline, mdiRepeatVariant, mdiCardsHeartOutline, mdiPoll, mdiShare } from '@mdi/js';
+import { mdiHeart, mdiDotsHorizontal, mdiMessageReplyOutline, mdiRepeatVariant, mdiCardsHeartOutline, mdiPoll, mdiShare } from '@mdi/js';
 
 //firebase - functions
-import { loadUserData } from '../../firebase/config';
+import { db, loadUserData } from '../../firebase/config';
 
 // --- firebase
-import { DocumentData } from 'firebase/firestore'; // tipo de datos de la base de datos
+import { DocumentData, doc, updateDoc } from 'firebase/firestore'; // tipo de datos de la base de datos
 
 
 const StyledDiv = styled.div  `
@@ -106,6 +106,13 @@ const StyledDiv = styled.div  `
       }
     }
 
+    .liked{
+      border-radius: 100%;
+      
+      /* &:hover{
+        color: #838383 !important;
+      } */
+    }
 
     .reply:hover, .views:hover, .share:hover{
       color: #35abff;
@@ -123,12 +130,21 @@ const StyledDiv = styled.div  `
         color: #0fb14b;
       }
     }
-    .like:hover{
+    .like:hover, .liked{
       color: #ff3c87;
       background-color: #ffcade;
 
       + p{
         color: #ff3c87;
+      }
+    }
+
+    .liked:hover{
+      color: #757575;
+      background-color: #cfcfcf;
+
+      + p{
+        color: #757575;
       }
     }
   
@@ -137,13 +153,14 @@ const StyledDiv = styled.div  `
 `
 
 interface ContentForUserProps{
-  likes: number
+  likes: string[]
   content: string
   uid: string  // this should be useraccount or username
   fecha: string
+  inputId: string
 }
 
-export default function ContentForUser({likes, content, uid, fecha}: ContentForUserProps) {
+export default function ContentForUser({likes, content, uid, fecha, inputId}: ContentForUserProps) {
   
   // useState
   const [userData, setUserData] = useState<DocumentData | undefined>(undefined);
@@ -186,7 +203,7 @@ export default function ContentForUser({likes, content, uid, fecha}: ContentForU
     const difference = now.diff(fecha, 'hours');  // método diff() de moment.js 
 
       if (difference < 1) {
-        return 'Now';
+        return 'Recently posted';
       } else if (difference < 24) {
         return `${difference}h ago`;
       } else if (difference < 48) {
@@ -196,6 +213,30 @@ export default function ContentForUser({likes, content, uid, fecha}: ContentForU
       } else {
         return date.format('YYYY MMM'); // Año y mes (ejemplo: "2022 May")
       }
+  }
+  
+  const addLikes = (): void => {
+    const docRef = doc(db, "inputs", inputId);
+    const isLiked = Array.isArray(likes) && likes.includes(userData.username);
+  
+    let updatedLikes;
+    if (isLiked) {
+      updatedLikes = likes.filter((username) => username !== userData.username);
+    } else {
+      updatedLikes = [...likes, userData.username];
+    }
+  
+    updateDoc(docRef, { likes: updatedLikes })
+      .then(() => {
+        console.log("Likes actualizados correctamente");
+      })
+      .catch((error) => {
+        console.error("Error al actualizar los likes:", error);
+      });
+  };
+
+  const liked = () => {
+    return Array.isArray(likes) && likes.includes(userData.username);
   }
 
   const { name, profilImg, username } = userData;
@@ -207,8 +248,8 @@ export default function ContentForUser({likes, content, uid, fecha}: ContentForU
           <div className="message-head">
             <div className="message-info">
               <p className="nick-name"><NavLink to={`/${uid}`}>{name}</NavLink></p>
-              <p className='user-name'>@{username}</p>
-              <p className='publish-date'>{dateFormat(fecha)}</p>
+              <p className='user-name'> @{username}</p>
+              <p className='publish-date'> · {dateFormat(fecha)}</p>
             </div>
             <Icon path={mdiDotsHorizontal} size={1} />
           </div>
@@ -220,8 +261,9 @@ export default function ContentForUser({likes, content, uid, fecha}: ContentForU
             <div>
               <Icon className='repost' path={mdiRepeatVariant} size={1} /> <p>45</p>
             </div>
-            <div>
-              <Icon className='like' path={mdiCardsHeartOutline} size={1} /> <p>{likes}</p>
+            <div onClick={addLikes}>
+              {!liked() ? <><Icon className={`like ${liked() ? 'liked' : ''}`} path={mdiCardsHeartOutline} size={1} /> <p>{likes.length}</p></>
+             : <><Icon className='like liked' path={mdiHeart} size={1} /> <p>{likes.length}</p></>}
             </div>
             <div>
               <Icon className='views' path={mdiPoll} size={1} /> <p>29.7k</p>

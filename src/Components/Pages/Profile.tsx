@@ -162,6 +162,7 @@ export default function Profile() {
                 content={input.content}
                 uid={input.uid}
                 fecha={input.fecha}
+                inputId= {input.inputId}
               />
             );
           }

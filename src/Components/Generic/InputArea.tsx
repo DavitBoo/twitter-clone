@@ -217,7 +217,7 @@ export default function InputArea() {
       uid: userDataState?.username || "",
       fecha: new Date().toISOString(),
       content: (canvasOrText ? 'img;' + savedDataRef.current : 'text;' + valueTextArea) || "",
-      likes: 46,
+      likes: [],
     };
 
       addDoc(collection(db, "inputs"), inputData)
