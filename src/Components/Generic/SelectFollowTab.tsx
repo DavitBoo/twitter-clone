@@ -1,6 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+
 import { styled } from 'styled-components'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useParams } from 'react-router-dom'
+
+import { InputsContext } from '../../Context/InputsContext';
+import { UserContext } from '../../Context/UserContext';
+
 
 const StyledDiv = styled.div`
 
@@ -47,31 +52,33 @@ const StyledDiv = styled.div`
 
 `;
 
-interface SelectFollowTabProps{
-    activeTab: boolean
-}
 
-export default function SelectFollowTab({activeTab}: SelectFollowTabProps) {
+
+export default function SelectFollowTab() {
   
+  // userParams --- react-router
+  const { username } = useParams<{ username: string }>();
+
+
+  // useState
   const [activeMenu, setActiveMenu] = useState(true)
   
-  // useEffect(() => {
-  //   setActiveMenu(activeTab)
-  // }, [activeTab])
-  
+   // useContext
+   const { inputsState } = useContext(InputsContext);
+   const { userDataState } = useContext(UserContext);
   
   return (
 
     <StyledDiv>
         <ul>
-            <li onClick={undefined}>
-              <NavLink to="/profile/followers">
+            <li>
+              <NavLink to={`/${username}/followers`}>
                 <p>Followers</p>
                 <div></div>
               </NavLink>
             </li>
-            <li onClick={undefined}>
-              <NavLink to="/profile/following" >
+            <li>
+              <NavLink to={`/${username}/following`} >
                 <p>Following</p>
                 <div></div>
               </NavLink>

@@ -146,8 +146,8 @@ export default function Profile() {
             <p>Joined {userData ? userData.creationData : userDataState?.creationData}</p>
           </div>
           <div className='follow-info'>
-            <NavLink to="/profile/following"><p><strong>{userData ? userData.following.length : userDataState?.following.length}</strong> Following</p></NavLink>
-            <NavLink to="/profile/followers"><p><strong>{userData ? userData.followers.length : userDataState?.followers.length}</strong> Followers</p></NavLink>
+            <NavLink to={`/${(userData ? userData.username : 'profile')}/following`}><p><strong>{userData ? userData.following.length : userDataState?.following.length}</strong> Following</p></NavLink>
+            <NavLink to={`/${(userData ? userData.username : 'profile')}/followers`}><p><strong>{userData ? userData.followers.length : userDataState?.followers.length}</strong> Followers</p></NavLink>
           </div>
         </div>
 

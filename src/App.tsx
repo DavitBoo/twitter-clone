@@ -125,8 +125,8 @@ function App() {
                         <Route path="/" element={<Home />} />
                         <Route path="/profile" element={<Profile />} />
                         <Route path="/:username" element={<Profile />} />
-                        <Route path="/profile/following" element={<Followers />} />
-                        <Route path="/profile/followers" element={<Following />} />
+                        <Route path="/:username/following" element={<Followers />} />
+                        <Route path="/:username/followers" element={<Following />} />
                         <Route path="/settings" element={<Settings />} />
                     </Routes >
                   </InputsProvider>
