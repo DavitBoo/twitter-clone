@@ -1,7 +1,7 @@
 import React from 'react'
 import { styled } from 'styled-components'
 
-const StyledDiv = styled.div`
+const StyledSelectTimelines  = styled.div`
 
   font-weight: 700;
 
@@ -42,8 +42,13 @@ const StyledDiv = styled.div`
 `;
 
 export default function SelectTimelines() {
+
+  const clickHandler = () => {
+    alert('This featured is not implemented')
+  }
+
   return (
-    <StyledDiv>
+    <StyledSelectTimelines >
         <ul>
             <li>
               <div className='active'>
@@ -51,26 +56,26 @@ export default function SelectTimelines() {
                 <div></div>
               </div>
             </li>
-            <li>
-              <div>
+            <li onClick={clickHandler}>
+              <div >
                 <p>Replies</p>
                 <div></div>
               </div>
             </li>
-            <li>
-              <div>
+            <li onClick={clickHandler}>
+              <div >
                 <p>Media</p>
                 <div></div>
               </div>
             </li>
-            <li>
-              <div>
+            <li onClick={clickHandler}>
+              <div >
                 <p>Likes</p>
                 <div></div>
               </div>
             </li>
             
         </ul>
-    </StyledDiv>
+    </StyledSelectTimelines >
   )
 }
