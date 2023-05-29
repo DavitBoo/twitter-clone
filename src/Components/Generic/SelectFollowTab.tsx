@@ -1,10 +1,8 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React from 'react'
 
 import { styled } from 'styled-components'
 import { NavLink, useParams } from 'react-router-dom'
 
-import { InputsContext } from '../../Context/InputsContext';
-import { UserContext } from '../../Context/UserContext';
 
 
 const StyledDiv = styled.div`
@@ -58,14 +56,6 @@ export default function SelectFollowTab() {
   
   // userParams --- react-router
   const { username } = useParams<{ username: string }>();
-
-
-  // useState
-  const [activeMenu, setActiveMenu] = useState(true)
-  
-   // useContext
-   const { inputsState } = useContext(InputsContext);
-   const { userDataState } = useContext(UserContext);
   
   return (
 

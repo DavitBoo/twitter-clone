@@ -38,18 +38,21 @@ const StyledDiv = styled.div`
   ul > li > div:not(.active){
     color: var(--color-text-secondary);
   }
-
-
 `;
+
+enum ActiveMenu {
+  ForYou,
+  Following,
+}
 
 export default function SelectMenu({activeMenu, setActiveMenu}: any) {
     
   const activeLeftByClick = () => {
-    setActiveMenu(true)
+    setActiveMenu(ActiveMenu.ForYou)
   }
 
   const activeRightByClick = () => {
-    setActiveMenu(false)
+    setActiveMenu(ActiveMenu.Following)
   }
   
   return (
@@ -58,13 +61,13 @@ export default function SelectMenu({activeMenu, setActiveMenu}: any) {
     <StyledDiv>
         <ul>
             <li onClick={activeLeftByClick}>
-              <div className={activeMenu?'active':'' } >
+              <div className={activeMenu === ActiveMenu.ForYou ? 'active' : ''}>
                 <p>For you</p>
                 <div></div>
               </div>
             </li>
             <li onClick={activeRightByClick}>
-              <div className={activeMenu?'':'active'} >
+              <div className={activeMenu === ActiveMenu.Following ? 'active' : ''}>
                 <p>Following</p>
                 <div></div>
               </div>
