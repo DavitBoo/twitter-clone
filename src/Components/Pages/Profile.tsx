@@ -54,7 +54,6 @@ const StyledDiv = styled.div`
     border-radius: 100rem;
     cursor: pointer;
     
-
     &:hover{
       background-color:#f9f9fc;
       cursor: pointer;
@@ -113,16 +112,25 @@ export default function Profile() {
 
   // userParams --- react-router
   const { username } = useParams<{ username: string }>();
+
+   // Verificar si userData está cargando o si está presente
+   const isLoadingUserData = !userData;
   
   useEffect(() => {
-    if(username){
+    if(username && username !== 'profile'){
       loadUserData(username).then((userData: any) => {
         console.log(userData)
         setUserData(userData)
       });
+    } else if (username === 'profile'){
+      setUserData(userDataState)
     }
-  }, [username])
+  }, [username,userDataState])
   
+   // Renderizar un mensaje de carga si userData está cargando
+   if (isLoadingUserData) {
+    return <div>Loading user data...</div>;
+  }
 
   return (
     <StyledDiv>
@@ -136,7 +144,7 @@ export default function Profile() {
           </div>  
         </div>
         <div className="cover">
-          <CoverImage profilImg={userData?.profilImg}/>
+          <CoverImage profilImg={userData?.profilImg} coverImg={userData?.coverImg}/>
           {!userData ? <NavLink className="edit-profile-btn" to="/settings">Edit Profile</NavLink> : <div className="edit-profile-btn"></div>}
         </div>
         <div className='user-info'>

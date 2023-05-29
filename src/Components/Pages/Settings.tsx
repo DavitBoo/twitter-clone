@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import FormForSettings from '../Generic/FormForSettings'
 import UserName from '../Generic/Subcomponents/UserName'
 import CoverImage from '../Generic/Subcomponents/CoverImage'
@@ -7,6 +7,7 @@ import { NavLink } from 'react-router-dom'
 
 import Icon from '@mdi/react';
 import { mdiArrowLeft } from '@mdi/js';
+import { UserContext } from '../../Context/UserContext'
 
 
 const StyledDiv = styled.div`
@@ -49,6 +50,10 @@ const StyledDiv = styled.div`
 `
 
 export default function Settings() {
+
+  // useContext
+  const { userDataState } = useContext(UserContext);
+
   return (
     <StyledDiv>
       <div className='header'>
@@ -57,7 +62,7 @@ export default function Settings() {
           </NavLink>
         <UserName/>
       </div>
-      <CoverImage/>      
+      <CoverImage coverImg={userDataState?.coverImg}/>      
       <FormForSettings/>
     </StyledDiv>
   )

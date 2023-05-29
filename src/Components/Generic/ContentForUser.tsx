@@ -256,17 +256,17 @@ export default function ContentForUser({likes, content, uid, fecha, inputId}: Co
           {isContent(content)}
           <div className="interactions">
             <div>
-              <Icon className='reply' path={mdiMessageReplyOutline} size={1} /> <p>23</p>
+              <Icon className='reply' path={mdiMessageReplyOutline} size={1} /> <p>0</p>
             </div>
             <div>
-              <Icon className='repost' path={mdiRepeatVariant} size={1} /> <p>45</p>
+              <Icon className='repost' path={mdiRepeatVariant} size={1} /> <p>0</p>
             </div>
             <div onClick={addLikes}>
               {!liked() ? <><Icon className={`like ${liked() ? 'liked' : ''}`} path={mdiCardsHeartOutline} size={1} /> <p>{likes.length}</p></>
              : <><Icon className='like liked' path={mdiHeart} size={1} /> <p>{likes.length}</p></>}
             </div>
             <div>
-              <Icon className='views' path={mdiPoll} size={1} /> <p>29.7k</p>
+              <Icon className='views' path={mdiPoll} size={1} /> <p>0</p>
             </div>
             <div>
               <Icon className='share' path={mdiShare} size={1} />

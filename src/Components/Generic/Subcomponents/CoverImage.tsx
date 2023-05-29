@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import ProfileImage from './ProfileImage'
 import { styled } from 'styled-components'
 import testImage2 from '../../../assets/test-2.jpg'
@@ -58,9 +58,10 @@ const StyleDiv = styled.div`
 
 `
 
-export default function CoverImage({profilImg}: any) {
+export default function CoverImage({profilImg, coverImg}: any) {
+
   return (
-    <StyleDiv className='cover-img'>
+    <StyleDiv className='cover-img' style={coverImg ? { backgroundImage: `url(${coverImg})` }: {}}>
         <ProfileImage profilImg={profilImg}/>
         <div className='camera-i'>
           <Icon path={mdiCameraOutline} size={1} />

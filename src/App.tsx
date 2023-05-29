@@ -123,7 +123,7 @@ function App() {
                   <InputsProvider inputsState={inputsState} setInputsState={setInputsState}>
                     <Routes>
                         <Route path="/" element={<Home />} />
-                        <Route path="/profile" element={<Profile />} />
+                        {/* <Route path="/profile" element={<Profile />} /> */}
                         <Route path="/:username" element={<Profile />} />
                         <Route path="/:username/followers" element={<Followers />} />
                         <Route path="/:username/following" element={<Following />} />
