@@ -1,10 +1,12 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import ProfileImage from './ProfileImage'
 import { styled } from 'styled-components'
 import testImage2 from '../../../assets/test-2.jpg'
 
 import Icon from '@mdi/react';
 import { mdiCameraOutline } from '@mdi/js';
+import { updateUserCoverImg, uploadCoverImage } from '../../../firebase/config';
+import { UserContext } from '../../../Context/UserContext';
 
 const StyleDiv = styled.div`
 
@@ -59,13 +61,43 @@ const StyleDiv = styled.div`
 `
 
 export default function CoverImage({profilImg, coverImg}: any) {
+  
+  // useContext
+  const { userDataState, setUserDataState } = useContext(UserContext);
+  
+  const handleCoverImgChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files[0]) {
+      const coverImgFile = event.target.files[0];
+      try {
+        if (userDataState?.username) {
+          const coverImg = await uploadCoverImage(userDataState.username, coverImgFile);
+          await updateUserCoverImg(userDataState.username, coverImg);
+          setUserDataState((prevState) => ({
+            ...prevState!,
+            coverImg: coverImg,
+          }));
+        }
+      } catch (error) {
+        // Manejo de errores en caso de que ocurra algún problema en la carga de la imagen
+      }
+    }
+  };
+
+  const handleClick = () => {
+    const fileInput = document.getElementById('coverImgInput');
+    if (fileInput) {
+      fileInput.click();
+    }
+    console.log(fileInput)
+  };
 
   return (
     <StyleDiv className='cover-img' style={coverImg ? { backgroundImage: `url(${coverImg})` }: {}}>
         <ProfileImage profilImg={profilImg}/>
-        <div className='camera-i'>
-          <Icon path={mdiCameraOutline} size={1} />
-        </div>
+        <input type="file" accept="image/*" onChange={handleCoverImgChange} style={{ display: 'none' }} id="coverImgInput" />
+        <div className='camera-i' onClick={handleClick}>
+  <Icon path={mdiCameraOutline} size={1} />
+</div>
     </StyleDiv>
   )
 }

@@ -145,7 +145,7 @@ export default function Profile() {
         </div>
         <div className="cover">
           <CoverImage profilImg={userData?.profilImg} coverImg={userData?.coverImg}/>
-          {!userData ? <NavLink className="edit-profile-btn" to="/settings">Edit Profile</NavLink> : <div className="edit-profile-btn"></div>}
+          {userData!=='profile' ? <NavLink className="edit-profile-btn" to="/settings">Edit Profile</NavLink> : <div className="edit-profile-btn"></div>}
         </div>
         <div className='user-info'>
           <UserName/>

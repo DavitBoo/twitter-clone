@@ -1,7 +1,8 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { getFirestore, doc, setDoc, getDoc, collection, getDocs } from "firebase/firestore";
+import { getFirestore, doc, setDoc, getDoc, collection, getDocs, updateDoc } from "firebase/firestore";
+import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -23,6 +24,9 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 
 const provider = new GoogleAuthProvider();
+
+//storage
+const storage = getStorage(app);
 
 export const signInWithGoogle = async () => {
   try {
@@ -117,6 +121,45 @@ export const loadInputs = async () => {
   });
 
   return inputsArray;
+};
+
+export const uploadCoverImage = async (uid: string | undefined, coverImgFile: File) => {
+  const storage = getStorage(); // Puedes omitir el parámetro "app" si ya has inicializado Firebase
+
+  // Crear una referencia al archivo en el almacenamiento de Firebase
+  if(uid !== undefined){
+    const coverImgRef = ref(storage, `cover/${uid}`);
+
+    try {
+      // Subir el archivo al almacenamiento de Firebase
+      await uploadBytes(coverImgRef, coverImgFile);
+      console.log('Imagen de portada actualizada correctamente');
+
+      // Obtén la URL de descarga del archivo subido
+      const downloadURL = await getDownloadURL(coverImgRef);
+      
+      // Devuelve la URL de descarga
+      return downloadURL;
+
+    } catch (error) {
+      console.error('Error al actualizar la imagen de portada:', error);
+    }
+  }
+};
+
+
+export const updateUserCoverImg = async (username: string | undefined, coverImg: string | undefined) => {
+  if (username) {
+    const userRef = doc(db, "users", username);
+    try {
+      await updateDoc(userRef, {
+        coverImg: coverImg,
+      });
+      console.log("Imagen de portada actualizada en la base de datos correctamente");
+    } catch (error) {
+      console.error("Error al actualizar la imagen de portada en la base de datos:", error);
+    }
+  }
 };
 
 export { auth, db, GoogleAuthProvider };

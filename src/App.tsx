@@ -54,7 +54,7 @@ const StyledDiv = styled.div `
 interface UserData {
   name: string;
   profilImg: string;
-  coverImg: string;
+  coverImg?: string;
   inputs: any[];
   username: string;
   bio: string;
