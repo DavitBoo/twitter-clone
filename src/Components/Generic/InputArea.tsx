@@ -12,6 +12,28 @@ import { mdiDraw, mdiFormatText  } from '@mdi/js';
 import { db } from "../../firebase/config";
 import { addDoc, collection } from "firebase/firestore";
 
+enum Color {
+  Black = "black",
+  Red = "red",
+  Blue = "blue",
+  Green = "green",
+  Yellow = "yellow",
+  Orange = "orange",
+  Purple = "purple",
+  White = "white",
+  Brown = "brown",
+  Gray = "gray",
+  Teal = "teal",
+  Cyan = "cyan",
+  Magenta = "magenta",
+  Navy = "navy",
+  Indigo = "indigo",
+  Maroon = "maroon",
+  Olive = "olive",
+  Lime = "lime",
+  Silver = "silver",
+  Gold = "gold"
+}
 
 const StyledDiv = styled.div `
 display: flex;
@@ -96,8 +118,9 @@ flex-direction: column;
   }
 
   .color-option {
-    width: 17px;
-    height: 17px;
+    margin: 1px;
+    width: 15px;
+    height: 15px;
     border-radius: 50%;
     margin-right: 5px;
     cursor: pointer;
@@ -140,7 +163,7 @@ export default function InputArea() {
   const [canvasOrText, setCanvasOrText] = useState(true)
   const [canvasState, setCanvasState] = useState<string | null>(null);
   const [valueTextArea, setValueTextArea] = useState("")
-  const [color, setColor] = useState("black");
+  const [color, setColor] = useState(Color.Black);
 
   // useContext
   const { userDataState } = useContext(UserContext);
@@ -237,109 +260,19 @@ export default function InputArea() {
       <div className="input-container flex">
         <div className="flex-col-dir">
           {userDataState === null ? '...' : <img src={userDataState?.profilImg} alt="" />}
-          {canvasOrText && <div className="color-picker">
-            <div
-              className="color-option"
-              style={{ backgroundColor: "black" }}
-              onClick={() => setColor("black")}
-            ></div>
-            <div
-              className="color-option"
-              style={{ backgroundColor: "red" }}
-              onClick={() => setColor("red")}
-            ></div>
-            <div
-              className="color-option"
-              style={{ backgroundColor: "blue" }}
-              onClick={() => setColor("blue")}
-            ></div>
-            <div
-              className="color-option"
-              style={{ backgroundColor: "green" }}
-              onClick={() => setColor("green")}
-            ></div>
-            <div
-              className="color-option"
-              style={{ backgroundColor: "yellow" }}
-              onClick={() => setColor("yellow")}
-            ></div>
-            <div
-              className="color-option"
-              style={{ backgroundColor: "orange" }}
-              onClick={() => setColor("orange")}
-            ></div>
-            <div
-              className="color-option"
-              style={{ backgroundColor: "purple" }}
-              onClick={() => setColor("purple")}
-            ></div>
-            <div
-              className="color-option"
-              style={{ backgroundColor: "white" }}
-              onClick={() => setColor("white")}
-            ></div>
-            <div
-              className="color-option"
-              style={{ backgroundColor: "brown" }}
-              onClick={() => setColor("brown")}
-            ></div>
-            <div
-              className="color-option"
-              style={{ backgroundColor: "gray" }}
-              onClick={() => setColor("gray")}
-            ></div>
-            <div
-              className="color-option"
-              style={{ backgroundColor: "teal" }}
-              onClick={() => setColor("teal")}
-            ></div>
-            <div
-              className="color-option"
-              style={{ backgroundColor: "cyan" }}
-              onClick={() => setColor("cyan")}
-            ></div>
-            <div
-              className="color-option"
-              style={{ backgroundColor: "magenta" }}
-              onClick={() => setColor("magenta")}
-            ></div>
-            <div
-              className="color-option"
-              style={{ backgroundColor: "navy" }}
-              onClick={() => setColor("navy")}
-            ></div>
-            <div
-              className="color-option"
-              style={{ backgroundColor: "indigo" }}
-              onClick={() => setColor("indigo")}
-            ></div>
-            <div
-              className="color-option"
-              style={{ backgroundColor: "maroon" }}
-              onClick={() => setColor("maroon")}
-            ></div>
-            <div
-              className="color-option"
-              style={{ backgroundColor: "olive" }}
-              onClick={() => setColor("olive")}
-            ></div>
-            <div
-              className="color-option"
-              style={{ backgroundColor: "lime" }}
-              onClick={() => setColor("lime")}
-            ></div>
-            <div
-              className="color-option"
-              style={{ backgroundColor: "silver" }}
-              onClick={() => setColor("silver")}
-            ></div>
-            <div
-              className="color-option"
-              style={{ backgroundColor: "gold" }}
-              onClick={() => setColor("gold")}
-            ></div>
-    
-          </div>}
+          {canvasOrText && (
+            <div className="color-picker">
+              {/* using typscript enum I created one and I just mapped in order */}
+              {Object.values(Color).map((colorOption) => (
+                <div
+                  key={colorOption}
+                  className={`color-option ${color === colorOption ? "active" : ""}`}
+                  style={{ backgroundColor: colorOption }}
+                  onClick={() => setColor(colorOption)}
+                ></div>
+              ))}
+            </div>
+          )}
           <div className="buttons">
               <div onClick={displayCanvas}>
                 <Icon path={mdiDraw} size={1}  />
