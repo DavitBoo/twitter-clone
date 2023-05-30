@@ -3,9 +3,16 @@ import TopBar from '../Generic/TopBar'
 import ContentMain from '../Generic/ContentMain'
 
 
+enum ActiveMenu {
+  ForYou,
+  Following,
+}
+
+
+
 export default function Home() {
 
-  const [activeMenu, setActiveMenu] = useState(true)
+  const [activeMenu, setActiveMenu] = useState(ActiveMenu.ForYou)
 
   return (
     <div>

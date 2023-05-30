@@ -12,6 +12,8 @@ import { mdiDraw, mdiFormatText  } from '@mdi/js';
 import { db } from "../../firebase/config";
 import { addDoc, collection } from "firebase/firestore";
 
+
+// I could have used a object as const and it'd have worked too
 enum Color {
   Black = "black",
   Red = "red",
