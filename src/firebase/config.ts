@@ -78,18 +78,22 @@ export const createUserInFirestore = async (user: any) => {
 };
 
 
-export const checkUsers = async (gotUser: string) => {
+export const checkUsers = async (gotUser: any) => {
   const usersRef = collection(db, "users");
   const querySnapshot = await getDocs(usersRef);
+
+ let foundUser = undefined; // Inicializar con valor undefined
 
   querySnapshot.forEach((doc) => {
     const user = doc.data();
     if (user.username === gotUser) {
       // La variable coincide con el username de este usuario
-      // Realiza las acciones adicionales que necesites
-      return user
+      const { bio, name, profilImg, username } = user;
+      foundUser = { bio, name, profilImg, username }; // Asignar el valor encontrado
     }
   });
+
+  return foundUser; // Retornar el valor encontrado (puede ser undefined si no se encontró ningún usuario)
 };
 
 export const loadUserData = async (uid: any) => {

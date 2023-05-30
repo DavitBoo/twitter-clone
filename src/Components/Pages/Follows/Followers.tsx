@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 
 // context
 import { UserContext } from '../../../Context/UserContext'
@@ -66,6 +66,20 @@ export default function Followed() {
 
   // use params
   const { username } = useParams<{ username: string }>();
+
+  // useState
+  const [displayedUser, setDisplayedUser] = useState(undefined)
+
+  // useEffect
+  useEffect(() => {
+    const getUser = async () => {
+      const currentUserFromDB = await checkUsers(username);
+      console.log(currentUserFromDB)
+      setDisplayedUser(currentUserFromDB);
+    };
+
+    getUser();
+  }, [username]);
   
   return (
     <StyledDiv>
@@ -74,7 +88,7 @@ export default function Followed() {
           <NavLink to={`/${username}`}>
                 <Icon path={mdiArrowLeft} size={1} />
           </NavLink>
-          <UserName/>
+          <UserName displayedUser={displayedUser}/>
         </div>
         <SelectFollowTab/>
         {userDataState?.followers.map((followedUser) => {

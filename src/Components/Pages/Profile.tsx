@@ -148,7 +148,7 @@ export default function Profile() {
           {userData!=='profile' ? <NavLink className="edit-profile-btn" to="/settings">Edit Profile</NavLink> : <div className="edit-profile-btn"></div>}
         </div>
         <div className='user-info'>
-          <UserName/>
+          <UserName displayedUser={userData}/>
           <div className='join-date'>
             <Icon path={mdiCalendarMonthOutline} size={1} />
             <p>Joined {userData ? userData.creationData : userDataState?.creationData}</p>
