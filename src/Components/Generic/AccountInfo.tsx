@@ -1,6 +1,7 @@
 import React from 'react'
+
+// libraries
 import { styled } from 'styled-components'
-import testImg from '../../assets/test-2.jpg'
 
 const StyledDiv = styled.div `
 
@@ -61,22 +62,23 @@ const StyledDiv = styled.div `
     }
 `;
 
-export default function AccountInfo() {
+
+export default function AccountInfo({ gotUser }: any) {
   return (
     <StyledDiv className='flex'>
-        <img src={testImg} alt='' />
+        <img src={gotUser.profilImg} alt='' />
         <div className='flex-col container'>
             <div className='flex follow-user'>
                 <div className='flex-col user-info'>
-                    <p className='userName'>davitAmKaltenBorn</p>
-                    <p className='userAccount'>@davitAmkKaltenBorn</p>
+                    <p className='userName'>{gotUser.name}</p>
+                    <p className='userAccount'>@{gotUser.username}</p>
                 </div>
                 <div>
                     <button>Follow</button>
                 </div>
             </div>
             <div>
-                <p className='description'>Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>
+                <p className='description'>{gotUser.bio}</p>
             </div>
         </div>
     </StyledDiv>

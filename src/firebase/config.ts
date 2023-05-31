@@ -88,8 +88,8 @@ export const checkUsers = async (gotUser: any) => {
     const user = doc.data();
     if (user.username === gotUser) {
       // La variable coincide con el username de este usuario
-      const { bio, name, profilImg, username } = user;
-      foundUser = { bio, name, profilImg, username }; // Asignar el valor encontrado
+      const { bio, name, profilImg, username, following, followers } = user;
+      foundUser = { bio, name, profilImg, username, following, followers }; // Asignar el valor encontrado
     }
   });
 

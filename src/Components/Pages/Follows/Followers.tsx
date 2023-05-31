@@ -58,6 +58,14 @@ const StyledDiv = styled.div `
 
 `
 
+interface User {
+  bio: string,
+  name: string,
+  profilImg: string,
+  username: string,
+  following: string[];
+  followers: string[];
+}
 
 export default function Followed() {
 
@@ -68,7 +76,8 @@ export default function Followed() {
   const { username } = useParams<{ username: string }>();
 
   // useState
-  const [displayedUser, setDisplayedUser] = useState(undefined)
+  const [displayedUser, setDisplayedUser] = useState<User | undefined>(undefined);
+  const [followedUsers, setFollowedUsers] = useState<any[]>([])
 
   // useEffect
   useEffect(() => {
@@ -80,10 +89,27 @@ export default function Followed() {
 
     getUser();
   }, [username]);
+
+  useEffect(() => {
+    const getFollowedUsers = async () => {
+      const users = displayedUser?.followers || [];
+
+      const followedUsersData = await Promise.all(
+        users.map((followedUser) => checkUsers(followedUser))
+      );
+
+      setFollowedUsers(followedUsersData.filter((user) => user !== undefined))
+    };
+
+    if (displayedUser) {
+      getFollowedUsers();
+    }
+  }, [displayedUser]);
+
+  
   
   return (
     <StyledDiv>
-      
         <div className='header'>
           <NavLink to={`/${username}`}>
                 <Icon path={mdiArrowLeft} size={1} />
@@ -91,13 +117,9 @@ export default function Followed() {
           <UserName displayedUser={displayedUser}/>
         </div>
         <SelectFollowTab/>
-        {userDataState?.followers.map((followedUser) => {
-        const gotUser = checkUsers(followedUser)
-        if (gotUser !== undefined) {
-          return <AccountInfo key={followedUser.uid} />;
-        }
-        return null;
-      })}
+        {followedUsers.map((followedUser, i) => (
+        <AccountInfo key={i} gotUser={followedUser} />
+      ))}
     </StyledDiv>
   )
 }
