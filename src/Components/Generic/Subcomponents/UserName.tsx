@@ -1,6 +1,7 @@
 import React, {useContext} from 'react'
 import { UserContext } from '../../../Context/UserContext'
 
+
 export default function UserName({ displayedUser }: any) {
   const { userDataState } = useContext(UserContext);
 

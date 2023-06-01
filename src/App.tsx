@@ -55,11 +55,11 @@ interface UserData {
   name: string;
   profilImg: string;
   coverImg?: string;
-  inputs: any[];
+  inputs: string[];
   username: string;
   bio: string;
-  following: any[];
-  followers: any[];
+  following: string[];
+  followers: string[];
   email: string;
   creationData: string;
   uid: string

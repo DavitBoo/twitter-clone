@@ -16,7 +16,12 @@ const StyledDiv = styled.div`
   }
 `
 
-export default function ProfileImage({profilImg, userProfileName}: any) {
+interface ProfileImageProps {
+  profilImg: string,
+  userProfileName: string
+}
+
+export default function ProfileImage({profilImg, userProfileName}: ProfileImageProps) {
   const { userDataState } = useContext(UserContext);
 
   return (

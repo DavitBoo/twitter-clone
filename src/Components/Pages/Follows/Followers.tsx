@@ -83,7 +83,6 @@ export default function Followed() {
   useEffect(() => {
     const getUser = async () => {
       const currentUserFromDB = await checkUsers(username);
-      console.log(currentUserFromDB)
       setDisplayedUser(currentUserFromDB);
     };
 
