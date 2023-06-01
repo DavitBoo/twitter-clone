@@ -5,7 +5,7 @@ import MoreMenu from './MoreMenu';
 
 // icon library
 import Icon from '@mdi/react';
-import { mdiHomeOutline, mdiAccountOutline, mdiCogOutline, mdiDotsHorizontalCircleOutline } from '@mdi/js';
+import { mdiHomeOutline, mdiAccountOutline, mdiCogOutline, mdiDotsHorizontalCircleOutline, mdiHome, mdiAccount, mdiCog, mdiDotsHorizontalCircle } from '@mdi/js';
 
 // react libraries
 import { styled } from 'styled-components';
@@ -51,13 +51,23 @@ interface LeftSidebarProps {
   setOverlayDisplay: React.Dispatch<React.SetStateAction<boolean>>;
   setDisplaySubMenu: React.Dispatch<React.SetStateAction<boolean>>;
   displaySubMenu: boolean;
-
 }
+
+// Tupla's types are defined 
+type MenuItem = [string, string, string, string];
+
+// this is the info to fill the <ul> element with each <li>  
+// [displayed name, normal icon, hover icon, route]
+const menuItems: MenuItem[] = [
+  ['Home', mdiHomeOutline, mdiHome, '/'],
+  ['Profile', mdiAccountOutline, mdiAccount, '/profile'],
+  ['Settings', mdiCogOutline, mdiCog, '/settings'],
+  ['More', mdiDotsHorizontalCircleOutline, mdiDotsHorizontalCircle, '#'],
+];
 
 export default function MainMenu({ setOverlayDisplay, setDisplaySubMenu, displaySubMenu }: LeftSidebarProps ) {
 
-  
-  
+  const [activeItem, setActiveItem] = useState('');
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     e.preventDefault();
@@ -65,37 +75,37 @@ export default function MainMenu({ setOverlayDisplay, setDisplaySubMenu, display
     setOverlayDisplay(true)
   }
 
+  const handleMouseEnter = (text: string) => {
+    // Actualizar estado en función del enlace en el que se hizo hover
+    setActiveItem(text);
+  };
+
+  const handleMouseLeave = () => {
+    // Reiniciar estado cuando el mouse sale del menú
+    setActiveItem('');
+  };
+
   return (
     <StyledDiv>
-        <ul onClick={displaySubMenu ? () => setDisplaySubMenu(false) : undefined} >
-            <li>
-              <NavLink to="/">
-                  <Icon path={mdiHomeOutline} size={1} /> <p>Home</p>
-                </NavLink>         
-            </li>
-            <li>
-              <NavLink to="/profile">
-                <Icon path={mdiAccountOutline} size={1} /> <p>Profile</p>
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/settings">
-                <Icon path={mdiCogOutline} size={1} /> <p>Settings</p>
-              </NavLink>
-            </li>
-            <li>
-                <a href="/#" onClick={handleClick}>
-                  <Icon path={mdiDotsHorizontalCircleOutline} size={1} />
-                  More
-                </a>          
-            </li>
-        </ul>
-        { displaySubMenu && 
-          <MoreMenu 
-            setOverlayDisplay={setOverlayDisplay}
-            setDisplaySubMenu={setDisplaySubMenu}
-          /> 
-        }
+      {/* onClick event to close logout submenu  */}
+      <ul onMouseLeave={handleMouseLeave} onClick={displaySubMenu ? () => setDisplaySubMenu(false) : undefined}>
+        {/* instead of have to write the whole menu, it takes it from the tupla */}
+        {menuItems.map((item, index) => (
+          <li key={index}>
+            <NavLink to={item[3]} onClick={item[0]==='More'? handleClick : undefined } onMouseEnter={() => handleMouseEnter(item[0])} className={activeItem === item[0] ? 'active' : ''}>
+              <Icon path={activeItem === item[0] ? item[2] : item[1]} size={1} />
+              <p>{item[0]}</p>
+            </NavLink>
+          </li>
+        ))}
+      </ul>
+
+      { displaySubMenu && 
+        <MoreMenu 
+          setOverlayDisplay={setOverlayDisplay}
+          setDisplaySubMenu={setDisplaySubMenu}
+        /> 
+      }
     </StyledDiv>
   )
 }
