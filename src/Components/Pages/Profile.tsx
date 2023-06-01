@@ -144,7 +144,7 @@ export default function Profile() {
           </div>  
         </div>
         <div className="cover">
-          <CoverImage profilImg={userData?.profilImg} coverImg={userData?.coverImg}/>
+          <CoverImage profilImg={userData?.profilImg} coverImg={userData?.coverImg} userProfileName={username}/>
           {userData!=='profile' ? <NavLink className="edit-profile-btn" to="/settings">Edit Profile</NavLink> : <div className="edit-profile-btn"></div>}
         </div>
         <div className='user-info'>
@@ -162,7 +162,10 @@ export default function Profile() {
         <SelectTimelines/>
         {inputsState &&
         inputsState.map((input, index) => {
-          if ((username ? username : userDataState?.username) === input.uid) {
+          console.log(input.uid)
+          console.log(username)
+          console.log(userDataState?.username)
+          if (username === 'profile' ? (userDataState?.following.includes(input.uid)) : ((username ? username : userDataState?.username) === input.uid)) {
             return (
               <ContentForUser
                 key={index}

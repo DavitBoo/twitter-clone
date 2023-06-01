@@ -16,16 +16,18 @@ const StyledDiv = styled.div`
   }
 `
 
-export default function ProfileImage({profilImg}: any) {
+export default function ProfileImage({profilImg, userProfileName}: any) {
   const { userDataState } = useContext(UserContext);
 
   return (
     <StyledDiv className='profile-img-container'>
         {!profilImg && <img className="profile-img" src={userDataState?.profilImg} alt="" />}
         {profilImg && <img className="profile-img" src={profilImg} alt="" />}
-        <div className='camera-i-profile'>
-          <Icon path={mdiCameraOutline} size={1} />
-        </div>
+        { !userProfileName && <>   
+          <div className='camera-i-profile'>
+            <Icon path={mdiCameraOutline} size={1} />
+          </div>
+        </>}
     </StyledDiv>
   )
 }

@@ -60,7 +60,7 @@ const StyleDiv = styled.div`
 
 `
 
-export default function CoverImage({profilImg, coverImg}: any) {
+export default function CoverImage({profilImg, coverImg, userProfileName}: any) {
   
   // useContext
   const { userDataState, setUserDataState } = useContext(UserContext);
@@ -93,11 +93,13 @@ export default function CoverImage({profilImg, coverImg}: any) {
 
   return (
     <StyleDiv className='cover-img' style={coverImg ? { backgroundImage: `url(${coverImg})` }: {}}>
-        <ProfileImage profilImg={profilImg}/>
-        <input type="file" accept="image/*" onChange={handleCoverImgChange} style={{ display: 'none' }} id="coverImgInput" />
-        <div className='camera-i' onClick={handleClick}>
-  <Icon path={mdiCameraOutline} size={1} />
-</div>
+        <ProfileImage profilImg={profilImg} userProfileName={userProfileName}/>
+        { !userProfileName  && <>
+          <input type="file" accept="image/*" onChange={handleCoverImgChange} style={{ display: 'none' }} id="coverImgInput" />
+          <div className='camera-i' onClick={handleClick}>
+          <Icon path={mdiCameraOutline} size={1} />
+        </div>
+        </> } 
     </StyleDiv>
   )
 }
