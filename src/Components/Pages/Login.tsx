@@ -86,21 +86,22 @@ interface LoginProps{
 
 
 export default function Login({setLogged, setuserDataState}: LoginProps)   {
-  
+  const [loading, setLoading] = useState(false);
 
   const handleLogin = async () => {
     try {
+      setLoading(true); // Establecer loading en true
+
       const user = await signInWithGoogle();
       await createUserInFirestore(user);
 
-      // setup login state to true
       setLogged(true);
 
       // El usuario ha iniciado sesión correctamente
-      
     } catch (error) {
-      // Ocurrió un error al iniciar sesión
       console.log(error);
+    } finally {
+      setLoading(false); // Establecer loading en false
     }
   }
 
@@ -110,7 +111,9 @@ export default function Login({setLogged, setuserDataState}: LoginProps)   {
         <div className="container">
           <img src={logo} alt="" />
           <h2>Sign in to WriteLine</h2>
-          <button onClick={handleLogin}><img src={googleLogo} alt="" /> Sign in with Google</button>
+          <button onClick={handleLogin}>
+            {loading ? 'Loading...' : <><img src={googleLogo} alt="" /> Sign in with Google</>}
+          </button>
           <p>Don't you have an account? <a href="">Enter as guest user!</a></p>
         </div>
     </StyledDiv>

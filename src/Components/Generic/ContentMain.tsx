@@ -18,7 +18,9 @@ export default function ContentMain({activeMenu}: any) {
     <div>
         <InputArea/>
         {inputsState && inputsState.map((input, index) => {
-        if (activeMenu || userDataState?.following.includes(input.uid)) {
+        if (activeMenu || 
+          (userDataState && userDataState.following && userDataState.following.includes(input.uid))
+          ) {
           return (
             <ContentForUser
               key={index}

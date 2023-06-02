@@ -58,8 +58,8 @@ export const signInWithGoogle = async () => {
 
 export const createUserInFirestore = async (user: any) => {
   const userRef = doc(db, "users", user.email.split('@')[0]);
-  console.log(userRef)
   const userSnapshot = await getDoc(userRef);
+  console.log(userSnapshot)
 
   if (!userSnapshot.exists()) {
     await setDoc(userRef, {

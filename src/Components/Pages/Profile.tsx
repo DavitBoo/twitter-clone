@@ -103,8 +103,10 @@ const StyledDiv = styled.div`
 
 export default function Profile() {
   
+  
   // useState
   const [userData, setUserData] = useState<any>(null);
+  
 
   // useContext
   const { userDataState } = useContext(UserContext);
@@ -132,6 +134,10 @@ export default function Profile() {
     return <div>Loading user data...</div>;
   }
 
+   if (!userDataState) {
+    return <div>Loading user data...</div>;
+  }
+
   return (
     <StyledDiv>
         <div className='header'>
@@ -140,7 +146,7 @@ export default function Profile() {
           </NavLink>
           <div className='flex-col'>
             <h1>{userData && (userData==='profile' ? 'profile' : userData.name)}</h1>
-            <p>{userData?.inputs.length} tweets</p>
+            <p>{userData?.inputs?.length} tweets</p>
           </div>  
         </div>
         <div className="cover">
@@ -154,18 +160,19 @@ export default function Profile() {
             <p>Joined {userData ? userData.creationData : userDataState?.creationData}</p>
           </div>
           <div className='follow-info'>
-            <NavLink to={`/${(userData ? userData.username : 'profile')}/following`}><p><strong>{userData ? userData.following.length : userDataState?.following.length}</strong> Following</p></NavLink>
-            <NavLink to={`/${(userData ? userData.username : 'profile')}/followers`}><p><strong>{userData ? userData.followers.length : userDataState?.followers.length}</strong> Followers</p></NavLink>
+            <NavLink to={`/${(userData ? userData.username : 'profile')}/following`}><p><strong>{userData ? userData.following?.length : userDataState?.following.length}</strong> Following</p></NavLink>
+            <NavLink to={`/${(userData ? userData.username : 'profile')}/followers`}><p><strong>{userData ? userData.followers?.length : userDataState?.followers.length}</strong> Followers</p></NavLink>
           </div>
         </div>
 
         <SelectTimelines/>
-        {inputsState &&
+        
+        {(inputsState && userDataState) &&
         inputsState.map((input, index) => {
           console.log(input.uid)
           console.log(username)
           console.log(userDataState?.username)
-          if (username === 'profile' ? (userDataState?.following.includes(input.uid)) : ((username ? username : userDataState?.username) === input.uid)) {
+          if (username === 'profile' ? (userDataState?.following?.includes(input.uid)) : ((username ? username : userDataState?.username) === input.uid)) {
             return (
               <ContentForUser
                 key={index}

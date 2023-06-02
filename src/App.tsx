@@ -72,24 +72,45 @@ function App() {
   const [displaySubMenu, setDisplaySubMenu] = useState(false)
   const [logged, setLogged] = useState(false)
 
+  const [loadingUser, setLoadingUser] = useState(false);
+
   // for context
   const [userDataState, setUserDataState] = useState<UserData | null>(null);
   const [inputsState, setInputsState] = useState<Array<any> | null>(null);
 
   useEffect(() => {
     const checkLoggedInStatus = () => {
+      setLoadingUser(true); // Establecer loadingUser en true
+
       auth.onAuthStateChanged((user) => {
         if (user) {
           setLogged(true);
-
+          console.log(user)
            // Le pasabmos el uid directamente
            // pero como ahora el identificador es el email se ha cambiado eso
           loadUserData(user.email?.split('@')[0]).then((userData: any) => {
-            const updatedUserData = {
-              ...userData,
-              uid: user.uid
-            };
-            setUserDataState(updatedUserData);
+            if (userData) {
+              const updatedUserData = {
+                ...userData,
+                uid: user.uid
+              };
+              setUserDataState(updatedUserData);
+            } else {
+              // Establecer userData con un valor predeterminado si es undefined
+              const defaultUserData: any = {
+                name: user.displayName,
+                profilImg: user.photoURL,
+                coverImg: "",
+                inputs: [],
+                username: user.email?.split('@')[0],
+                bio: "",
+                following: [],
+                followers: [],
+                email: user.email || "",
+                creationData: 'welcome!',
+              };
+              setUserDataState(defaultUserData);
+            }
           });
 
           loadInputs().then(inputs => setInputsState(inputs))
@@ -98,6 +119,7 @@ function App() {
         } else {
           setLogged(false);
         }
+        setLoadingUser(false); // Establecer loadingUser en false
       });
     };
 
@@ -108,6 +130,11 @@ function App() {
   const overlayClickHandler = () => {
     setOverlayDisplay(false)
     setDisplaySubMenu(false)
+  }
+
+
+  if (loadingUser) {
+    return <div>Loading...</div>; // Mostrar un mensaje de carga mientras se obtienen los datos del usuario
   }
 
   return (
