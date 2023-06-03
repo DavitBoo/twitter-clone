@@ -1,5 +1,7 @@
-import React from 'react'
+import React, { useContext, useRef } from 'react'
 import { styled } from 'styled-components'
+import { UserContext } from '../../Context/UserContext';
+import { updateUserProfile } from '../../firebase/config';
 
 const StyledDiv = styled.div`
   .form{
@@ -52,22 +54,46 @@ const StyledDiv = styled.div`
 `
 
 export default function FormForSettings() {
+
+  // useState
+  const { userDataState, setUserDataState } = useContext(UserContext);
+
+  // useRef
+  const nameRef = useRef<HTMLInputElement>(null)
+  const usernameRef = useRef<HTMLInputElement>(null)
+  const bioRef = useRef<HTMLInputElement>(null)
+
+  const handleSave = () => {
+    const name = nameRef.current?.value ?? '';
+  const username = usernameRef.current?.value ?? '';
+  const bio = bioRef.current?.value ?? '';
+
+    updateUserProfile(userDataState?.username, username, name, bio);
+
+    setUserDataState(prevState => ({
+      ...prevState!,
+      username: username,
+      name: name,
+      bio: bio
+    }));
+  };
+  
   return (
     <StyledDiv>
         <div className='form'>
           <div>
             <label htmlFor="name">Name</label>
-            <input id="name" type="text" placeholder='' />
+            <input id="name" type="text" placeholder='' defaultValue={userDataState?.name} ref={nameRef}/>
           </div>
           <div>
             <label htmlFor="username">Username</label>
-            <input id="username" type="text" placeholder='' />
+            <input id="username" type="text" placeholder='' defaultValue={userDataState?.username} ref={usernameRef}/>
           </div>
           <div>
             <label htmlFor="bio">Bio</label>
-            <input id="bio" type="text" placeholder='' />
+            <input id="bio" type="text" placeholder='' defaultValue={userDataState?.bio} ref={bioRef}/>
           </div>
-          <button>Save</button>
+          <button onClick={handleSave}>Save</button>
         </div>
     </StyledDiv>
   )

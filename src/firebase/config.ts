@@ -3,6 +3,7 @@ import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { getFirestore, doc, setDoc, getDoc, collection, getDocs, updateDoc } from "firebase/firestore";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
+import UserName from "../Components/Generic/Subcomponents/UserName";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -204,5 +205,27 @@ export const updateUserProfileImg = async (username: string | undefined, profile
     }
   }
 };
+
+
+export const updateUserProfile = async (
+  usernameId: string | undefined, 
+  username: string | undefined, 
+  name: string | undefined, 
+  bio: string | undefined
+) => {
+  if (usernameId && username && name && bio) {    //  username && name && bio no pueden ser null, '' o undefined
+    const userRef = doc(db, "users", usernameId);
+    try {
+      await updateDoc(userRef, {
+        username: username,
+        name: name,
+        bio: bio,
+      });
+      console.log("Actualizado en la base de datos correctamente");
+    } catch (error) {
+      console.error("Error al actualizar el perfil en la base de datos:", error);
+    }
+  }
+}
 
 export { auth, db, GoogleAuthProvider };
