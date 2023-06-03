@@ -18,7 +18,8 @@ export default function ContentMain({activeMenu}: any) {
     <div>
         <InputArea/>
         {inputsState && inputsState.map((input, index) => {
-        if (activeMenu || 
+        // i just turn activeMenu into not comparation, why? => in the select menu it was working in the oposite way
+        if (!activeMenu || 
           (userDataState && userDataState.following && userDataState.following.includes(input.uid))
           ) {
           return (
