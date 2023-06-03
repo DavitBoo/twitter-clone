@@ -166,4 +166,43 @@ export const updateUserCoverImg = async (username: string | undefined, coverImg:
   }
 };
 
+export const uploadProfileImage = async (uid: string | undefined, profileImgFile: File) => {
+  const storage = getStorage(); // Puedes omitir el parámetro "app" si ya has inicializado Firebase
+
+  // Crear una referencia al archivo en el almacenamiento de Firebase
+  if(uid !== undefined){
+    const profileImgRef = ref(storage, `profile/${uid}`);
+
+    try {
+      // Subir el archivo al almacenamiento de Firebase
+      await uploadBytes(profileImgRef, profileImgFile);
+      console.log('Imagen de perfil actualizada correctamente');
+
+      // Obtén la URL de descarga del archivo subido
+      const downloadURL = await getDownloadURL(profileImgRef);
+      
+      // Devuelve la URL de descarga
+      return downloadURL;
+
+    } catch (error) {
+      console.error('Error al actualizar la imagen de perfil:', error);
+    }
+  }
+};
+
+
+export const updateUserProfileImg = async (username: string | undefined, profileImg: string | undefined) => {
+  if (username) {
+    const userRef = doc(db, "users", username);
+    try {
+      await updateDoc(userRef, {
+        profilImg: profileImg,
+      });
+      console.log("Imagen de perfil actualizada en la base de datos correctamente");
+    } catch (error) {
+      console.error("Error al actualizar la imagen de perfil en la base de datos:", error);
+    }
+  }
+};
+
 export { auth, db, GoogleAuthProvider };

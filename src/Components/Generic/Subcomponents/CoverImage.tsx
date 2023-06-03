@@ -97,7 +97,7 @@ export default function CoverImage({profilImg, coverImg, userProfileName}: any) 
         { !userProfileName  && <>
           <input type="file" accept="image/*" onChange={handleCoverImgChange} style={{ display: 'none' }} id="coverImgInput" />
           <div className='camera-i' onClick={handleClick}>
-          <Icon path={mdiCameraOutline} size={1} />
+            <Icon path={mdiCameraOutline} size={1} />
         </div>
         </> } 
     </StyleDiv>
