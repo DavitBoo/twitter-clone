@@ -80,6 +80,12 @@ flex-direction: column;
 
   }
 
+  .button-disabled {
+    opacity: 0.5;
+    pointer-events: none;
+    cursor: not-allowed;
+  }
+
 
   .flex-col-dir{
     display: flex;
@@ -167,6 +173,9 @@ export default function InputArea() {
   const [valueTextArea, setValueTextArea] = useState("")
   const [color, setColor] = useState(Color.Black);
 
+  const [canvasInteracted, setCanvasInteracted] = useState(false);
+  const [textInteracted, setTextInteracted] = useState(false);
+
   // useContext
   const { userDataState } = useContext(UserContext);
 
@@ -185,6 +194,7 @@ export default function InputArea() {
     function startDrawing(e: MouseEvent): void {
       isDrawing = true;
       [lastX, lastY] = [e.offsetX, e.offsetY];
+      setCanvasInteracted(true);
     }
 
     function draw(e: MouseEvent): void {
@@ -195,6 +205,7 @@ export default function InputArea() {
       context.strokeStyle = color; // Establecer el color actual
       context.stroke();
       [lastX, lastY] = [e.offsetX, e.offsetY];
+      setCanvasInteracted(true);
     }
 
     function stopDrawing(): void{
@@ -219,6 +230,8 @@ export default function InputArea() {
       image.src = canvasState;
     }
 
+    
+
     return () => {
       canvas.removeEventListener("mousedown", startDrawing);
       canvas.removeEventListener("mousemove", draw);
@@ -228,6 +241,16 @@ export default function InputArea() {
   }, [canvasOrText, canvasState, color]);
 
 
+  const resetCanvas = () => {
+    const canvas = canvasRef.current;
+    if (canvas) {
+      const context = canvas.getContext("2d");
+      if (context) {
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        setCanvasState(null);
+      }
+    }
+  }
 
   const displayCanvas = () => {
     setCanvasOrText(true)
@@ -238,6 +261,8 @@ export default function InputArea() {
   }
 
   const handleSubmitInput = () => {
+    setCanvasInteracted(false)
+    setTextInteracted(false)
     const inputData = {
       uid: userDataState?.username || "",
       fecha: new Date().toISOString(),
@@ -292,17 +317,33 @@ export default function InputArea() {
             id="" 
             placeholder="What is happening?"
             value={valueTextArea}
-            onChange={(e) => setValueTextArea(e.target.value)}
+            onChange={(e) => {
+              setValueTextArea(e.target.value)
+              setTextInteracted(true)
+            }}
           ></textarea>
         }
-        {canvasOrText && <button onClick={handleSubmitInput}>
+        {canvasOrText && 
+        <button 
+        onClick={() => {
+          handleSubmitInput();
+          resetCanvas();
+        }}
+          disabled={!canvasInteracted} 
+          className={!canvasInteracted ? 'button-disabled' : ''}
+          
+        >
           Draw!
         </button>}
         {!canvasOrText && 
          <>
             <div className="textArea-control">
               <p>{280-valueTextArea.length}/280</p>
-              <button onClick={handleSubmitInput}>
+              <button 
+                onClick={handleSubmitInput} 
+                disabled={!textInteracted}
+                className={!textInteracted ? 'button-disabled' : ''}
+              >
                 Write!
               </button>
             </div>
