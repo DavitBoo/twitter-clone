@@ -120,44 +120,51 @@ flex-direction: column;
 
 
   .color-picker {
-    display: flex;
-    flex-wrap: wrap;
-    margin-top: 10px;
+  display: grid;
+  grid-template-columns: repeat(4, 20px); 
+  grid-gap: 1px;
+  margin-top: 10px;
+  /* width: 230px; Ajusta el ancho según tus necesidades */
+  justify-content: center;
+}
+
+.color-option {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  margin-right: 5px;
+  cursor: pointer;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+
+  &:hover {
+    transform: scale(2.2);
+    z-index: 15;
   }
 
-  .color-option {
-    margin: 1px;
-    width: 15px;
-    height: 15px;
-    border-radius: 50%;
-    margin-right: 5px;
-    cursor: pointer;
-    border: 2px solid #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: all 0.2s ease;
-  
-      &:hover {
-        transform: scale(2);
-      }
-    
-      &:focus {
-        outline: none;
-        transform: scale(2);
-      }
-    
-      &.active {
-        border-width: 4px;
-
-        &:hover {
-          transform: scale(2);
-        }
-        
-        &:focus {
-          outline: none;
-          transform: scale(2);
-        }
-      }
+  &:focus {
+    outline: none;
+    transform: scale(2.2);
   }
+
+  &.active {
+    border-width: 4px;
+    box-shadow: 0px 0px 2px #00000025;
+    margin: -2px;
+    z-index: 10;
+
+    &:hover {
+      transform: scale(2.2);
+      z-index: 15;
+    }
+
+    &:focus {
+      outline: none;
+      transform: scale(2.2);
+    }
+  }
+}
 
   `;
 
@@ -309,7 +316,7 @@ export default function InputArea() {
               </div>
           </div>
         </div>
-        {canvasOrText && <canvas ref={canvasRef} width={400} height={200} />}
+        {canvasOrText && <canvas ref={canvasRef} width={400} height={250} />}
         {!canvasOrText && 
           <textarea 
             maxLength={280} 
