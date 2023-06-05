@@ -8,6 +8,8 @@ const StyledDiv = styled.div `
     padding: 1rem;
     border-top: 1px solid var(--color-border);
     cursor: pointer;
+    justify-content: space-between;
+    align-items: center;
 
     &:hover{
         background-color: var(--color-hover);
@@ -16,6 +18,10 @@ const StyledDiv = styled.div `
     .flex-col{
         display: flex;
         flex-direction: column;
+    }
+
+    .up-container{
+        justify-content: space-between !important;
     }
 
     .container{
@@ -53,6 +59,7 @@ const StyledDiv = styled.div `
         background-color: #000;
         font-weight: 700;
         padding: .5rem 1rem;
+        height: 36px;
 
         transition: all .2s;
 
@@ -66,21 +73,26 @@ const StyledDiv = styled.div `
 export default function AccountInfo({ gotUser }: any) {
   return (
     <StyledDiv className='flex'>
-        <img src={gotUser.profilImg} alt='' />
-        <div className='flex-col container'>
-            <div className='flex follow-user'>
-                <div className='flex-col user-info'>
-                    <p className='userName'>{gotUser.name}</p>
-                    <p className='userAccount'>@{gotUser.username}</p>
+        <div className="flex">
+            <img src={gotUser.profilImg} alt='' />
+            <div className='flex-col container' >
+                <div className='flex follow-user'>
+                    <div className="flex">
+                        <div className='flex-col user-info'>
+                            <p className='userName'>{gotUser.name}</p>
+                            <p className='userAccount'>@{gotUser.username}</p>
+                        </div>
+                        <div>
+            
+                        </div>
+                    </div>
                 </div>
                 <div>
-                    <button>Follow</button>
+                    <p className='description'>{gotUser.bio}</p>
                 </div>
             </div>
-            <div>
-                <p className='description'>{gotUser.bio}</p>
-            </div>
         </div>
+        <button>Follow</button>
     </StyledDiv>
   )
 }

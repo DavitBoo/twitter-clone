@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 // components
 import MainMenu from './MainMenu'
@@ -8,9 +8,11 @@ import logo from '../../assets/logo.png'
 import { styled } from 'styled-components'
 import { NavLink } from 'react-router-dom'
 
+interface StyledDivProps {
+  showSidebar: boolean;
+}
 
-
-const StyledDiv = styled.div `
+const StyledDiv = styled.div<StyledDivProps> `
 
   display: flex;
   flex-direction: column;
@@ -25,6 +27,10 @@ const StyledDiv = styled.div `
     justify-content: space-between;
     margin-right: 10rem;
     z-index: 20;
+
+    transform: ${({ showSidebar }) => (showSidebar ? 'translateX(0)' : 'translateX(-300%)')};
+    transition: transform 0.3s ease;
+    
   }
 
   ul{
@@ -70,9 +76,17 @@ interface LeftSidebarProps {
   displaySubMenu: boolean;
 }
 
+
+
 const LeftSidebar: React.FC<LeftSidebarProps> = ({ setOverlayDisplay, setDisplaySubMenu, displaySubMenu }) => {
+  const [showSidebar, setShowSidebar] = useState(false);
+  
+  useEffect(() => {
+    setShowSidebar(true);
+  }, []);
+
   return (
-    <StyledDiv className='left-sidebar'>
+    <StyledDiv className='left-sidebar' showSidebar={showSidebar}>
       <div className="fixed-container">
         <div>
           <NavLink to="/" className='logo'><img src={logo} alt="" /></NavLink>
