@@ -48,6 +48,7 @@ const StyledDiv = styled.div<StyledDivProps> `
     border-radius: 100% ;
     transition: all .2s;
     display: inline-block;
+    filter: drop-shadow(0px 4px 2px hsl(220deg 60% 50%));
 
     &:hover {
       background-color: rgba(15, 20, 25, 0.1);

@@ -7,7 +7,7 @@ const StyledDiv = styled.div`
 
     ul{
         border-radius: 8px;
-        box-shadow: 0px 0px 10px #00000046;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     }
 
     ul li{
@@ -18,9 +18,12 @@ const StyledDiv = styled.div`
         padding: .75rem;
         font-size: 1rem;
         font-weight: 700;
+        transition: transform 0.3s ease; 
 
         &:hover {
-            background-color: rgba(15, 20, 25, 0.1);
+            /* background-color: rgba(15, 20, 25, 0.1); */
+            transform: translateY(-2px);
+            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
             cursor: pointer;
         }
     }   

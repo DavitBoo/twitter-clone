@@ -38,11 +38,11 @@ const StyledDiv = styled.div `
 
     &:hover {
       background-color: rgba(15, 20, 25, 0.1);
+      svg{
+        filter: drop-shadow(0px 0px 2px hsl(220deg 80% 70%));
+      }
     }
 
-    &.active{
-
-    }
   }
 `
 
