@@ -34,6 +34,7 @@ const StyledDiv = styled.div<StyledDivProps> `
     @media (max-width: 980px) {
       margin-right: 0rem;
       padding-left: 3rem;
+      align-items: center;
     }
     
   }

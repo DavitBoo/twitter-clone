@@ -38,7 +38,7 @@ const StyledDiv = styled.div `
     border-radius : 2rem ;
     transition: all .2s;
     padding: 0 1rem;
-    /* font-weight: 700; */
+    
 
     &:hover {
       background-color: rgba(15, 20, 25, 0.1);
@@ -90,7 +90,7 @@ export default function MainMenu({ setOverlayDisplay, setDisplaySubMenu, display
 
   const [activeItem, setActiveItem] = useState('');
 
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 980);
   const [iconSize, setIconSize] = useState(isMobile ? 1.3 : 1);
 
   useEffect(() => {
