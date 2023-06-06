@@ -11,6 +11,8 @@ import { UserContext } from '../../Context/UserContext'
 
 
 const StyledDiv = styled.div`
+  width: min(100%, 514px);
+
   .user-name{
     margin-left: 16px;
 
@@ -28,6 +30,7 @@ const StyledDiv = styled.div`
   }
   .cover-img{
     margin-bottom: 5rem;
+    
   }
 
   .header{

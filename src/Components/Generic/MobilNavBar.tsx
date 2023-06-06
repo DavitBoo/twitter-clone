@@ -18,24 +18,33 @@ const StyledDiv = styled.div<StyledDivProps> `
   flex-direction: column;
   align-items: center;
   position: relative;
+  
+
+  
 
   .fixed-container{
-    height: 100vh;
+    /* height: 100vh; */
     position: fixed;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    margin-right: 10rem;
     z-index: 20;
 
     transform: ${({ showSidebar }) => (showSidebar ? 'translateX(0)' : 'translateX(-300%)')};
     transition: transform 0.3s ease;
 
-    @media (max-width: 980px) {
-      margin-right: 0rem;
-      padding-left: 3rem;
+    @media (max-width: 768px) {
+      width: 100%;
     }
     
+  }
+
+  .top-bar{
+    gap: 3rem;
+    backdrop-filter: blur(12px);
+    background-color: rgba(255, 255, 255, 0.85);
+    width: 100%;
+    justify-content: center;
   }
 
   ul{
@@ -60,29 +69,15 @@ const StyledDiv = styled.div<StyledDivProps> `
     }
   }
 
-  .footer{
-    max-width: 100%;
-    color: var(--color-text-secodary);
-    margin-bottom: 2rem;
-
-    a:hover{
-      color: var(--color-primary);
-    }
-  }
-
   .active{
     font-weight: 900;
   }
 
-  @media (max-width: 980px) {
-    .center-on-tablet {
-      align-items: center;
-    }
-  }
+
 
 `;
 
-interface LeftSidebarProps {
+interface MobilNavBarProps {
   setOverlayDisplay: React.Dispatch<React.SetStateAction<boolean>>;
   setDisplaySubMenu: React.Dispatch<React.SetStateAction<boolean>>;
   displaySubMenu: boolean;
@@ -90,7 +85,7 @@ interface LeftSidebarProps {
 
 
 
-const LeftSidebar: React.FC<LeftSidebarProps> = ({ setOverlayDisplay, setDisplaySubMenu, displaySubMenu }) => {
+const MobilNavBar: React.FC<MobilNavBarProps> = ({ setOverlayDisplay, setDisplaySubMenu, displaySubMenu }) => {
   const [showSidebar, setShowSidebar] = useState(false);
   
   useEffect(() => {
@@ -98,9 +93,9 @@ const LeftSidebar: React.FC<LeftSidebarProps> = ({ setOverlayDisplay, setDisplay
   }, []);
 
   return (
-    <StyledDiv className='left-sidebar ' showSidebar={showSidebar}>
-      <div className="fixed-container ">
-        <div>
+    <StyledDiv className='' showSidebar={showSidebar}>
+      <div className="fixed-container">
+        <div className='flex top-bar'>
           <NavLink to="/" className='logo'><img src={logo} alt="" /></NavLink>
           <MainMenu  
               setOverlayDisplay={setOverlayDisplay}
@@ -108,10 +103,10 @@ const LeftSidebar: React.FC<LeftSidebarProps> = ({ setOverlayDisplay, setDisplay
               setDisplaySubMenu={setDisplaySubMenu}
             />
         </div>
-        <div className='footer'><a target="_blank" href="https://github.com/DavitBoo/twitter-clone">About this project</a></div>
+
       </div>
     </StyledDiv>
   )
 }
 
-export default LeftSidebar
+export default MobilNavBar

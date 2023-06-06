@@ -18,12 +18,18 @@ import { auth, loadInputs, loadUserData } from './firebase/config';
 // context providers
 import { UserProvider } from './Context/UserContext';
 import { InputsProvider } from './Context/InputsContext';
+import MobilNavBar from './Components/Generic/MobilNavBar';
 
 const StyledDiv = styled.div `
   position: relative;
   display: flex;
   justify-content: center;
   gap: 5rem;
+
+  @media (max-width: 768px){
+    flex-direction: column;
+    align-items: center;  
+  }
 
   > div:first-child{
     width: 0px;
@@ -142,11 +148,19 @@ function App() {
         { logged ?
           <StyledDiv className="App">
             <UserProvider userDataState={userDataState} setUserDataState={setUserDataState}>
+              {window.innerWidth > 768 ? (
                   <LeftSidebar
                     setOverlayDisplay={setOverlayDisplay}
                     displaySubMenu={displaySubMenu}
                     setDisplaySubMenu={setDisplaySubMenu}
-                  />
+                  /> ) : 
+                  (
+                    <MobilNavBar
+                      setOverlayDisplay={setOverlayDisplay}
+                      displaySubMenu={displaySubMenu}
+                      setDisplaySubMenu={setDisplaySubMenu}
+                  /> )
+                  }
                   <InputsProvider inputsState={inputsState} setInputsState={setInputsState}>
                     <Routes>
                         <Route path="/" element={<Home />} />

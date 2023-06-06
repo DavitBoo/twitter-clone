@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 // components
 import MoreMenu from './MoreMenu';
@@ -20,6 +20,10 @@ const StyledDiv = styled.div `
     display: flex;
     flex-direction: column;
     gap: .5rem;
+
+    @media (max-width: 768px){
+      flex-direction: row;
+    }
   }
 
   ul > li > a{
@@ -45,7 +49,17 @@ const StyledDiv = styled.div `
 
   }
 
-  @media (max-width: 768px) {
+  ul.mobile-icons > li > a {
+    /* Aumentar el espacio vertical entre los iconos */
+    margin-bottom: 1rem;
+  }
+
+  ul.mobile-icons a {
+    /* Aumentar el tamaño de los iconos */
+    font-size: 5rem !important;
+  }
+
+  @media (max-width: 980px) {
     .hide-on-tablet {
       display: none;
     }
@@ -76,6 +90,22 @@ export default function MainMenu({ setOverlayDisplay, setDisplaySubMenu, display
 
   const [activeItem, setActiveItem] = useState('');
 
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [iconSize, setIconSize] = useState(isMobile ? 1.3 : 1);
+
+  useEffect(() => {
+    const handleResize = () => {
+      const mobile = window.innerWidth <= 980;
+      setIsMobile(mobile);
+      setIconSize(mobile ? 1.3 : 1);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     e.preventDefault();
     setDisplaySubMenu(true)
@@ -95,12 +125,12 @@ export default function MainMenu({ setOverlayDisplay, setDisplaySubMenu, display
   return (
     <StyledDiv>
       {/* onClick event to close logout submenu  */}
-      <ul onMouseLeave={handleMouseLeave} onClick={displaySubMenu ? () => setDisplaySubMenu(false) : undefined}>
+      <ul className={isMobile ? 'mobile-icons' : ''} onMouseLeave={handleMouseLeave} onClick={displaySubMenu ? () => setDisplaySubMenu(false) : undefined}>
         {/* instead of have to write the whole menu, it takes it from the tupla */}
         {menuItems.map((item, index) => (
           <li key={index}>
             <NavLink to={item[3]} onClick={item[0]==='More'? handleClick : undefined } onMouseEnter={() => handleMouseEnter(item[0])} className={activeItem === item[0] ? 'active' : ''}>
-              <Icon path={activeItem === item[0] ? item[2] : item[1]} size={1} />
+              <Icon path={activeItem === item[0] ? item[2] : item[1]} size={iconSize} />
               <p className="hide-on-tablet">{item[0]}</p>
             </NavLink>
           </li>
