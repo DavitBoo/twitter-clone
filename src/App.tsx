@@ -31,7 +31,7 @@ const StyledDiv = styled.div `
 
   > div:nth-child(2){
     /* flex: 1 1 50%; */
-    width: min(65ch, 100%);
+    /* width: min(65ch, 100%); */
     border: 1px solid var(--color-border);
 
     > h1{

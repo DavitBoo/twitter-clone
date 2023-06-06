@@ -44,6 +44,13 @@ const StyledDiv = styled.div `
     }
 
   }
+
+  @media (max-width: 768px) {
+    .hide-on-tablet {
+      display: none;
+    }
+  }
+
 `
 
 
@@ -94,7 +101,7 @@ export default function MainMenu({ setOverlayDisplay, setDisplaySubMenu, display
           <li key={index}>
             <NavLink to={item[3]} onClick={item[0]==='More'? handleClick : undefined } onMouseEnter={() => handleMouseEnter(item[0])} className={activeItem === item[0] ? 'active' : ''}>
               <Icon path={activeItem === item[0] ? item[2] : item[1]} size={1} />
-              <p>{item[0]}</p>
+              <p className="hide-on-tablet">{item[0]}</p>
             </NavLink>
           </li>
         ))}

@@ -30,6 +30,11 @@ const StyledDiv = styled.div<StyledDivProps> `
 
     transform: ${({ showSidebar }) => (showSidebar ? 'translateX(0)' : 'translateX(-300%)')};
     transition: transform 0.3s ease;
+
+    @media (max-width: 768px) {
+      margin-right: 0rem;
+      padding-left: 3rem;
+    }
     
   }
 
@@ -69,6 +74,12 @@ const StyledDiv = styled.div<StyledDivProps> `
     font-weight: 900;
   }
 
+  @media (max-width: 768px) {
+    .center-on-tablet {
+      align-items: center;
+    }
+  }
+
 `;
 
 interface LeftSidebarProps {
@@ -87,8 +98,8 @@ const LeftSidebar: React.FC<LeftSidebarProps> = ({ setOverlayDisplay, setDisplay
   }, []);
 
   return (
-    <StyledDiv className='left-sidebar' showSidebar={showSidebar}>
-      <div className="fixed-container">
+    <StyledDiv className='left-sidebar ' showSidebar={showSidebar}>
+      <div className="fixed-container ">
         <div>
           <NavLink to="/" className='logo'><img src={logo} alt="" /></NavLink>
           <MainMenu  
