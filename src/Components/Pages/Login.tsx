@@ -47,6 +47,7 @@ const StyledDiv = styled.div `
 
   h2 {
     background: linear-gradient(to right, var(--color-primary), var(--color-primary-darker));
+    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
