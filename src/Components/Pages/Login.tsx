@@ -16,7 +16,7 @@ const StyledDiv = styled.div `
 
   .overlay-login{
     position: fixed;
-    background-color: #a3a3a3;
+    background: linear-gradient(135deg, var(--color-primary-darker), var(--color-primary));
     top:0;
     left: 0;
     width: 100%;
@@ -29,7 +29,6 @@ const StyledDiv = styled.div `
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-
     background-color: #fff;
     width: min(65ch, 100%);
     display: flex;
@@ -44,6 +43,12 @@ const StyledDiv = styled.div `
     @media (max-width: 767px) {
       height: 100vh;
     }
+  }
+
+  h2 {
+    background: linear-gradient(to right, var(--color-primary), var(--color-primary-darker));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 
   button {

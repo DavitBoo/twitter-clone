@@ -50,6 +50,10 @@ const GlobalStyles = createGlobalStyle`
     cursor: pointer;
   }
 
+  input, button, textarea, select {
+    font: inherit;
+  }
+
   .flex{
     display: flex;
   }
