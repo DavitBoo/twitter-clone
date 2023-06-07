@@ -33,6 +33,8 @@ const StyledDiv = styled.div<StyledDivProps> `
     transform: ${({ showSidebar }) => (showSidebar ? 'translateX(0)' : 'translateX(-300%)')};
     transition: transform 0.3s ease;
 
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+
     @media (max-width: 768px) {
       width: 100%;
     }

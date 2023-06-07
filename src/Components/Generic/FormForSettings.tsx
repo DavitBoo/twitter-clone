@@ -65,8 +65,8 @@ export default function FormForSettings() {
 
   const handleSave = () => {
     const name = nameRef.current?.value ?? '';
-  const username = usernameRef.current?.value ?? '';
-  const bio = bioRef.current?.value ?? '';
+    const username = usernameRef.current?.value ?? '';
+    const bio = bioRef.current?.value ?? '';
 
     updateUserProfile(userDataState?.username, username, name, bio);
 
@@ -85,10 +85,10 @@ export default function FormForSettings() {
             <label htmlFor="name">Name</label>
             <input id="name" type="text" placeholder='' defaultValue={userDataState?.name} ref={nameRef}/>
           </div>
-          <div>
+          {/* <div>
             <label htmlFor="username">Username</label>
             <input id="username" type="text" placeholder='' defaultValue={userDataState?.username} ref={usernameRef}/>
-          </div>
+          </div> */}
           <div>
             <label htmlFor="bio">Bio</label>
             <input id="bio" type="text" placeholder='' defaultValue={userDataState?.bio} ref={bioRef}/>

@@ -56,15 +56,23 @@ const StyledDiv = styled.div `
     }
 
     button{
-        background-color: #000;
+        
         font-weight: 700;
         padding: .5rem 1rem;
         height: 36px;
-
         transition: all .2s;
 
-        &:hover{
-            background-color: #000000ba;
+        &.follow-btn{
+            background-color: #000;
+            &:hover{
+                background-color: #000000ba;
+            }
+        }
+
+        &.following-btn{
+            background-color: #fff;
+            color: #000;
+            border: var(--color-border) 1px solid;
         }
     }
 `;
@@ -92,7 +100,8 @@ export default function AccountInfo({ gotUser }: any) {
                 </div>
             </div>
         </div>
-        <button>Follow</button>
+        <button className='follow-btn'>Follow</button>
+        <button className='following-btn'>Following</button>
     </StyledDiv>
   )
 }

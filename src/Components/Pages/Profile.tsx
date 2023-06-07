@@ -58,7 +58,20 @@ const StyledDiv = styled.div`
       background-color:#f9f9fc;
       cursor: pointer;
     }
+
+    &.follow-btn{
+        width: 80px;
+        text-align: center;
+        background-color: #000;
+        color: #fff;
+        &:hover{
+            background-color: #000000ba;
+      }
+    }
   }
+
+
+      
   .cover{
     max-width: 100%;
     margin-bottom: 1rem;
@@ -105,12 +118,13 @@ export default function Profile() {
   
   
   // useState
-  const [userData, setUserData] = useState<any>(null);
+  const [userData, setUserData] = useState<any>(null)
+  const [inputCounted, setInputCounted] = useState(0)
   
 
   // useContext
-  const { userDataState } = useContext(UserContext);
-  const { inputsState } = useContext(InputsContext);
+  const { userDataState } = useContext(UserContext)
+  const { inputsState } = useContext(InputsContext)
 
   // userParams --- react-router
   const { username } = useParams<{ username: string }>();
@@ -128,6 +142,26 @@ export default function Profile() {
       setUserData(userDataState)
     }
   }, [username,userDataState])
+
+
+  // I count the posts per profile (just the user we are checking)
+  useEffect(() => {
+    let count = 0;
+
+    if (inputsState && userDataState) {
+      inputsState.forEach((input) => {
+        if (
+          username === "profile"
+            ? userDataState?.following?.includes(input.uid)
+            : (username ? username : userDataState?.username) === input.uid
+        ) {
+          count++;
+        }
+      });
+    }
+
+    setInputCounted(count);
+  }, [inputsState, userDataState, username]);
   
    // Renderizar un mensaje de carga si userData está cargando
    if (isLoadingUserData) {
@@ -146,12 +180,14 @@ export default function Profile() {
           </NavLink>
           <div className='flex-col'>
             <h1>{userData && (userData==='profile' ? 'profile' : userData.name)}</h1>
-            <p>{userData?.inputs?.length} tweets</p>
+            <p>{inputCounted} tweets</p>
           </div>  
         </div>
         <div className="cover">
           <CoverImage profilImg={userData?.profilImg} coverImg={userData?.coverImg} userProfileName={username}/>
-          {userData!=='profile' ? <NavLink className="edit-profile-btn" to="/settings">Edit Profile</NavLink> : <div className="edit-profile-btn"></div>}
+          {username==='profile' 
+            ? <NavLink className="edit-profile-btn" to="/settings">Edit Profile</NavLink> 
+            : <div className="edit-profile-btn follow-btn">Follow</div>}
         </div>
         <div className='user-info'>
           <UserName displayedUser={userData}/>
@@ -169,9 +205,7 @@ export default function Profile() {
         
         {(inputsState && userDataState) &&
         inputsState.map((input, index) => {
-          console.log(input.uid)
-          console.log(username)
-          console.log(userDataState?.username)
+
           if (username === 'profile' ? (userDataState?.following?.includes(input.uid)) : ((username ? username : userDataState?.username) === input.uid)) {
             return (
               <ContentForUser

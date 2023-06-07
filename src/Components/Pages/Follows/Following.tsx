@@ -21,6 +21,8 @@ import { mdiCalendarMonthOutline, mdiArrowLeft } from '@mdi/js';
 
 
 const StyledDiv = styled.div `
+    width: min(100%, 600px);
+
     .header{
       display: flex;
       align-items: center;
@@ -77,7 +79,7 @@ export default function Following() {
 
   // useState
   const [displayedUser, setDisplayedUser] = useState<User | undefined>(undefined);
-  const [followedUsers, setFollowedUsers] = useState<any[]>([])
+  const [followedUsers, setFollowedUsers] = useState<any[] | never[]>([])
 
   // useEffect
   useEffect(() => {

@@ -40,6 +40,8 @@ const StyledDiv = styled.div  `
     flex-direction: column;
     flex: 1 1 100%;
     padding: 0 1rem;
+    width: 100%;
+    overflow: hidden;
   }
 
   .message-head{

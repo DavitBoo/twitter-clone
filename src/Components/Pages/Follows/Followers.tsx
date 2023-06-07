@@ -21,6 +21,8 @@ import { mdiArrowLeft } from '@mdi/js';
 
 
 const StyledDiv = styled.div `
+    width: min(100%, 600px);
+
     .header{
       display: flex;
       align-items: center;
