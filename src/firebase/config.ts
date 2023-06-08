@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { getFirestore, doc, setDoc, getDoc, collection, getDocs, updateDoc } from "firebase/firestore";
+import { getFirestore, doc, setDoc, getDoc, collection, getDocs, updateDoc, arrayRemove, arrayUnion } from "firebase/firestore";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import UserName from "../Components/Generic/Subcomponents/UserName";
 
@@ -222,6 +222,34 @@ export const updateUserProfile = async (
         bio: bio,
       });
       console.log("Actualizado en la base de datos correctamente");
+    } catch (error) {
+      console.error("Error al actualizar el perfil en la base de datos:", error);
+    }
+  }
+}
+
+  
+export const updateFollowers = async (
+  user: string | undefined, 
+  followingUser: string | undefined, 
+  operation: string | undefined,  //operation can be add or remove
+) => {   
+  if( user && followingUser && operation){
+    const userRef = doc(db, "users", user);
+    const followingUserRef = doc(db, "users", followingUser);
+    
+    try {
+      if (operation === "add") {
+        await updateDoc(userRef, { following: arrayUnion(followingUser) });
+        await updateDoc(followingUserRef, { followers: arrayUnion(user) });
+        console.log("Actualizado en la base de datos correctamente - usuario ++");
+      } else if (operation === "remove") {
+        await updateDoc(userRef, { following: arrayRemove(followingUser) });
+        await updateDoc(followingUserRef, { followers: arrayRemove(user) });
+        console.log("Usuarios eliminados de la base de datos correctamente - usuario --");
+      } else {
+        console.error("Operación no válida");
+      }
     } catch (error) {
       console.error("Error al actualizar el perfil en la base de datos:", error);
     }

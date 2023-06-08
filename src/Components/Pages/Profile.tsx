@@ -17,7 +17,7 @@ import { styled } from 'styled-components'
 // icon library
 import Icon from '@mdi/react';
 import { mdiCalendarMonthOutline, mdiArrowLeft } from '@mdi/js';
-import { loadUserData } from '../../firebase/config'
+import { loadUserData, updateFollowers } from '../../firebase/config'
 
 
 const StyledDiv = styled.div`
@@ -123,8 +123,9 @@ export default function Profile() {
   
 
   // useContext
-  const { userDataState } = useContext(UserContext)
+  const { userDataState, setUserDataState } = useContext(UserContext)
   const { inputsState } = useContext(InputsContext)
+  
 
   // userParams --- react-router
   const { username } = useParams<{ username: string }>();
@@ -159,7 +160,7 @@ export default function Profile() {
         }
       });
     }
-
+    
     setInputCounted(count);
   }, [inputsState, userDataState, username]);
   
@@ -170,6 +171,24 @@ export default function Profile() {
 
    if (!userDataState) {
     return <div>Loading user data...</div>;
+  }
+
+  
+  const handleFollowingClick = () => {
+    updateFollowers(userDataState?.username, username, 'remove')
+    setUserDataState(prevState => ({
+        ...prevState!,
+    following: prevState!.following.filter(toRemove => toRemove !== username),
+      }))
+    
+  }
+  
+  const handleFollowClick = () => {
+    updateFollowers(userDataState?.username, username, 'add')
+    setUserDataState(prevState => ({
+        ...prevState!,
+    following: [...prevState!.following, username],
+      }))
   }
 
   return (
@@ -185,9 +204,21 @@ export default function Profile() {
         </div>
         <div className="cover">
           <CoverImage profilImg={userData?.profilImg} coverImg={userData?.coverImg} userProfileName={username}/>
-          {username==='profile' 
-            ? <NavLink className="edit-profile-btn" to="/settings">Edit Profile</NavLink> 
-            : <div className="edit-profile-btn follow-btn">Follow</div>}
+          {username === 'profile' ? (     // if user is in the profile tab
+          <NavLink className="edit-profile-btn" to="/settings">
+            Edit Profile
+          </NavLink>
+          ) : username === userDataState?.username ? (    // if the user checks its own profile
+            <div className="edit-profile-btn "></div>
+          ) : (
+            <>
+              {userDataState?.following.includes(username) ? (    // if the user is following this account
+                <div className="edit-profile-btn" onClick={handleFollowingClick}>Following</div>
+              ) : (
+                <div className="edit-profile-btn follow-btn" onClick={handleFollowClick}>Follow</div>
+              )}
+            </>
+          )}
         </div>
         <div className='user-info'>
           <UserName displayedUser={userData}/>

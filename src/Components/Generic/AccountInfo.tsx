@@ -1,7 +1,13 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 
 // libraries
 import { styled } from 'styled-components'
+
+// context
+import { UserContext } from '../../Context/UserContext';
+import { updateFollowers } from '../../firebase/config';
+
+
 
 const StyledDiv = styled.div `
 
@@ -79,6 +85,27 @@ const StyledDiv = styled.div `
 
 
 export default function AccountInfo({ gotUser }: any) {
+
+  const { userDataState, setUserDataState } = useContext(UserContext);
+
+  const handleFollowingClick = () => {
+    updateFollowers(userDataState?.username, gotUser.username, 'remove')
+    setUserDataState(prevState => ({
+        ...prevState!,
+    following: prevState!.following.filter(username => username !== gotUser.username),
+      }))
+    
+  }
+  
+  const handleFollowClick = () => {
+    updateFollowers(userDataState?.username, gotUser.username, 'add')
+    setUserDataState(prevState => ({
+        ...prevState!,
+    following: [...prevState!.following, gotUser.username],
+      }))
+  }
+  
+
   return (
     <StyledDiv className='flex'>
         <div className="flex">
@@ -100,8 +127,9 @@ export default function AccountInfo({ gotUser }: any) {
                 </div>
             </div>
         </div>
-        <button className='follow-btn'>Follow</button>
-        <button className='following-btn'>Following</button>
+       {userDataState?.following.includes(gotUser.username)? 
+        <button className='following-btn' onClick={handleFollowingClick}>Following</button>:
+        <button className='follow-btn' onClick={handleFollowClick}>Follow</button>}
     </StyledDiv>
   )
 }
