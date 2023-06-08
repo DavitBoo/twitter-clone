@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/static/css/main.58462fbc.css",
+    "main.js": "/static/js/main.de97648f.js",
+    "static/media/test-2.jpg": "/static/media/test-2.189497d0c2a5931d5ede.jpg",
+    "static/media/logo.png": "/static/media/logo.58b8fedd7617907c1d71.png",
+    "static/media/google-logo.svg": "/static/media/google-logo.330a2dc7f18d7502647dc5d6f93812ec.svg",
+    "index.html": "/index.html",
+    "main.58462fbc.css.map": "/static/css/main.58462fbc.css.map",
+    "main.de97648f.js.map": "/static/js/main.de97648f.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.58462fbc.css",
+    "static/js/main.de97648f.js"
+  ]
+}
