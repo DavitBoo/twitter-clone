@@ -165,8 +165,10 @@ interface ContentForUserProps{
 
 export default function ContentForUser({likes, content, uid, fecha, inputId}: ContentForUserProps) {
   
+  
   // useState
   const [userData, setUserData] = useState<DocumentData | undefined>(undefined);
+  const [likesState, setLikesState] = useState(likes)
   
   // useEffect
   useEffect(() => {
@@ -220,18 +222,19 @@ export default function ContentForUser({likes, content, uid, fecha, inputId}: Co
   
   const addLikes = (): void => {
     const docRef = doc(db, "inputs", inputId);
-    const isLiked = Array.isArray(likes) && likes.includes(userData.username);
+    const isLiked = Array.isArray(likesState) && likesState.includes(userData.username);
   
-    let updatedLikes;
+    let updatedLikes: string[];
     if (isLiked) {
-      updatedLikes = likes.filter((username) => username !== userData.username);
+      updatedLikes = likesState.filter((username) => username !== userData.username);
     } else {
-      updatedLikes = [...likes, userData.username];
+      updatedLikes = [...likesState, userData.username];
     }
   
     updateDoc(docRef, { likes: updatedLikes })
       .then(() => {
         console.log("Likes actualizados correctamente");
+        setLikesState(updatedLikes);
       })
       .catch((error) => {
         console.error("Error al actualizar los likes:", error);
@@ -240,7 +243,7 @@ export default function ContentForUser({likes, content, uid, fecha, inputId}: Co
   };
 
   const liked = () => {
-    return Array.isArray(likes) && likes.includes(userData.username);
+    return Array.isArray(likesState) && likesState.includes(userData.username);
   }
 
   const { name, profilImg, username } = userData;
@@ -266,8 +269,8 @@ export default function ContentForUser({likes, content, uid, fecha, inputId}: Co
               <Icon className='repost' path={mdiRepeatVariant} size={1} /> <p>0</p>
             </div>
             <div onClick={addLikes}>
-              {!liked() ? <><Icon className={`like ${liked() ? 'liked' : ''}`} path={mdiCardsHeartOutline} size={1} /> <p>{likes.length}</p></>
-             : <><Icon className='like liked' path={mdiHeart} size={1} /> <p>{likes.length}</p></>}
+              {!liked() ? <><Icon className={`like ${liked() ? 'liked' : ''}`} path={mdiCardsHeartOutline} size={1} /> <p>{likesState.length}</p></>
+             : <><Icon className='like liked' path={mdiHeart} size={1} /> <p>{likesState.length}</p></>}
             </div>
             <div>
               <Icon className='views' path={mdiPoll} size={1} /> <p>0</p>

@@ -12,7 +12,9 @@ Also the aim of this project it is still to learn and to apply some new things I
 
 Since I am using still components and it has a nice amount of components and CSS, I used also to practice with the _CSS Stack Context_ and the _Layout Modes_ in order to understand it a bit better.
 
-(_8 Jun 2023_)
+(_8 Jun 2023_)   
+
+_*Currently working in the responsive and in lazy load, backend park works pretty aceptable_
 
 ----------------------------------------------------------------------------
 
@@ -24,7 +26,7 @@ Since I am using still components and it has a nice amount of components and CSS
     <li>Typescript</li>
     <li>React Router</li>
     <li>Material Design Icons Library</li>
-    <li>Also different React hooks, from React and external libreries:<li>
+    <li>Also different React hooks, from React and external libreries:</li>
     <ul>
         <li>useState</li>
         <li>useEffect</li>
