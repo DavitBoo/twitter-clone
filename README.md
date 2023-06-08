@@ -31,12 +31,11 @@ Since I am using still components and it has a nice amount of components and CSS
         <li>useRef</li>
         <li>useParams</li>
     <ul>
-
 </ul>
 
 ## For the back end I am using _Firebase_
 <ul>
-<li>Authentication</li>
-<li>Firebase Database</li>
-<li>Storage</li>
+    <li>Authentication</li>
+    <li>Firebase Database</li>
+    <li>Storage</li>
 </ul>
