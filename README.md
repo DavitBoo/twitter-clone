@@ -17,6 +17,7 @@ Since I am using still components and it has a nice amount of components and CSS
 ----------------------------------------------------------------------------
 
 ## Used technologies, tools... until this moment:
+
 <ul>
     <li>React.js</li>
     <li>Styled-Components</li>
@@ -33,7 +34,9 @@ Since I am using still components and it has a nice amount of components and CSS
     <ul>
 </ul>
 
-## For the back end I am using _Firebase_
+
+## For the back end I am using _Firebase_:
+
 <ul>
     <li>Authentication</li>
     <li>Firebase Database</li>
