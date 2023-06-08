@@ -24,7 +24,7 @@ Since I am using still components and it has a nice amount of components and CSS
     <li>Typescript</li>
     <li>React Router</li>
     <li>Material Design Icons Library</li>
-    <li>Also different React hooks, from React and external libreries<li>
+    <li>Also different React hooks, from React and external libreries:<li>
     <ul>
         <li>useState</li>
         <li>useEffect</li>
@@ -34,6 +34,7 @@ Since I am using still components and it has a nice amount of components and CSS
     <ul>
 </ul>
 
+----------------------------------------------------------------------------
 
 ## For the back end I am using _Firebase_:
 
