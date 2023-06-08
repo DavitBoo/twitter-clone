@@ -31,7 +31,7 @@ Since I am using still components and it has a nice amount of components and CSS
         <li>useContext</li>
         <li>useRef</li>
         <li>useParams</li>
-    <ul>
+    </ul>
 </ul>
 
 ----------------------------------------------------------------------------
