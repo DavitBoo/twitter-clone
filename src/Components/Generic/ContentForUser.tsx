@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 
 // images
 import testImage from '../../assets/test.jpg'
@@ -17,6 +17,7 @@ import { db, loadUserData } from '../../firebase/config';
 
 // --- firebase
 import { DocumentData, doc, updateDoc } from 'firebase/firestore'; // tipo de datos de la base de datos
+import { UserContext } from '../../Context/UserContext';
 
 
 const StyledDiv = styled.div  `
@@ -166,7 +167,7 @@ export default function ContentForUser({likes, content, uid, fecha, inputId}: Co
   
   // useState
   const [userData, setUserData] = useState<DocumentData | undefined>(undefined);
-
+  
   // useEffect
   useEffect(() => {
     async function fetchUserData() {
@@ -235,6 +236,7 @@ export default function ContentForUser({likes, content, uid, fecha, inputId}: Co
       .catch((error) => {
         console.error("Error al actualizar los likes:", error);
       });
+    
   };
 
   const liked = () => {
