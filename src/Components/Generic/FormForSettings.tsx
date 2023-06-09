@@ -60,19 +60,19 @@ export default function FormForSettings() {
 
   // useRef
   const nameRef = useRef<HTMLInputElement>(null)
-  const usernameRef = useRef<HTMLInputElement>(null)
+  // const usernameRef = useRef<HTMLInputElement>(null)
   const bioRef = useRef<HTMLInputElement>(null)
 
   const handleSave = () => {
     const name = nameRef.current?.value ?? '';
-    const username = usernameRef.current?.value ?? '';
+    // const username = usernameRef.current?.value ?? '';
     const bio = bioRef.current?.value ?? '';
 
-    updateUserProfile(userDataState?.username, username, name, bio);
+    updateUserProfile(userDataState?.username, name, bio);
 
     setUserDataState(prevState => ({
       ...prevState!,
-      username: username,
+      // username: username,
       name: name,
       bio: bio
     }));

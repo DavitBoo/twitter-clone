@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 // I changed HashRouter for BrowserRouter just because testing in the address bar.
-import { BrowserRouter, Routes, Route, useParams } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useParams, HashRouter} from "react-router-dom";
 import { styled } from 'styled-components';
 
 // components
@@ -145,7 +145,7 @@ function App() {
   }
 
   return (
-    <BrowserRouter >
+    <HashRouter >
         { logged ?
           <StyledDiv className="App">
             <UserProvider userDataState={userDataState} setUserDataState={setUserDataState}>
@@ -177,7 +177,7 @@ function App() {
       </StyledDiv> 
       // if user is not logged, login screen will be displayed
       : <Login setLogged={setLogged} setuserDataState={setUserDataState}/>}
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 

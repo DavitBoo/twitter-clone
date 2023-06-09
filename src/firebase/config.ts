@@ -209,15 +209,15 @@ export const updateUserProfileImg = async (username: string | undefined, profile
 
 export const updateUserProfile = async (
   usernameId: string | undefined, 
-  username: string | undefined, 
+  // username: string | undefined, 
   name: string | undefined, 
   bio: string | undefined
 ) => {
-  if (usernameId && username && name && bio) {    //  username && name && bio no pueden ser null, '' o undefined
+  if (usernameId && /*username &&*/ name && bio) {    //  username && name && bio no pueden ser null, '' o undefined
     const userRef = doc(db, "users", usernameId);
     try {
       await updateDoc(userRef, {
-        username: username,
+        // username: username,
         name: name,
         bio: bio,
       });
