@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { getFirestore, doc, setDoc, getDoc, collection, getDocs, updateDoc, arrayRemove, arrayUnion } from "firebase/firestore";
+import { getFirestore, doc, setDoc, getDoc, collection, getDocs, updateDoc, arrayRemove, arrayUnion, query, orderBy } from "firebase/firestore";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import UserName from "../Components/Generic/Subcomponents/UserName";
 
@@ -35,7 +35,6 @@ export const signInWithGoogle = async () => {
     const result = await signInWithPopup(auth, provider);
 
     const { user } = result;
-    console.log(user)
     // we could destructrue some other data like login token, telephone, account's joining data.. but we do not need it right now 
     const { displayName, photoURL, email, uid, metadata } = user;
 
@@ -60,7 +59,6 @@ export const signInWithGoogle = async () => {
 export const createUserInFirestore = async (user: any) => {
   const userRef = doc(db, "users", user.email.split('@')[0]);
   const userSnapshot = await getDoc(userRef);
-  console.log(userSnapshot)
 
   if (!userSnapshot.exists()) {
     await setDoc(userRef, {
@@ -113,10 +111,13 @@ export const loadUserData = async (uid: any) => {
 export const loadInputs = async () => {
   const inputsRef = collection(db, "inputs");
 
-  const inputSnapshot = await getDocs(inputsRef);
+  // it creates the query and sorts by the "date" property in descending order
+  const queryRef = query(inputsRef, orderBy("fecha", "desc"));
+  const querySnapshot = await getDocs(queryRef);
+
   const inputsArray: Array<any> = [];
 
-  inputSnapshot.forEach((doc) => {
+  querySnapshot.forEach((doc) => {
     if (doc.exists()) {
       const inputData = doc.data();
       const inputId = doc.id;
