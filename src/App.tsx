@@ -96,6 +96,7 @@ function App() {
            // Le pasabmos el uid directamente
            // pero como ahora el identificador es el email se ha cambiado eso
           loadUserData(user.email?.split('@')[0]).then((userData: any) => {
+            console.log(userData)
             if (userData) {
               const updatedUserData = {
                 ...userData,

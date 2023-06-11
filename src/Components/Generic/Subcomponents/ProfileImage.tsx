@@ -1,5 +1,4 @@
-import React, {useContext} from 'react'
-import testImage from '../../../assets/test.jpg'
+import React, {useContext, useRef} from 'react'
 
 import Icon from '@mdi/react';
 import { mdiCameraOutline } from '@mdi/js';
@@ -24,6 +23,7 @@ interface ProfileImageProps {
 
 export default function ProfileImage({profilImg, userProfileName}: ProfileImageProps) {
   const { userDataState, setUserDataState } = useContext(UserContext);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleProfileImgChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
@@ -40,17 +40,16 @@ export default function ProfileImage({profilImg, userProfileName}: ProfileImageP
           }));
         }
       } catch (error) {
+        console.log('The image could not be loaded 🤷')
         // Manejo de errores en caso de que ocurra algún problema en la carga de la imagen
       }
     }
   };
 
   const handleClick = () => {
-    const fileInput = document.getElementById('profileImgInput');
-    if (fileInput) {
-      fileInput.click();
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
     }
-    console.log(fileInput)
   };
   
   return (
@@ -58,7 +57,13 @@ export default function ProfileImage({profilImg, userProfileName}: ProfileImageP
         {!profilImg && <img className="profile-img" src={userDataState?.profilImg} alt="" />}
         {profilImg && <img className="profile-img" src={profilImg} alt="" />}
         { !userProfileName && <>  
-          <input type="file" accept="image/*" onChange={handleProfileImgChange} style={{ display: 'none' }} id="profileImgInput" /> 
+          <input 
+            type="file" 
+            accept="image/*" 
+            onChange={handleProfileImgChange} 
+            style={{ display: 'none' }} 
+            ref={fileInputRef}
+          /> 
           <div className='camera-i-profile' onClick={handleClick}>
             <Icon path={mdiCameraOutline} size={1} />
           </div>
