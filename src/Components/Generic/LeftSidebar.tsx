@@ -25,7 +25,7 @@ const StyledDiv = styled.div<StyledDivProps> `
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    margin-right: 10rem;
+    margin-right: 160px;
     z-index: 20;
 
     transform: ${({ showSidebar }) => (showSidebar ? 'translateX(0)' : 'translateX(-300%)')};
@@ -33,7 +33,7 @@ const StyledDiv = styled.div<StyledDivProps> `
 
     @media (max-width: 980px) {
       margin-right: 0rem;
-      padding-left: 3rem;
+      padding-left: 48px;
       align-items: center;
     }
     

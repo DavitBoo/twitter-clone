@@ -46,7 +46,7 @@ const GlobalStyles = createGlobalStyle`
     background-color: var(--color-primary);
     color: var(--color-text-contrast);
     border: none;
-    border-radius: 100rem;
+    border-radius: 100px;
     cursor: pointer;
   }
 

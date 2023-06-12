@@ -25,12 +25,12 @@ const StyledDiv = styled.div`
   .header{
     display: flex;
     align-items: center;
-    padding: 0.5rem 1rem;
+    padding: 8px 16px;
     gap: 2rem;
 
     a{
       cursor: pointer;
-      padding: .5rem;
+      padding: 8px;
       border-radius: 100%;
 
       &:hover{
@@ -47,7 +47,7 @@ const StyledDiv = styled.div`
     background-color: #fff;
     color: #000;
     border: 1px solid var(--color-border);
-    padding: .75rem .5rem;
+    padding: 12px 8px;
     font-weight: 700;
     margin: 1rem;
 

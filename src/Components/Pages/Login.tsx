@@ -4,6 +4,8 @@ import googleLogo from '../../assets/google-logo.svg'
 import { styled } from 'styled-components'
 
 import { createUserInFirestore, signInWithGoogle } from '../../firebase/config'
+import { NavLink } from 'react-router-dom'
+import { useNavigate } from 'react-router'
 
 
 
@@ -37,7 +39,7 @@ const StyledDiv = styled.div `
     justify-content: center;
     gap: 2rem;
 
-    padding: 2.5rem;
+    padding: 36px;
     border-radius: 15px;
 
     @media (max-width: 767px) {
@@ -55,7 +57,7 @@ const StyledDiv = styled.div `
   button {
     width: 250px;
     font-weight: 700;
-    padding: .5rem 1rem;
+    padding: 8px 16px;
     display: flex;
     justify-content: center;
     gap: .5rem;
@@ -93,7 +95,8 @@ interface LoginProps{
 
 export default function Login({setLogged, setuserDataState}: LoginProps)   {
   const [loading, setLoading] = useState(false);
-
+  const navigate = useNavigate();
+  
   const handleLogin = async () => {
     try {
       setLoading(true); // Establecer loading en true
@@ -107,6 +110,7 @@ export default function Login({setLogged, setuserDataState}: LoginProps)   {
     } catch (error) {
       console.log(error);
     } finally {
+      navigate('/');
       setLoading(false); // Establecer loading en false
     }
   }
@@ -120,7 +124,7 @@ export default function Login({setLogged, setuserDataState}: LoginProps)   {
           <button onClick={handleLogin}>
             {loading ? 'Loading...' : <><img src={googleLogo} alt="" /> Sign in with Google</>}
           </button>
-          <p>Don't you have an account? <a href="">Enter as guest user!</a></p>
+          <p>Don't you have an account? <NavLink to="/">Take a look to the main feed!</NavLink></p>
         </div>
     </StyledDiv>
   )

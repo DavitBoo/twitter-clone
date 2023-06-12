@@ -121,17 +121,18 @@ function App() {
             }
           });
 
-          loadInputs().then(inputs => setInputsState(inputs))
           
-
+          
         } else {
           setLogged(false);
         }
         setLoadingUser(false); // Establecer loadingUser en false
       });
     };
-
+    
+    loadInputs().then(inputs => setInputsState(inputs))
     checkLoggedInStatus();
+    
   }, []);
 
   
@@ -162,7 +163,7 @@ function App() {
                       displaySubMenu={displaySubMenu}
                       setDisplaySubMenu={setDisplaySubMenu}
                   /> )
-                  }
+              }
                   <InputsProvider inputsState={inputsState} setInputsState={setInputsState}>
                     <Routes>
                         <Route path="/" element={<Home />} />
@@ -177,7 +178,10 @@ function App() {
         </UserProvider>
       </StyledDiv> 
       // if user is not logged, login screen will be displayed
-      : <Login setLogged={setLogged} setuserDataState={setUserDataState}/>}
+      :<Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login setLogged={setLogged} setuserDataState={setUserDataState}/>} />
+        </Routes> }
     </HashRouter>
   );
 }

@@ -22,7 +22,7 @@ import { UserContext } from '../../Context/UserContext';
 
 const StyledDiv = styled.div  `
   display: flex;
-  padding: 1rem;
+  padding: 16px;
   outline: 1px solid var(--color-border);
 
   &:hover{

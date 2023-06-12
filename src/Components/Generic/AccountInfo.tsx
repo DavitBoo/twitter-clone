@@ -11,7 +11,7 @@ import { updateFollowers } from '../../firebase/config';
 
 const StyledDiv = styled.div `
 
-    padding: 1rem;
+    padding: 16px;
     border-top: 1px solid var(--color-border);
     cursor: pointer;
     justify-content: space-between;
@@ -31,10 +31,10 @@ const StyledDiv = styled.div `
     }
 
     .container{
-        padding: 0 1rem;
+        padding: 0 16px;
 
         p{
-            padding: 0.25rem;
+            padding: 4px;
             margin: 0;
         }
     }
@@ -64,7 +64,7 @@ const StyledDiv = styled.div `
     button{
         
         font-weight: 700;
-        padding: .5rem 1rem;
+        padding: 8px 16px;
         height: 36px;
         transition: all .2s;
 

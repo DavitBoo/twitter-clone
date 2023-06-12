@@ -2,6 +2,7 @@ import React from 'react'
 import { styled } from 'styled-components'
 
 import { auth } from "../../firebase/config";
+import { useNavigate } from 'react-router';
 
 const StyledDiv = styled.div`
 
@@ -15,7 +16,7 @@ const StyledDiv = styled.div`
         border-bottom: 1px solid var(--color-border); */
         /* padding: ; */
         border-radius: 8px;
-        padding: .75rem;
+        padding: 12px;
         font-size: 1rem;
         font-weight: 700;
         transition: transform 0.3s ease; 
@@ -36,17 +37,18 @@ interface MoreMenuProps {
 }
 
 export default function MoreMenu({setOverlayDisplay, setDisplaySubMenu}: MoreMenuProps) {
+    const navigate = useNavigate();
 
-const handleLogout = async () => {
-    setOverlayDisplay(false)
-    setDisplaySubMenu(false)
-    try {
-        await auth.signOut();
-        // Realiza cualquier otra acción necesaria después del cierre de sesión exitoso
-    } catch (error) {
-        // Maneja los errores de cierre de sesión
-        console.log(error);
-    }
+    const handleLogout = async () => {
+        setOverlayDisplay(false)
+        setDisplaySubMenu(false)
+        try {
+            await auth.signOut();
+            navigate('/login')
+        } catch (error) {
+            // Maneja los errores de cierre de sesión
+            console.log(error);
+        }
     };
 
   return (

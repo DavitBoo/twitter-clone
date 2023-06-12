@@ -41,7 +41,7 @@ const StyleDiv = styled.div`
         filter: invert(1);
         border-radius: 100%;
         background-color: #ffffff2c;
-        padding: 1rem;
+        padding: 16px;
 
         transition: all .2s;
         cursor: pointer;

@@ -7,13 +7,13 @@ const StyledDiv = styled.div`
   .form{
     display: flex;
     flex-direction: column;
-    padding: 1rem;
+    padding: 16px;
     
     > div {
       margin: .5rem 0;
       position: relative;
       padding-left: 1ch;
-      padding-bottom: 2rem;
+      padding-bottom: 32px;
       border: 1px solid var(--color-border);
       border-radius: 5px;
 
@@ -40,7 +40,7 @@ const StyledDiv = styled.div`
 
   button{
     background-color: #000;
-    padding: .6rem 1.2rem;
+    padding: 17px 35px;
     font-weight: 700;
     cursor: pointer;
     align-self: self-start;

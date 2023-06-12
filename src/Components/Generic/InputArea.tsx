@@ -45,14 +45,14 @@ flex-direction: column;
     width: 75px;
     height: 75px;
     border-radius: 100%;
-    /* padding: 1rem; */
+
   }
   .input-container{
     border-top: 1px solid var(--color-border);
     border-bottom: 1px solid var(--color-border);
     background-color: #f9f9fc;
     justify-content: space-around;
-    padding: .5rem 0;
+    padding: 8px 0;
   }
 
   canvas{
@@ -63,7 +63,7 @@ flex-direction: column;
   
 
   button{
-    padding: .6rem 1.2rem;
+    padding: 17px 35px;
     font-weight: 700;
     align-self: flex-end;
 
