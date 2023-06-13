@@ -1,12 +1,24 @@
 import React, { useContext, useState } from 'react'
+
+// useContext
+import { UserContext } from '../../../Context/UserContext';
+
+// components
 import ProfileImage from './ProfileImage'
+
+// libraries
 import { styled } from 'styled-components'
+
+// images
 import testImage2 from '../../../assets/test-2.jpg'
 
+// icon libraries
 import Icon from '@mdi/react';
 import { mdiCameraOutline } from '@mdi/js';
+
+// firebase functions
 import { updateUserCoverImg, uploadCoverImage } from '../../../firebase/config';
-import { UserContext } from '../../../Context/UserContext';
+
 
 const StyleDiv = styled.div`
 
@@ -60,7 +72,13 @@ const StyleDiv = styled.div`
 
 `
 
-export default function CoverImage({profilImg, coverImg, userProfileName}: any) {
+interface CoverImageProps {
+  profilImg: string;
+  coverImg: string;
+  userProfileName?: string;
+}
+
+export default function CoverImage({profilImg, coverImg, userProfileName}: CoverImageProps) {
   
   // useContext
   const { userDataState, setUserDataState } = useContext(UserContext);
@@ -93,7 +111,7 @@ export default function CoverImage({profilImg, coverImg, userProfileName}: any) 
 
   return (
     <StyleDiv className='cover-img' style={coverImg ? { backgroundImage: `url(${coverImg})` }: {}}>
-        <ProfileImage profilImg={profilImg} userProfileName={userProfileName}/>
+        <ProfileImage profilImg={profilImg} userProfileName={userProfileName || ''}/>
         { !userProfileName  && <>
           <input type="file" accept="image/*" onChange={handleCoverImgChange} style={{ display: 'none' }} id="coverImgInput" />
           <div className='camera-i' onClick={handleClick}>

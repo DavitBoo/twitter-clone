@@ -65,7 +65,7 @@ export default function Settings() {
           </NavLink>
         <UserName/>
       </div>
-      <CoverImage coverImg={userDataState?.coverImg}/>      
+      <CoverImage profilImg={userDataState?.profilImg || ''} coverImg={userDataState?.coverImg || ''} />    
       <FormForSettings/>
     </StyledDiv>
   )
