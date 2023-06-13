@@ -30,8 +30,8 @@ const StyleDiv = styled.div`
     position: relative;
 
   img.profile-img{
-    width: 130px;
-    height: 130px;
+    width: 8.125rem;
+    height: 8.125rem;
     border-radius: 100%;
     position: absolute;
     bottom: 0;

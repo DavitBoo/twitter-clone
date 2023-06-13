@@ -65,7 +65,7 @@ const StyledDiv = styled.div `
         
         font-weight: 700;
         padding: 8px 16px;
-        height: 36px;
+        height: 2.25rem;
         transition: all .2s;
 
         &.follow-btn{
