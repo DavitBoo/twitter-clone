@@ -42,8 +42,8 @@ display: flex;
 flex-direction: column;
 
   img{
-    width: 75px;
-    height: 75px;
+    width: 4.5rem;
+    height: 4.5rem;
     border-radius: 100%;
 
   }
@@ -53,6 +53,11 @@ flex-direction: column;
     background-color: #f9f9fc;
     justify-content: space-around;
     padding: 8px 0;
+
+    @media (max-width: 767px){
+      flex-direction: column;
+    }
+    
   }
 
   canvas{
@@ -67,6 +72,10 @@ flex-direction: column;
     font-weight: 700;
     align-self: flex-end;
 
+    @media (max-width: 767px){
+      align-self: center;
+    }
+
     &:hover{
       background-color: var(--color-primary-darker);
       transition: all .2s;
@@ -77,6 +86,10 @@ flex-direction: column;
     display: flex;
     justify-content: space-between;
     cursor: pointer;
+
+    @media (max-width: 767px){
+      margin-top: 1rem;
+    }
 
   }
 
@@ -115,7 +128,7 @@ flex-direction: column;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;       
+    justify-content: space-between;     
   }
 
 
@@ -126,6 +139,11 @@ flex-direction: column;
   margin-top: 10px;
   /* width: 230px; Ajusta el ancho según tus necesidades */
   justify-content: center;
+
+  @media (max-width: 767px){
+    grid-template-columns: repeat(10, 20px); 
+    grid-gap: .5rem;
+  }
 }
 
 .color-option {
@@ -137,6 +155,11 @@ flex-direction: column;
   border: 2px solid #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: all 0.2s ease;
+
+  @media (max-width: 767px){
+    width: 22px;
+    height: 22px;
+  }
 
   &:hover {
     transform: scale(2.2);
