@@ -1,11 +1,16 @@
 import React, { useState } from 'react'
+
+// images
 import logo from '../../assets/logo.png'
 import googleLogo from '../../assets/google-logo.svg'
-import { styled } from 'styled-components'
 
-import { createUserInFirestore, signInWithGoogle } from '../../firebase/config'
+// libraries
+import { styled } from 'styled-components'
 import { NavLink } from 'react-router-dom'
 import { useNavigate } from 'react-router'
+
+// firebase
+import { createUserInFirestore, signInWithGoogle } from '../../firebase/config'
 
 
 
@@ -86,14 +91,11 @@ const StyledDiv = styled.div `
 
 interface LoginProps{
   setLogged: React.Dispatch<React.SetStateAction<boolean>>;
-
-  //el tipo sería  React.Dispatch<React.SetStateAction<UserData>> pero tengo que ver como importo el interface
-  setuserDataState: React.Dispatch<React.SetStateAction<any>>;
 }
 
 
 
-export default function Login({setLogged, setuserDataState}: LoginProps)   {
+export default function Login({setLogged}: LoginProps)   {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   
