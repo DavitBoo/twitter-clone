@@ -1,13 +1,14 @@
 import React, { useState } from 'react'
 
-// images
-import logo from '../../assets/logo.png'
-import googleLogo from '../../assets/google-logo.svg'
-
 // libraries
-import { styled } from 'styled-components'
 import { NavLink } from 'react-router-dom'
+import { styled } from 'styled-components'
 import { useNavigate } from 'react-router'
+
+
+// images
+import googleLogo from '../../assets/google-logo.svg'
+import logo from '../../assets/logo.png'
 
 // firebase
 import { createUserInFirestore, signInWithGoogle } from '../../firebase/config'
@@ -87,6 +88,13 @@ const StyledDiv = styled.div `
     }
   }
 
+  .error-message{
+    color: #ff4646;
+    margin-top: 10px;
+    font-size: 14px;
+    text-align: center;
+  }
+
 `
 
 interface LoginProps{
@@ -96,12 +104,18 @@ interface LoginProps{
 
 
 export default function Login({setLogged}: LoginProps)   {
+  
+  // useState
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  // react-router hooks -  useNavigate
   const navigate = useNavigate();
   
   const handleLogin = async () => {
     try {
-      setLoading(true); // Establecer loading en true
+      setLoading(true)
+      setError('')
 
       const user = await signInWithGoogle();
       await createUserInFirestore(user);
@@ -111,6 +125,7 @@ export default function Login({setLogged}: LoginProps)   {
       // El usuario ha iniciado sesión correctamente
     } catch (error) {
       console.log(error);
+      setError('An error occurred during login. Please try again.');
     } finally {
       navigate('/');
       setLoading(false); // Establecer loading en false
@@ -126,6 +141,7 @@ export default function Login({setLogged}: LoginProps)   {
           <button onClick={handleLogin}>
             {loading ? 'Loading...' : <><img src={googleLogo} alt="" /> Sign in with Google</>}
           </button>
+          {error && <p className="error-message">{error}</p>}
           <p>Don't you have an account? <NavLink to="/">Take a look to the main feed!</NavLink></p>
         </div>
     </StyledDiv>
