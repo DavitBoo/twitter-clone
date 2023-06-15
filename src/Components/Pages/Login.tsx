@@ -21,6 +21,7 @@ const StyledDiv = styled.div `
 
   img{
     max-width: 40px;
+    filter: drop-shadow(0px 4px 2px hsl(220deg 60% 50%));
   }
 
   .overlay-login{
