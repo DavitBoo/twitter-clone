@@ -9,12 +9,13 @@ enum ActiveMenu {
 interface TopBarProps {
   activeMenu: ActiveMenu
   setActiveMenu: React.Dispatch<React.SetStateAction<ActiveMenu>>;
+  logged: any
 }
 
-export default function TopBar({activeMenu, setActiveMenu}: TopBarProps) {
+export default function TopBar({activeMenu, setActiveMenu, logged }: TopBarProps) {
   return (
     <div>
-        <SelectMenu activeMenu={activeMenu} setActiveMenu={setActiveMenu}/>
+        <SelectMenu activeMenu={activeMenu} setActiveMenu={setActiveMenu} logged={logged}/>
     </div>
   )
 }

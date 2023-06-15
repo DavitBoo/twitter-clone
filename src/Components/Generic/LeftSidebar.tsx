@@ -87,11 +87,12 @@ interface LeftSidebarProps {
   setOverlayDisplay: React.Dispatch<React.SetStateAction<boolean>>;
   setDisplaySubMenu: React.Dispatch<React.SetStateAction<boolean>>;
   displaySubMenu: boolean;
+  logged: any;
 }
 
 
 
-const LeftSidebar: React.FC<LeftSidebarProps> = ({ setOverlayDisplay, setDisplaySubMenu, displaySubMenu }) => {
+const LeftSidebar: React.FC<LeftSidebarProps> = ({ setOverlayDisplay, setDisplaySubMenu, displaySubMenu, logged }) => {
   const [showSidebar, setShowSidebar] = useState(false);
   
   useEffect(() => {
@@ -107,6 +108,7 @@ const LeftSidebar: React.FC<LeftSidebarProps> = ({ setOverlayDisplay, setDisplay
               setOverlayDisplay={setOverlayDisplay}
               displaySubMenu={displaySubMenu}
               setDisplaySubMenu={setDisplaySubMenu}
+              logged={logged}
             />
         </div>
         <div className='footer'><a target="_blank" href="https://github.com/DavitBoo/twitter-clone">About this project</a></div>

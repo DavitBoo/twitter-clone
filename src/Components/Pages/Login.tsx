@@ -16,6 +16,7 @@ import { createUserInFirestore, signInWithGoogle } from '../../firebase/config'
 
 
 const StyledDiv = styled.div `
+  z-index: 1000;
   position: relative;
 
   img{

@@ -72,6 +72,7 @@ interface LeftSidebarProps {
   setOverlayDisplay: React.Dispatch<React.SetStateAction<boolean>>;
   setDisplaySubMenu: React.Dispatch<React.SetStateAction<boolean>>;
   displaySubMenu: boolean;
+  logged: any
 }
 
 // Tupla's types are defined 
@@ -86,7 +87,7 @@ const menuItems: MenuItem[] = [
   ['More', mdiDotsHorizontalCircleOutline, mdiDotsHorizontalCircle, '#'],
 ];
 
-export default function MainMenu({ setOverlayDisplay, setDisplaySubMenu, displaySubMenu }: LeftSidebarProps ) {
+export default function MainMenu({ setOverlayDisplay, setDisplaySubMenu, displaySubMenu, logged }: LeftSidebarProps ) {
 
   const [activeItem, setActiveItem] = useState('');
 
@@ -127,14 +128,16 @@ export default function MainMenu({ setOverlayDisplay, setDisplaySubMenu, display
       {/* onClick event to close logout submenu  */}
       <ul className={isMobile ? 'mobile-icons' : ''} onMouseLeave={handleMouseLeave} onClick={displaySubMenu ? () => setDisplaySubMenu(false) : undefined}>
         {/* instead of have to write the whole menu, it takes it from the tupla */}
-        {menuItems.map((item, index) => (
-          <li key={index}>
-            <NavLink to={item[3]} onClick={item[0]==='More'? handleClick : undefined } onMouseEnter={() => handleMouseEnter(item[0])} className={activeItem === item[0] ? 'active' : ''}>
-              <Icon path={activeItem === item[0] ? item[2] : item[1]} size={iconSize} />
-              <p className="hide-on-tablet">{item[0]}</p>
-            </NavLink>
-          </li>
-        ))}
+        {menuItems
+          .filter((item) => logged|| item[0] === 'Home')
+          .map((item, index) => (
+            <li key={index}>
+              <NavLink to={item[3]} onClick={item[0] === 'More' ? handleClick : undefined} onMouseEnter={() => handleMouseEnter(item[0])} className={activeItem === item[0] ? 'active' : ''}>
+                <Icon path={activeItem === item[0] ? item[2] : item[1]} size={iconSize} />
+                <p className="hide-on-tablet">{item[0]}</p>
+              </NavLink>
+            </li>
+          ))}
       </ul>
 
       { displaySubMenu && 

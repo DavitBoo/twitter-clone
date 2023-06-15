@@ -45,7 +45,7 @@ enum ActiveMenu {
   Following,
 }
 
-export default function SelectMenu({activeMenu, setActiveMenu}: any) {
+export default function SelectMenu({activeMenu, setActiveMenu, logged}: any) {
     
   const activeLeftByClick = () => {
     setActiveMenu(ActiveMenu.ForYou)
@@ -60,6 +60,7 @@ export default function SelectMenu({activeMenu, setActiveMenu}: any) {
  
     <StyledDiv>
         <ul>
+            {logged && <>
             <li onClick={activeLeftByClick}>
               <div className={activeMenu === ActiveMenu.ForYou ? 'active' : ''}>
                 <p>For you</p>
@@ -72,7 +73,14 @@ export default function SelectMenu({activeMenu, setActiveMenu}: any) {
                 <div></div>
               </div>
             </li>
-            
+            </>}
+            {!logged && <li >
+              <div className='active'>
+                <p>General Feed</p>
+                <div></div>
+              </div>
+            </li>
+            }
         </ul>
     </StyledDiv>
   )

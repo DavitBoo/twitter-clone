@@ -83,11 +83,12 @@ interface MobilNavBarProps {
   setOverlayDisplay: React.Dispatch<React.SetStateAction<boolean>>;
   setDisplaySubMenu: React.Dispatch<React.SetStateAction<boolean>>;
   displaySubMenu: boolean;
+  logged: any
 }
 
 
 
-const MobilNavBar: React.FC<MobilNavBarProps> = ({ setOverlayDisplay, setDisplaySubMenu, displaySubMenu }) => {
+const MobilNavBar: React.FC<MobilNavBarProps> = ({ setOverlayDisplay, setDisplaySubMenu, displaySubMenu, logged }) => {
   const [showSidebar, setShowSidebar] = useState(false);
   
   useEffect(() => {
@@ -103,6 +104,7 @@ const MobilNavBar: React.FC<MobilNavBarProps> = ({ setOverlayDisplay, setDisplay
               setOverlayDisplay={setOverlayDisplay}
               displaySubMenu={displaySubMenu}
               setDisplaySubMenu={setDisplaySubMenu}
+              logged={logged}
             />
         </div>
 

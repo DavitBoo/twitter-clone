@@ -54,7 +54,6 @@ const StyledDiv = styled.div `
     left: 0;
     z-index: 10;
   }
-
 `;
 
 
@@ -129,7 +128,7 @@ function App() {
         setLoadingUser(false); // Establecer loadingUser en false
       });
     };
-    
+    console.log('meeee caaaa')
     loadInputs().then(inputs => setInputsState(inputs))
     checkLoggedInStatus();
     
@@ -156,17 +155,19 @@ function App() {
                     setOverlayDisplay={setOverlayDisplay}
                     displaySubMenu={displaySubMenu}
                     setDisplaySubMenu={setDisplaySubMenu}
+                    logged={logged}
                   /> ) : 
                   (
                     <MobilNavBar
                       setOverlayDisplay={setOverlayDisplay}
                       displaySubMenu={displaySubMenu}
                       setDisplaySubMenu={setDisplaySubMenu}
+                      logged={logged}
                   /> )
               }
                   <InputsProvider inputsState={inputsState} setInputsState={setInputsState}>
                     <Routes>
-                        <Route path="/" element={<Home />} />
+                        <Route path="/" element={<Home logged={logged}/>} />
                         {/* <Route path="/profile" element={<Profile />} /> */}
                         <Route path="/:username" element={<Profile />} />
                         <Route path="/:username/followers" element={<Followers />} />
@@ -178,11 +179,34 @@ function App() {
         </UserProvider>
       </StyledDiv> 
       // if user is not logged, login screen will be displayed
-      :<Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login setLogged={setLogged} setuserDataState={setUserDataState}/>} />
-        </Routes> }
-    </HashRouter>
+      :<><StyledDiv>
+        <InputsProvider inputsState={inputsState} setInputsState={setInputsState}>
+              {window.innerWidth > 768 ? (
+                <LeftSidebar
+                  setOverlayDisplay={setOverlayDisplay}
+                  displaySubMenu={displaySubMenu}
+                  setDisplaySubMenu={setDisplaySubMenu}
+                  logged={logged}
+                /> ) : 
+                (
+                  <MobilNavBar
+                    setOverlayDisplay={setOverlayDisplay}
+                    displaySubMenu={displaySubMenu}
+                    setDisplaySubMenu={setDisplaySubMenu}
+                    logged={logged}
+                /> )
+            }
+            <Routes>
+              <Route path="/" element={<Home logged={logged}/>} />
+            </Routes> 
+            </InputsProvider>
+          </StyledDiv>
+          <Routes>
+              <Route path="/login" element={<Login setLogged={setLogged}/>} />
+          </Routes> 
+          </>
+        }
+      </HashRouter>
   );
 }
 
