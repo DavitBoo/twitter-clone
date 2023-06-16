@@ -1,52 +1,59 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 // I changed HashRouter for BrowserRouter just because testing in the address bar.
-import { BrowserRouter, Routes, Route, useParams, HashRouter} from "react-router-dom";
-import { styled } from 'styled-components';
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  useParams,
+  HashRouter,
+} from "react-router-dom";
+import { styled } from "styled-components";
 
 // components
-import Home from './Components/Pages/Home';
-import Profile from './Components/Pages/Profile';
-import Settings from './Components/Pages/Settings';
-import LeftSidebar from './Components/Generic/LeftSidebar';
-import Followers from './Components/Pages/Follows/Followers';
-import Following from './Components/Pages/Follows/Following';
-import Login from './Components/Pages/Login';
+import Home from "./Components/Pages/Home";
+import Profile from "./Components/Pages/Profile";
+import Settings from "./Components/Pages/Settings";
+import LeftSidebar from "./Components/Generic/LeftSidebar";
+import Followers from "./Components/Pages/Follows/Followers";
+import Following from "./Components/Pages/Follows/Following";
+import Login from "./Components/Pages/Login";
 
 // firebase
-import { auth, loadInputs, loadUserData } from './firebase/config';
+import { auth, loadInputs, loadUserData } from "./firebase/config";
 
 // context providers
-import { UserProvider } from './Context/UserContext';
-import { InputsProvider } from './Context/InputsContext';
-import MobilNavBar from './Components/Generic/MobilNavBar';
+import { UserProvider } from "./Context/UserContext";
+import { InputsProvider } from "./Context/InputsContext";
+import MobilNavBar from "./Components/Generic/MobilNavBar";
+import LoginDownBar from "./Components/Generic/LoginDownBar";
 
-const StyledDiv = styled.div `
+const StyledDiv = styled.div`
   position: relative;
   display: flex;
   justify-content: center;
   gap: 5rem;
 
-  @media (max-width: 768px){
+  @media (max-width: 768px) {
     flex-direction: column;
-    align-items: center;  
+    align-items: center;
   }
 
-  > div:first-child{
+  > div:first-child {
     width: 0px;
   }
 
-  > div:nth-child(2){
+  > div:nth-child(2) {
     /* flex: 1 1 50%; */
     /* width: min(65ch, 100%); */
     width: min(100%, 600px);
     border: 1px solid var(--color-border);
 
-    > h1{
+    > h1 {
       padding-left: 16px;
     }
   }
-  
-  .full-overlay{
+
+  .full-overlay {
     position: fixed;
     width: 100%;
     height: 100%;
@@ -55,7 +62,6 @@ const StyledDiv = styled.div `
     z-index: 10;
   }
 `;
-
 
 interface UserData {
   name: string;
@@ -68,15 +74,13 @@ interface UserData {
   followers: string[];
   email: string;
   creationData: string;
-  uid: string
+  uid: string;
 }
 
-
 function App() {
-
-  const [overlayDisplay, setOverlayDisplay] = useState(false)
-  const [displaySubMenu, setDisplaySubMenu] = useState(false)
-  const [logged, setLogged] = useState(false)
+  const [overlayDisplay, setOverlayDisplay] = useState(false);
+  const [displaySubMenu, setDisplaySubMenu] = useState(false);
+  const [logged, setLogged] = useState(false);
 
   const [loadingUser, setLoadingUser] = useState(false);
 
@@ -91,15 +95,15 @@ function App() {
       auth.onAuthStateChanged((user) => {
         if (user) {
           setLogged(true);
-          console.log(user)
-           // Le pasabmos el uid directamente
-           // pero como ahora el identificador es el email se ha cambiado eso
-          loadUserData(user.email?.split('@')[0]).then((userData: any) => {
-            console.log(userData)
+          console.log(user);
+          // Le pasabmos el uid directamente
+          // pero como ahora el identificador es el email se ha cambiado eso
+          loadUserData(user.email?.split("@")[0]).then((userData: any) => {
+            console.log(userData);
             if (userData) {
               const updatedUserData = {
                 ...userData,
-                uid: user.uid
+                uid: user.uid,
               };
               setUserDataState(updatedUserData);
             } else {
@@ -109,104 +113,112 @@ function App() {
                 profilImg: user.photoURL,
                 coverImg: "",
                 inputs: [],
-                username: user.email?.split('@')[0],
+                username: user.email?.split("@")[0],
                 bio: "",
                 following: [],
                 followers: [],
                 email: user.email || "",
-                creationData: 'welcome!',
+                creationData: "welcome!",
               };
               setUserDataState(defaultUserData);
             }
           });
-
-          
-          
         } else {
           setLogged(false);
         }
         setLoadingUser(false); // Establecer loadingUser en false
       });
     };
-    console.log('meeee caaaa')
-    loadInputs().then(inputs => setInputsState(inputs))
+    console.log("meeee caaaa");
+    loadInputs().then((inputs) => setInputsState(inputs));
     checkLoggedInStatus();
-    
   }, []);
 
-  
   const overlayClickHandler = () => {
-    setOverlayDisplay(false)
-    setDisplaySubMenu(false)
-  }
-
+    setOverlayDisplay(false);
+    setDisplaySubMenu(false);
+  };
 
   if (loadingUser) {
     return <div>Loading...</div>; // Mostrar un mensaje de carga mientras se obtienen los datos del usuario
   }
 
   return (
-    <HashRouter >
-        { logged ?
-          <StyledDiv className="App">
-            <UserProvider userDataState={userDataState} setUserDataState={setUserDataState}>
-              {window.innerWidth > 768 ? (
-                  <LeftSidebar
-                    setOverlayDisplay={setOverlayDisplay}
-                    displaySubMenu={displaySubMenu}
-                    setDisplaySubMenu={setDisplaySubMenu}
-                    logged={logged}
-                  /> ) : 
-                  (
-                    <MobilNavBar
-                      setOverlayDisplay={setOverlayDisplay}
-                      displaySubMenu={displaySubMenu}
-                      setDisplaySubMenu={setDisplaySubMenu}
-                      logged={logged}
-                  /> )
-              }
-                  <InputsProvider inputsState={inputsState} setInputsState={setInputsState}>
-                    <Routes>
-                        <Route path="/" element={<Home logged={logged}/>} />
-                        {/* <Route path="/profile" element={<Profile />} /> */}
-                        <Route path="/:username" element={<Profile />} />
-                        <Route path="/:username/followers" element={<Followers />} />
-                        <Route path="/:username/following" element={<Following />} />
-                        <Route path="/settings" element={<Settings />} />
-                    </Routes >
-                  </InputsProvider>
-          { overlayDisplay && <div onClick={overlayClickHandler} className="full-overlay"></div> }
-        </UserProvider>
-      </StyledDiv> 
-      // if user is not logged, login screen will be displayed
-      :<><StyledDiv>
-        <InputsProvider inputsState={inputsState} setInputsState={setInputsState}>
+    <HashRouter>
+      {logged ? (
+        <StyledDiv className="App">
+          <UserProvider
+            userDataState={userDataState}
+            setUserDataState={setUserDataState}
+          >
+            {window.innerWidth > 768 ? (
+              <LeftSidebar
+                setOverlayDisplay={setOverlayDisplay}
+                displaySubMenu={displaySubMenu}
+                setDisplaySubMenu={setDisplaySubMenu}
+                logged={logged}
+              />
+            ) : (
+              <MobilNavBar
+                setOverlayDisplay={setOverlayDisplay}
+                displaySubMenu={displaySubMenu}
+                setDisplaySubMenu={setDisplaySubMenu}
+                logged={logged}
+              />
+            )}
+            <InputsProvider
+              inputsState={inputsState}
+              setInputsState={setInputsState}
+            >
+              <Routes>
+                <Route path="/" element={<Home logged={logged} />} />
+                {/* <Route path="/profile" element={<Profile />} /> */}
+                <Route path="/:username" element={<Profile />} />
+                <Route path="/:username/followers" element={<Followers />} />
+                <Route path="/:username/following" element={<Following />} />
+                <Route path="/settings" element={<Settings />} />
+              </Routes>
+            </InputsProvider>
+            {overlayDisplay && (
+              <div onClick={overlayClickHandler} className="full-overlay"></div>
+            )}
+          </UserProvider>
+        </StyledDiv>
+      ) : (
+        // if user is not logged, login screen will be displayed
+        <>
+          <StyledDiv>
+            <InputsProvider
+              inputsState={inputsState}
+              setInputsState={setInputsState}
+            >
               {window.innerWidth > 768 ? (
                 <LeftSidebar
                   setOverlayDisplay={setOverlayDisplay}
                   displaySubMenu={displaySubMenu}
                   setDisplaySubMenu={setDisplaySubMenu}
                   logged={logged}
-                /> ) : 
-                (
-                  <MobilNavBar
-                    setOverlayDisplay={setOverlayDisplay}
-                    displaySubMenu={displaySubMenu}
-                    setDisplaySubMenu={setDisplaySubMenu}
-                    logged={logged}
-                /> )
-            }
-            <Routes>
-              <Route path="/" element={<Home logged={logged}/>} />
-            </Routes> 
+                />
+              ) : (
+                <MobilNavBar
+                  setOverlayDisplay={setOverlayDisplay}
+                  displaySubMenu={displaySubMenu}
+                  setDisplaySubMenu={setDisplaySubMenu}
+                  logged={logged}
+                />
+              )}
+              <Routes>
+                <Route path="/" element={<Home logged={logged} />} />
+              </Routes>
+              <LoginDownBar />
             </InputsProvider>
           </StyledDiv>
           <Routes>
-              <Route path="/login" element={<Login setLogged={setLogged}/>} />
-          </Routes> 
-          </>
-        }
-      </HashRouter>
+            <Route path="/login" element={<Login setLogged={setLogged} />} />
+          </Routes>
+        </>
+      )}
+    </HashRouter>
   );
 }
 
