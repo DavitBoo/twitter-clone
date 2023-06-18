@@ -3,20 +3,8 @@ import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { getFirestore, doc, setDoc, getDoc, collection, getDocs, updateDoc, arrayRemove, arrayUnion, query, orderBy } from "firebase/firestore";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
-import UserName from "../Components/Generic/Subcomponents/UserName";
 
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyB4c4o_akEfx3iLudrXMDS6K7-0rFo1UZY",
-  authDomain: "twitter-clone-5f03f.firebaseapp.com",
-  projectId: "twitter-clone-5f03f",
-  storageBucket: "twitter-clone-5f03f.appspot.com",
-  messagingSenderId: "961773242244",
-  appId: "1:961773242244:web:0c18c07250497b83183fd1"
-};
+import firebaseConfig from './firebaseConfig';
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -25,9 +13,6 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 
 const provider = new GoogleAuthProvider();
-
-//storage
-const storage = getStorage(app);
 
 export const signInWithGoogle = async () => {
   try {
@@ -256,5 +241,7 @@ export const updateFollowers = async (
     }
   }
 }
+
+
 
 export { auth, db, GoogleAuthProvider };
