@@ -1,24 +1,21 @@
-import React, { useState } from 'react'
-import { styled } from 'styled-components'
+import React, { useState } from "react";
+import { styled } from "styled-components";
 
 const StyledDiv = styled.div`
-
   font-weight: 700;
 
-  ul{
+  ul {
     display: flex;
     justify-content: space-around;
     padding: 0;
-
-    
   }
 
-  ul li{
+  ul li {
     flex: 1 1 100%;
 
-    &:hover{
+    &:hover {
       background-color: #dee3e9;
-      transition: all .2s;
+      transition: all 0.2s;
     }
   }
 
@@ -27,7 +24,7 @@ const StyledDiv = styled.div`
     cursor: pointer;
   }
 
-  ul > li > .active > div{
+  ul > li > .active > div {
     background-color: var(--color-primary);
     height: 4px;
     align-self: center;
@@ -35,7 +32,7 @@ const StyledDiv = styled.div`
     display: inline-block;
   }
 
-  ul > li > div:not(.active){
+  ul > li > div:not(.active) {
     color: var(--color-text-secondary);
   }
 `;
@@ -45,43 +42,49 @@ enum ActiveMenu {
   Following,
 }
 
-export default function SelectMenu({activeMenu, setActiveMenu, logged}: any) {
-    
+type SelectMenuProps = Partial<{
+  activeMenu: ActiveMenu;
+  setActiveMenu: (activeMenu: ActiveMenu) => void;
+  logged: boolean;
+}>;
+
+export default function SelectMenu({ activeMenu, setActiveMenu, logged }: SelectMenuProps) {
   const activeLeftByClick = () => {
-    setActiveMenu(ActiveMenu.ForYou)
-  }
+    setActiveMenu!(ActiveMenu.ForYou); // "!" to assert that setActiveMenu is not null or undefined
+  };
 
   const activeRightByClick = () => {
-    setActiveMenu(ActiveMenu.Following)
-  }
-  
-  return (
+    setActiveMenu!(ActiveMenu.Following);
+  };
 
- 
+  return (
     <StyledDiv>
-        <ul>
-            {logged && <>
+      <ul>
+        {logged && (
+          <>
             <li onClick={activeLeftByClick}>
-              <div className={activeMenu === ActiveMenu.ForYou ? 'active' : ''}>
+              <div className={activeMenu === ActiveMenu.ForYou ? "active" : ""}>
                 <p>For you</p>
                 <div></div>
               </div>
             </li>
             <li onClick={activeRightByClick}>
-              <div className={activeMenu === ActiveMenu.Following ? 'active' : ''}>
+              <div className={activeMenu === ActiveMenu.Following ? "active" : ""}>
                 <p>Following</p>
                 <div></div>
               </div>
             </li>
-            </>}
-            {!logged && <li >
-              <div className='active'>
-                <p>General Feed</p>
-                <div></div>
-              </div>
-            </li>
-            }
-        </ul>
+          </>
+        )}
+        {!logged && (
+          <li>
+            <div className="active">
+              <p>General Feed</p>
+              <div></div>
+            </div>
+          </li>
+        )}
+      </ul>
     </StyledDiv>
-  )
+  );
 }

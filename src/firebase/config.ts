@@ -195,7 +195,6 @@ export const updateUserProfileImg = async (username: string | undefined, profile
 
 export const updateUserProfile = async (
   usernameId: string | undefined, 
-  // username: string | undefined, 
   name: string | undefined, 
   bio: string | undefined
 ) => {

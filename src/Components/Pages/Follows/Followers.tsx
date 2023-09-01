@@ -85,9 +85,7 @@ export default function Followed() {
     const getFollowedUsers = async () => {
       const users = selectedUser?.followers || [];
 
-      const followedUsersData = await Promise.all(
-        users.map((followedUser) => checkUsers(followedUser))
-      );
+      const followedUsersData = await Promise.all(users.map((followedUser) => checkUsers(followedUser)));
 
       setFollowedUsers(followedUsersData.filter((user) => user !== undefined));
     };
